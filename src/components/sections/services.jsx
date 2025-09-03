@@ -250,11 +250,11 @@ export default function Services({ showHeader = true, showFullServices = false }
         {showHeader && (
           <div className="flex-[2] flex flex-col px-6 md:px-12 lg:px-20">
             <div className="max-w-7xl">
-              <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold text-neutral-700 leading-tight mb-4 md:mb-6 lg:mb-8">
-                Mūsu pakalpojumi
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-neutral-700 leading-tight mb-4 md:mb-6 lg:mb-8">
+                Mūsu pakalpojumi, piedāvā pilnu mežsaimniecības risinājumu klāstu no plānošanas līdz apsaimniekošanai
               </h2>
               <p className="text-base md:text-lg lg:text-xl text-neutral-700 max-w-3xl leading-relaxed mb-8 md:mb-12 lg:mb-16">
-                AM Forest piedāvā plašu meža apsaimniekošanas un tehnikas pakalpojumu klāstu, nodrošinot profesionālu risinājumu katram klientam.
+              Nodrošinām individuālu pieeju un augstu kvalitāti visos mežsaimniecības posmos.
               </p>
             </div>
           </div>

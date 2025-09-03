@@ -94,7 +94,7 @@ export default function HomeHero() {
         <div className="flex-[2] flex flex-col justify-center px-20 py-20">
           <div className="max-w-5xl">
             <h1 className="text-7xl font-bold text-[#dbf6a3] leading-tight mb-8">
-              See beyond that of limits, because that each field tells the story a History single
+            AM Forest profesionāla pieeja katram meža īpašniekam, katram hektāram.
             </h1>
           </div>
         </div>

@@ -18,44 +18,47 @@ function AppContent({ Component, pageProps }) {
   // Prevent scrolling ONLY when contact modal is open (not menu)
   useEffect(() => {
     if (isContactOpen && !menuOpen) {
-      // Disable scrolling on html and body
+      // Save current scroll position
+      const scrollY = window.scrollY;
+      
+      // Disable scrolling without moving the body
       document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow = 'hidden';
-      document.documentElement.style.height = '100%';
-      document.body.style.height = '100%';
+      document.body.style.position = 'relative';
+      
+      // Store scroll position
+      document.body.dataset.modalScrollY = scrollY;
     } else if (!isContactOpen) {
       // Re-enable scrolling only if contact modal is closed
       document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
-      document.documentElement.style.height = '';
-      document.body.style.height = '';
+      document.body.style.position = '';
+      
+      // Restore scroll if needed
+      const savedScrollY = document.body.dataset.modalScrollY;
+      if (savedScrollY) {
+        window.scrollTo(0, parseInt(savedScrollY));
+        delete document.body.dataset.modalScrollY;
+      }
     }
 
     return () => {
       if (!menuOpen) {
         document.documentElement.style.overflow = '';
         document.body.style.overflow = '';
-        document.documentElement.style.height = '';
-        document.body.style.height = '';
+        document.body.style.position = '';
       }
     };
   }, [isContactOpen, menuOpen]);
 
   return (
-    <div className="min-h-screen bg-[#faf6ed]">
+    <div className="min-h-screen" style={{ backgroundColor: '#1a1a1a' }}>
       <PageTransition>
         <SimplePageTransition>
           {/* Main wrapper with push effect matching modal width */}
-          <div className={`transition-transform duration-700 ease-in-out bg-[#faf6ed] ${
+          <div className={`relative transition-transform duration-700 ease-in-out bg-[#faf6ed] ${
             isContactOpen ? 'transform -translate-x-full md:-translate-x-[480px] lg:-translate-x-[550px]' : 'transform translate-x-0'
           }`}>
-            {/* Dark overlay with smooth fade in/out */}
-            <div 
-              className={`fixed inset-0 bg-black/50 z-[9998] transition-opacity duration-700 ${
-                isContactOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
-              }`}
-            />
-            
             {/* Navbar inside transform so it moves with the page */}
             <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 200 }}>
               <Navbar onMenuToggle={setMenuOpen} isMenuOpen={menuOpen} setIsMenuOpen={setMenuOpen} />
@@ -66,6 +69,16 @@ function AppContent({ Component, pageProps }) {
               <Component {...pageProps} />
               <Footer />
             </LocomotiveScrollProvider>
+            
+            {/* Dark overlay that slides with the page */}
+            <div 
+              className={`fixed inset-0 bg-black/50 z-[100] pointer-events-none ${
+                isContactOpen ? 'opacity-100' : 'opacity-0'
+              }`}
+              style={{
+                transition: isContactOpen ? 'opacity 700ms 200ms' : 'opacity 700ms',
+              }}
+            />
           </div>
         </SimplePageTransition>
       </PageTransition>

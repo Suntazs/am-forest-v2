@@ -138,12 +138,13 @@ export default function AnimatedCounter({
       <div style={{ 
         fontSize: currentFontSize,
         display: "flex",
-        gap: currentFontSize * 0.05,
+        gap: 0,
         overflow: "hidden",
         lineHeight: 1,
         fontWeight: "inherit",
         color: "inherit",
-        position: "relative"
+        position: "relative",
+        letterSpacing: "-0.05em"
       }}>
         <Digit place={10} value={value} height={height} />
         <Digit place={1} value={value} height={height} />

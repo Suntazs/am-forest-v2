@@ -1,11 +1,10 @@
 "use client";
 import React, { useEffect, useRef, useState } from 'react';
+import AnimatedCounter from '@/components/ui/AnimatedCounter';
 
 export default function About() {
   const [isInView, setIsInView] = useState(false);
-  const [countStarted, setCountStarted] = useState(false);
-  const [count, setCount] = useState(0);
-  const [finalSnap, setFinalSnap] = useState(false);
+  const [counterInView, setCounterInView] = useState(false);
   const flowerRef = useRef(null);
   const countRef = useRef(null);
 
@@ -37,31 +36,11 @@ export default function About() {
     
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !countStarted) {
-          setCountStarted(true);
-          // Start counting animation with smooth decimal values
-          let startTime = null;
-          const duration = 4000; // 4 seconds
-          const targetCount = 14;
-          
-          const animate = (timestamp) => {
-            if (!startTime) startTime = timestamp;
-            const progress = Math.min((timestamp - startTime) / duration, 1);
-            
-            // Smooth ease-out to exactly 14
-            const easeOut = 1 - Math.pow(1 - progress, 4);
-            const currentCount = easeOut * targetCount;
-            setCount(currentCount);
-            
-            if (progress < 1) {
-              requestAnimationFrame(animate);
-            }
-          };
-          
-          requestAnimationFrame(animate);
+        if (entry.isIntersecting) {
+          setCounterInView(true);
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 }
     );
 
     if (countRef.current) {
@@ -73,7 +52,7 @@ export default function About() {
         observer.unobserve(countRef.current);
       }
     };
-  }, [countStarted]);
+  }, []);
 
   return (
     <> 
@@ -119,51 +98,24 @@ export default function About() {
         {/* Right side - Counter section */}
         <div className="w-full lg:w-1/3 lg:pl-16 mt-8 lg:mt-0">
           <div ref={countRef} className="lg:sticky lg:top-32">
-            <div className="flex items-baseline justify-start">
-              {/* First digit */}
-              <div className="relative h-32 w-16 md:h-40 md:w-20 lg:h-40 lg:w-20 overflow-hidden">
-                <div 
-                  className="flex flex-col"
-                  style={{
-                    transform: `translateY(-${Math.min(count / 10, 1) * 160}px)`,
-                  }}
-                >
-                  {[0, 1, 2, 3].map((i) => (
-                    <div 
-                      key={i}
-                      className="text-8xl md:text-9xl lg:text-9xl font-bold text-[#bc9d6e] h-32 md:h-40 lg:h-40 flex items-center justify-center tabular-nums"
-                    >
-                      {i}
-                    </div>
-                  ))}
-                </div>
+            <div className="flex items-end justify-start">
+              <div className="font-bold text-[#bc9d6e] leading-none">
+                <AnimatedCounter
+                  targetValue={14}
+                  fontSize={144}
+                  mobileFontSize={128}
+                  delay={0.3}
+                  duration={2.5}
+                  inView={counterInView}
+                  className="tracking-tighter"
+                />
               </div>
               
-              {/* Second digit */}
-              <div className="relative h-32 w-16 md:h-40 md:w-20 lg:h-40 lg:w-20 overflow-hidden -ml-2">
-                <div 
-                  className="flex flex-col"
-                  style={{
-                    transform: `translateY(-${(count % 10) * 160}px)`,
-                  }}
-                >
-                  {/* Display 0-9 */}
-                  {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
-                    <div 
-                      key={num}
-                      className="text-8xl md:text-9xl lg:text-9xl font-bold text-[#bc9d6e] h-32 md:h-40 lg:h-40 flex items-center justify-center tabular-nums"
-                    >
-                      {num}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              
-              <span className="text-6xl md:text-7xl lg:text-7xl font-bold text-[#bc9d6e] ml-3 md:ml-4 lg:ml-4">
+              <span className="text-6xl md:text-7xl lg:text-7xl font-bold text-[#bc9d6e] ml-4 md:ml-6 pb-2">
                 gadi +
               </span>
             </div>
-            <p className="text-4xl md:text-6xl lg:text-6xl font-semibold text-neutral-600 mt-2 text-left">
+            <p className="text-4xl md:text-6xl lg:text-6xl font-semibold text-neutral-600 mt-1 text-left">
               Mežsaimniecībā
             </p>
           </div>

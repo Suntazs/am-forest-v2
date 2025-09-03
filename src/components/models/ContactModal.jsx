@@ -15,6 +15,7 @@ export default function ContactModal({ isOpen, onClose }) {
     setIsMounted(true);
   }, []);
 
+
   useEffect(() => {
     // Only apply styles if modal is actually open
     if (!isOpen) return;
@@ -22,24 +23,12 @@ export default function ContactModal({ isOpen, onClose }) {
     // Save current scroll position
     const scrollY = window.scrollY;
     
-    // Prevent scrolling on the body
-    document.body.style.position = 'fixed';
-    document.body.style.top = `-${scrollY}px`;
-    document.body.style.width = '100%';
-    document.body.style.overflow = 'hidden';
-    
     // Store scroll position to restore later
     document.body.dataset.scrollY = scrollY;
     
     return () => {
       // Restore scroll position
       const savedScrollY = document.body.dataset.scrollY || '0';
-      
-      // Remove styles
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      document.body.style.overflow = '';
       
       // Restore scroll position
       window.scrollTo(0, parseInt(savedScrollY));
@@ -76,9 +65,11 @@ export default function ContactModal({ isOpen, onClose }) {
     <>
       {/* Modal */}
       <div 
-        className={`fixed top-0 right-0 h-screen w-full md:w-[480px] lg:w-[550px] z-[9999] bg-[#faf6ed] transition-transform duration-700 ease-in-out ${
-          isOpen ? 'transform translate-x-0' : 'transform translate-x-full'
-        }`}
+        className="fixed top-0 right-0 h-screen w-full md:w-[480px] lg:w-[550px] z-[9999] bg-[#faf6ed] transition-transform duration-700 ease-in-out"
+        style={{
+          transform: !isMounted ? 'translateX(100%)' : (isOpen ? 'translateX(0)' : 'translateX(100%)'),
+          WebkitTransform: !isMounted ? 'translateX(100%)' : (isOpen ? 'translateX(0)' : 'translateX(100%)'),
+        }}
       >
         {/* Modal Content */}
         <div className="h-screen flex flex-col">
