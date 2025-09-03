@@ -2,12 +2,13 @@ import { useState, useEffect } from 'react';
 import Navbar from '../components/layout/navbar';
 import Footer from '../components/layout/footer';
 import LocomotiveScrollProvider from '../components/providers/locomotive-scroll-provider';
-import ProperPageTransition from '../components/ProperPageTransition';
+import SimplePageTransition from '../components/SimplePageTransition';
 import PageTransition from '../components/PageTransition';
 import ContactModal from '../components/models/ContactModal';
 import MenuModal from '../components/models/menu';
 import { ContactModalProvider, useContactModal } from '../contexts/ContactModalContext';
 import { MouseFollowerProvider } from '../contexts/MouseFollowerContext';
+import { PageTransitionProvider } from '../contexts/PageTransitionContext';
 import '../app/globals.css';
 
 function AppContent({ Component, pageProps }) {
@@ -41,11 +42,11 @@ function AppContent({ Component, pageProps }) {
   }, [isContactOpen, menuOpen]);
 
   return (
-    <>
+    <div className="min-h-screen bg-[#faf6ed]">
       <PageTransition>
-        <ProperPageTransition>
+        <SimplePageTransition>
           {/* Main wrapper with push effect matching modal width */}
-          <div className={`transition-transform duration-700 ease-in-out ${
+          <div className={`transition-transform duration-700 ease-in-out bg-[#faf6ed] ${
             isContactOpen ? 'transform -translate-x-full md:-translate-x-[480px] lg:-translate-x-[550px]' : 'transform translate-x-0'
           }`}>
             {/* Dark overlay with smooth fade in/out */}
@@ -66,7 +67,7 @@ function AppContent({ Component, pageProps }) {
               <Footer />
             </LocomotiveScrollProvider>
           </div>
-        </ProperPageTransition>
+        </SimplePageTransition>
       </PageTransition>
 
       {/* Menu Modal - outside transform so it doesn't move */}
@@ -77,16 +78,18 @@ function AppContent({ Component, pageProps }) {
         isOpen={isContactOpen} 
         onClose={closeContactModal} 
       />
-    </>
+    </div>
   );
 }
 
 export default function MyApp({ Component, pageProps }) {
   return (
-    <ContactModalProvider>
-      <MouseFollowerProvider>
-        <AppContent Component={Component} pageProps={pageProps} />
-      </MouseFollowerProvider>
-    </ContactModalProvider>
+    <PageTransitionProvider>
+      <ContactModalProvider>
+        <MouseFollowerProvider>
+          <AppContent Component={Component} pageProps={pageProps} />
+        </MouseFollowerProvider>
+      </ContactModalProvider>
+    </PageTransitionProvider>
   );
 }

@@ -59,7 +59,7 @@ export default function ImageLinks() {
       <div className="flex flex-col lg:flex-row px-6 md:px-12 lg:px-20 items-end relative">
         {/* Left side - Image */}
         <div className="w-full lg:w-5/12 mb-8 lg:mb-0 lg:pr-12">
-          <div className="relative h-[400px] lg:h-[700px] overflow-hidden rounded-2xl">
+          <div className="relative h-[400px] lg:h-[700px] overflow-hidden">
             <img 
               src={currentImage}
               alt="Forest"

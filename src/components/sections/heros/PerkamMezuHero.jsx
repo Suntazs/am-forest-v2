@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
 import { useContactModal } from '@/contexts/ContactModalContext';
+import { VideoWrapper } from '@/components/ui/AnimationWrapper';
 
 export default function PerkamMezuHero() {
   const { openContactModal } = useContactModal();
@@ -9,15 +10,14 @@ export default function PerkamMezuHero() {
     <section className="relative flex h-[700px] pt-20 ">
       {/* Left side - Video touching edge */}
       <div className="w-full lg:w-1/2 relative h-full">
-        <video
+        <VideoWrapper
+          src="/video/vid-bg-amforest(1).mp4"
           autoPlay
           loop
           muted
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
-        >
-          <source src="/video/vid-bg-amforest(1).mp4" type="video/mp4" />
-        </video>
+        />
       </div>
 
       {/* Right side - Content */}
@@ -39,15 +39,14 @@ export default function PerkamMezuHero() {
       <div className="lg:hidden absolute inset-0 flex flex-col">
         {/* Video background */}
         <div className="absolute inset-0">
-          <video
+          <VideoWrapper
+            src="/video/vid-bg-amforest(1).mp4"
             autoPlay
             loop
             muted
             playsInline
             className="w-full h-full object-cover opacity-50"
-          >
-            <source src="/video/vid-bg-amforest(1).mp4" type="video/mp4" />
-          </video>
+          />
         </div>
         
         {/* Content overlay */}

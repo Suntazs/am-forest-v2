@@ -1,7 +1,11 @@
 import { useContactModal } from '../contexts/ContactModalContext';
+import { usePageTransition } from '../contexts/PageTransitionContext';
+import { useEffect, useRef } from 'react';
 
 export default function ContactPage() {
   const { openContactModal } = useContactModal();
+  const { animationsEnabled } = usePageTransition();
+  const iframeRef = useRef(null);
 
   return (
     <div className="h-screen w-screen bg-[#faf6ed] flex pt-20">
@@ -9,10 +13,11 @@ export default function ContactPage() {
           {/* Left side - Google Maps */}
           <div className="w-full h-full">
             <iframe
+              ref={iframeRef}
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2178.5!2d21.9667!3d56.9667!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46fa4dce1b8b6f2d%3A0x0!2sĒdoles%20iela%2056%2C%20Kuldīga%2C%20LV-3301!5e0!3m2!1sen!2slv!4v1700000000000"
               width="100%"
               height="100%"
-              style={{ border: 0 }}
+              style={{ border: 0, opacity: animationsEnabled ? 1 : 0, transition: 'opacity 0.6s ease-out' }}
               allowFullScreen=""
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"

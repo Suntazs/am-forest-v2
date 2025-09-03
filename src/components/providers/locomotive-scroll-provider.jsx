@@ -1,10 +1,12 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { usePageTransition } from '../../contexts/PageTransitionContext';
 
 export default function LocomotiveScrollProvider({ children }) {
   const scrollRef = useRef(null);
   const locomotiveScrollRef = useRef(null);
   const [isReady, setIsReady] = useState(false);
+  const { isTransitioning, animationsEnabled } = usePageTransition();
 
   useEffect(() => {
     // Ensure we're on the client side
@@ -86,6 +88,22 @@ export default function LocomotiveScrollProvider({ children }) {
       }
     };
   }, [isReady]);
+
+  // Disable/enable locomotive scroll during transitions
+  useEffect(() => {
+    if (locomotiveScrollRef.current) {
+      if (isTransitioning) {
+        // Stop locomotive scroll during transition
+        locomotiveScrollRef.current.stop();
+      } else if (animationsEnabled) {
+        // Resume after transition completes
+        setTimeout(() => {
+          locomotiveScrollRef.current?.start();
+          locomotiveScrollRef.current?.update();
+        }, 100);
+      }
+    }
+  }, [isTransitioning, animationsEnabled]);
 
   return (
     <div data-scroll-container ref={scrollRef}>

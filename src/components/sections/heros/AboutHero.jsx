@@ -1,7 +1,40 @@
 "use client";
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { usePageTransition } from '@/contexts/PageTransitionContext';
 
 export default function AboutHero() {
+  const { animationsEnabled } = usePageTransition();
+  const flowerRef1 = useRef(null);
+  const flowerRef2 = useRef(null);
+  const curveRef = useRef(null);
+
+  useEffect(() => {
+    // Control animations based on transition state
+    if (flowerRef1.current) {
+      if (animationsEnabled) {
+        flowerRef1.current.style.animation = 'popIn 0.6s ease-out 0.3s both, spin 8s linear 0.9s infinite';
+      } else {
+        flowerRef1.current.style.animation = 'none';
+        flowerRef1.current.style.opacity = '0';
+      }
+    }
+    if (flowerRef2.current) {
+      if (animationsEnabled) {
+        flowerRef2.current.style.animation = 'popIn 0.6s ease-out 0.5s both, spin 8s linear 1.1s infinite reverse';
+      } else {
+        flowerRef2.current.style.animation = 'none';
+        flowerRef2.current.style.opacity = '0';
+      }
+    }
+    if (curveRef.current) {
+      if (animationsEnabled) {
+        curveRef.current.style.animation = 'drawLine 2.5s cubic-bezier(0.65, 0, 0.35, 1) 0.6s forwards';
+      } else {
+        curveRef.current.style.animation = 'none';
+        curveRef.current.style.strokeDashoffset = '1000';
+      }
+    }
+  }, [animationsEnabled]);
   return (
     <section className="relative bg-[#243c36] overflow-hidden">
       <div className="min-h-[600px] lg:min-h-screen flex items-center">
@@ -20,6 +53,7 @@ export default function AboutHero() {
                   viewBox="0 0 24 24" 
                   aria-hidden="true"
                   className="w-10 h-10 md:w-14 md:h-14 lg:w-16 lg:h-16 flower-icon"
+                  ref={flowerRef1}
                 >
                   <g clipPath="url(#a)">
                     <path 
@@ -44,6 +78,7 @@ export default function AboutHero() {
                   viewBox="0 0 24 24" 
                   aria-hidden="true"
                   className="w-10 h-10 md:w-14 md:h-14 lg:w-16 lg:h-16 flower-icon-alt"
+                  ref={flowerRef2}
                 >
                   <g clipPath="url(#b)">
                     <path 
@@ -88,6 +123,7 @@ export default function AboutHero() {
             stroke="#dbf6a3"
             strokeWidth="30"
             className="curve-path"
+            ref={curveRef}
           />
         </svg>
       </div>
@@ -129,15 +165,15 @@ export default function AboutHero() {
         .curve-path {
           stroke-dasharray: 1000;
           stroke-dashoffset: 1000;
-          animation: drawLine 2.5s cubic-bezier(0.65, 0, 0.35, 1) 0.6s forwards;
+          /* Animation controlled by JavaScript */
         }
 
         .flower-icon {
-          animation: popIn 0.6s ease-out 0.3s both, spin 8s linear 0.9s infinite;
+          /* Animation controlled by JavaScript */
         }
 
         .flower-icon-alt {
-          animation: popIn 0.6s ease-out 0.5s both, spin 8s linear 1.1s infinite reverse;
+          /* Animation controlled by JavaScript */
         }
       `}</style>
     </section>

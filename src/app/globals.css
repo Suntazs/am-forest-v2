@@ -2,7 +2,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
+  --background: #faf6ed;
   --foreground: #171717;
 }
 
@@ -13,8 +13,12 @@
   --font-mono: var(--font-geist-mono);
 }
 
+html {
+  background: #faf6ed;
+}
+
 body {
-  background: var(--background);
+  background: #faf6ed;
   color: var(--foreground);
   font-family: 'Helvetica Now Display', Helvetica, sans-serif;
 }

@@ -1,7 +1,32 @@
 "use client";
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import { VideoWrapper } from "@/components/ui/AnimationWrapper";
+import { usePageTransition } from "@/contexts/PageTransitionContext";
 
 export default function HomeHero() {
+  const { animationsEnabled } = usePageTransition();
+  const flowerRef = useRef(null);
+  const flowerRef2 = useRef(null);
+
+  useEffect(() => {
+    // Control flower animation based on transition state
+    if (flowerRef.current) {
+      if (animationsEnabled) {
+        flowerRef.current.style.animation = 'popIn 0.6s ease-out 0.3s both, spin 8s linear 0.9s infinite';
+      } else {
+        flowerRef.current.style.animation = 'none';
+        flowerRef.current.style.opacity = '0';
+      }
+    }
+    if (flowerRef2.current) {
+      if (animationsEnabled) {
+        flowerRef2.current.style.animation = 'popIn 0.6s ease-out 0.3s both, spin 8s linear 0.9s infinite';
+      } else {
+        flowerRef2.current.style.animation = 'none';
+        flowerRef2.current.style.opacity = '0';
+      }
+    }
+  }, [animationsEnabled]);
   return (
     <section className="relative bg-[#243c36] overflow-hidden">
       {/* Mobile Layout - Vertical */}
@@ -33,6 +58,7 @@ export default function HomeHero() {
                   viewBox="0 0 24 24" 
                   aria-hidden="true"
                   className="flower-svg"
+                  ref={flowerRef}
                 >
                   <g clipPath="url(#a)">
                     <path fill="#faf6ed" d="M15.2 20.8v-1.075l.76.76a3.2 3.2 0 1 0 4.525-4.525l-.76-.76H20.8a3.2 3.2 0 0 0 0-6.4h-1.075l.76-.76a3.2 3.2 0 1 0-4.525-4.525l-.76.76V3.2a3.2 3.2 0 0 0-6.4 0v1.075l-.76-.76A3.2 3.2 0 1 0 3.515 8.04l.76.76H3.2a3.2 3.2 0 0 0 0 6.4h1.075l-.76.76a3.2 3.2 0 0 0 4.525 4.525l.76-.76V20.8a3.2 3.2 0 0 0 6.4 0"></path>
@@ -50,7 +76,7 @@ export default function HomeHero() {
 
         {/* Video section */}
         <div className="relative h-[400px] md:h-[500px]">
-          <video 
+          <VideoWrapper 
             src="/video/vid-bg-amforest(1).mp4"
             autoPlay
             loop
@@ -78,7 +104,7 @@ export default function HomeHero() {
 
         {/* Right side - Video */}
         <div className="flex-1 relative">
-          <video 
+          <VideoWrapper 
             src="/video/vid-bg-amforest(1).mp4"
             autoPlay
             loop
@@ -108,6 +134,7 @@ export default function HomeHero() {
                 viewBox="0 0 24 24" 
                 aria-hidden="true"
                 className="flower-svg"
+                ref={flowerRef2}
               >
                 <g clipPath="url(#a)">
                   <path fill="#faf6ed" d="M15.2 20.8v-1.075l.76.76a3.2 3.2 0 1 0 4.525-4.525l-.76-.76H20.8a3.2 3.2 0 0 0 0-6.4h-1.075l.76-.76a3.2 3.2 0 1 0-4.525-4.525l-.76.76V3.2a3.2 3.2 0 0 0-6.4 0v1.075l-.76-.76A3.2 3.2 0 1 0 3.515 8.04l.76.76H3.2a3.2 3.2 0 0 0 0 6.4h1.075l-.76.76a3.2 3.2 0 0 0 4.525 4.525l.76-.76V20.8a3.2 3.2 0 0 0 6.4 0"></path>
@@ -148,7 +175,7 @@ export default function HomeHero() {
         }
 
         .flower-svg {
-          animation: popIn 0.6s ease-out 0.3s both, spin 8s linear 0.9s infinite;
+          /* Animation controlled by JavaScript */
         }
 
         .group:hover .flower-svg {

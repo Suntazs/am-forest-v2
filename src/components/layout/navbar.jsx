@@ -104,30 +104,30 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
       isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-95'
     }`}
     style={{ top: 0 }}>
-      <div className="mx-auto px-8 py-6">
+      <div className="w-full px-4 sm:px-6 md:px-8 py-4 md:py-6">
         <div className="flex items-center justify-between">
           {/* Left side - Logo, company name, and contact information */}
-          <div className="flex items-center gap-21">
+          <div className="flex items-center gap-4 md:gap-6 lg:gap-8 xl:gap-12">
             {/* Logo and company name */}
-            <div className="flex items-center gap-4">
-              <div className="w-14 h-14 bg-[#faf6ed] rounded-lg flex items-center justify-center">
+            <div className="flex items-center gap-2 md:gap-4">
+              <div className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-[#faf6ed] rounded-lg flex items-center justify-center flex-shrink-0">
                 {/* Logo placeholder */}
-                <span className="text-[#243c36] font-bold text-2xl">AM</span>
+                <span className="text-[#243c36] font-bold text-lg md:text-xl lg:text-2xl">AM</span>
               </div>
-              <div className="text-neutral-200 font-semibold text-2xl">
+              <div className="text-neutral-200 font-semibold text-lg md:text-xl lg:text-2xl whitespace-nowrap">
                 AM Forest
               </div>
             </div>
 
-            {/* Contact links */}
-            <div className="hidden md:flex items-center gap-8">
+            {/* Contact links - responsive sizing */}
+            <div className="hidden lg:flex items-center gap-4 xl:gap-6 2xl:gap-8">
               {/* Email */}
               <a 
                 href="mailto:info@amforest.lv" 
-                className="flex items-center gap-2 text-neutral-200 hover:text-[#dbf6a3] transition-colors"
+                className="flex items-center gap-1.5 md:gap-2 text-neutral-200 hover:text-[#dbf6a3] transition-colors"
               >
                 <svg 
-                  className="w-4 h-4" 
+                  className="w-3.5 h-3.5 lg:w-4 lg:h-4 flex-shrink-0" 
                   fill="none" 
                   stroke="currentColor" 
                   viewBox="0 0 24 24"
@@ -139,16 +139,16 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
                     d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" 
                   />
                 </svg>
-                <span className="text-lg">info@amforest.lv</span>
+                <span className="text-sm lg:text-base xl:text-lg whitespace-nowrap">info@amforest.lv</span>
               </a>
 
               {/* Phone */}
               <a 
                 href="tel:+37129123456" 
-                className="flex items-center gap-2 text-neutral-200 hover:text-[#dbf6a3] transition-colors"
+                className="flex items-center gap-1.5 md:gap-2 text-neutral-200 hover:text-[#dbf6a3] transition-colors"
               >
                 <svg 
-                  className="w-4 h-4" 
+                  className="w-3.5 h-3.5 lg:w-4 lg:h-4 flex-shrink-0" 
                   fill="none" 
                   stroke="currentColor" 
                   viewBox="0 0 24 24"
@@ -160,7 +160,7 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
                     d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" 
                   />
                 </svg>
-                <span className="text-lg">+371 29 123 456</span>
+                <span className="text-sm lg:text-base xl:text-lg whitespace-nowrap">+371 29 123 456</span>
               </a>
 
               {/* Address */}
@@ -168,10 +168,10 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
                 href="https://maps.google.com/?q=Riga,Latvia" 
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2  text-neutral-200 hover:text-[#dbf6a3] transition-colors"
+                className="flex items-center gap-1.5 md:gap-2 text-neutral-200 hover:text-[#dbf6a3] transition-colors"
               >
                 <svg 
-                  className="w-4 h-4" 
+                  className="w-3.5 h-3.5 lg:w-4 lg:h-4 flex-shrink-0" 
                   fill="none" 
                   stroke="currentColor" 
                   viewBox="0 0 24 24"
@@ -189,7 +189,7 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" 
                   />
                 </svg>
-                <span className="text-lg">Riga, Latvia</span>
+                <span className="text-sm lg:text-base xl:text-lg whitespace-nowrap">Riga, Latvia</span>
               </a>
             </div>
           </div>

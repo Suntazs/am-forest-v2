@@ -4,28 +4,35 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export default function PageTransition({ children }) {
   const [animationPhase, setAnimationPhase] = useState('waiting');
-  const [showOverlay, setShowOverlay] = useState(true);
-  const [contentVisible, setContentVisible] = useState(false);
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [contentVisible, setContentVisible] = useState(true);
   const [textWidth, setTextWidth] = useState(0);
-  const [isReady, setIsReady] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const textRef = useRef(null);
 
   useEffect(() => {
-    // Measure text width when component mounts
-    if (textRef.current) {
-      const width = textRef.current.offsetWidth;
-      setTextWidth(width);
-      setIsReady(true);
-    }
+    setMounted(true);
   }, []);
 
   useEffect(() => {
+    if (!mounted) return;
+    
     // Check if this is the first visit
     const hasVisited = sessionStorage.getItem('hasVisited');
     
-    if (!hasVisited && isReady) {
+    if (!hasVisited) {
       // First visit - show the full animation
       sessionStorage.setItem('hasVisited', 'true');
+      setShowOverlay(true);
+      setContentVisible(false);
+      
+      // Measure text width after a short delay to ensure DOM is ready
+      setTimeout(() => {
+        if (textRef.current) {
+          const width = textRef.current.offsetWidth;
+          setTextWidth(width);
+        }
+      }, 50);
       
       // Start with initial state (logo already on right)
       setAnimationPhase('initial');
@@ -45,25 +52,25 @@ export default function PageTransition({ children }) {
         setShowOverlay(false);
         setContentVisible(true);
       }, 5500);
-    } else if (hasVisited) {
+    } else {
       // Not first visit - immediately show content
       setShowOverlay(false);
       setContentVisible(true);
     }
-  }, [isReady]);
+  }, [mounted]);
 
   return (
     <>
       {/* Main content - always rendered but pointer-events disabled during animation */}
       <div style={{ 
-        pointerEvents: contentVisible ? 'auto' : 'none'
+        pointerEvents: mounted && !contentVisible ? 'none' : 'auto'
       }}>
         {children}
       </div>
 
       {/* Overlay - shows for full animation */}
       <AnimatePresence mode="wait">
-        {showOverlay && (
+        {mounted && showOverlay && (
           <motion.div
             className="fixed inset-0 z-[100] bg-gray-100 flex items-center justify-center"
             initial={{ y: '0%' }}
