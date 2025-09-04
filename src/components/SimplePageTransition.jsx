@@ -1,6 +1,6 @@
 "use client";
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePageTransition } from '../contexts/PageTransitionContext';
 
@@ -8,6 +8,8 @@ export default function SimplePageTransition({ children }) {
   const pathname = usePathname();
   const router = useRouter();
   const [showOverlay, setShowOverlay] = useState(false);
+  const [pageLoaded, setPageLoaded] = useState(true);
+  const previousPathname = useRef(pathname);
   const context = usePageTransition();
   const setGlobalTransitioning = context?.setIsTransitioning || (() => {});
   const setAnimationsEnabled = context?.setAnimationsEnabled || (() => {});
@@ -24,34 +26,62 @@ export default function SimplePageTransition({ children }) {
       // Prevent default navigation
       e.preventDefault();
       
-      // Show overlay
+      // Show overlay and mark page as loading
       setShowOverlay(true);
+      setPageLoaded(false);
       setGlobalTransitioning(true);
       setAnimationsEnabled(false);
       
-      // Navigate after a short delay
+      // Navigate after a short delay for fade in
       setTimeout(() => {
         router.push(href);
-      }, 400);
+      }, 200);
     };
 
     document.addEventListener('click', handleClick, true);
     return () => document.removeEventListener('click', handleClick, true);
   }, [pathname, router, setGlobalTransitioning, setAnimationsEnabled]);
 
-  // Hide overlay when pathname changes (navigation complete)
+  // Detect when pathname changes (navigation happened)
   useEffect(() => {
-    if (showOverlay) {
-      // Give time for new page to render
-      const timer = setTimeout(() => {
-        setShowOverlay(false);
-        setGlobalTransitioning(false);
-        setAnimationsEnabled(true);
-      }, 600);
+    if (pathname !== previousPathname.current) {
+      previousPathname.current = pathname;
       
-      return () => clearTimeout(timer);
+      // Scroll to top when page changes
+      window.scrollTo(0, 0);
+      
+      // Page has navigated, wait for it to load
+      if (showOverlay && !pageLoaded) {
+        // Check if page is ready
+        const checkPageReady = () => {
+          // Wait for next frame and all images to load
+          requestAnimationFrame(() => {
+            const images = document.querySelectorAll('img');
+            const imagePromises = Array.from(images).map(img => {
+              if (img.complete) return Promise.resolve();
+              return new Promise(resolve => {
+                img.addEventListener('load', resolve, { once: true });
+                img.addEventListener('error', resolve, { once: true });
+              });
+            });
+            
+            Promise.all(imagePromises).then(() => {
+              // Add small delay to ensure everything is rendered
+              setTimeout(() => {
+                setPageLoaded(true);
+                setShowOverlay(false);
+                setGlobalTransitioning(false);
+                setAnimationsEnabled(true);
+              }, 100);
+            });
+          });
+        };
+        
+        // Start checking after a minimum time
+        setTimeout(checkPageReady, 300);
+      }
     }
-  }, [pathname, showOverlay, setGlobalTransitioning, setAnimationsEnabled]);
+  }, [pathname, showOverlay, pageLoaded, setGlobalTransitioning, setAnimationsEnabled]);
 
   // Lock scroll during transition
   useEffect(() => {
@@ -77,7 +107,10 @@ export default function SimplePageTransition({ children }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.5, ease: 'easeInOut' }}
+            transition={{ 
+              duration: 0.2, 
+              ease: 'easeOut'
+            }}
           />
         )}
       </AnimatePresence>

@@ -15,6 +15,13 @@ function AppContent({ Component, pageProps }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const { isContactOpen, closeContactModal } = useContactModal();
 
+  // Disable browser scroll restoration
+  useEffect(() => {
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+  }, []);
+
   // Prevent scrolling ONLY when contact modal is open (not menu)
   useEffect(() => {
     if (isContactOpen && !menuOpen) {
@@ -52,7 +59,7 @@ function AppContent({ Component, pageProps }) {
   }, [isContactOpen, menuOpen]);
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: '#1a1a1a' }}>
+    <div className="min-h-screen overflow-x-hidden" style={{ backgroundColor: '#faf6ed' }}>
       <PageTransition>
         <SimplePageTransition>
           {/* Main wrapper with push effect matching modal width */}

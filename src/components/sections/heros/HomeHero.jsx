@@ -35,7 +35,7 @@ export default function HomeHero() {
         <div className="px-6 md:px-12 py-20 md:py-32">
           <div className="max-w-5xl">
             <h1 className="text-4xl md:text-5xl font-bold text-[#dbf6a3] leading-tight">
-              See beyond that of limits, because that each field tells the story a History single
+            AM Forest profesionāla pieeja katram meža īpašniekam, katram hektāram.
             </h1>
           </div>
         </div>

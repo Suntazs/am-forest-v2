@@ -7,6 +7,7 @@ export default function MenuModal({ isOpen, onClose }) {
   const [hasBeenOpened, setHasBeenOpened] = useState(false);
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [isHovering, setIsHovering] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
   
   const handleMouseLeave = () => {
     setIsHovering(false);
@@ -30,11 +31,17 @@ export default function MenuModal({ isOpen, onClose }) {
   useEffect(() => {
     if (isOpen && !hasBeenOpened) {
       setHasBeenOpened(true);
+      // Start with closed state, then animate open
+      setTimeout(() => setIsAnimating(true), 50);
+    } else if (isOpen) {
+      setIsAnimating(true);
+    } else {
+      setIsAnimating(false);
     }
   }, [isOpen, hasBeenOpened]);
 
 
-  // Don't render anything until mounted to prevent flash
+  // Don't render anything until mounted and has been opened at least once
   if (!isMounted || !hasBeenOpened) return null;
 
   return (
@@ -42,7 +49,7 @@ export default function MenuModal({ isOpen, onClose }) {
       {/* Backdrop */}
       <div 
         className={`fixed inset-0 bg-black/30 z-[10001] transition-opacity duration-600 ${
-          isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+          isAnimating ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         onClick={onClose}
       />
@@ -50,7 +57,7 @@ export default function MenuModal({ isOpen, onClose }) {
       {/* Modal */}
       <div 
         className={`fixed bottom-0 left-0 right-0 z-[10002] h-auto sm:min-h-[500px] ${
-          isOpen ? 'menu-reveal-open' : 'menu-reveal-closed'
+          isAnimating ? 'menu-reveal-open' : 'menu-reveal-closed'
         }`}
         style={{
           transformOrigin: 'bottom right'
@@ -61,7 +68,7 @@ export default function MenuModal({ isOpen, onClose }) {
         
         {/* Black line at top - full width on desktop, shows on mobile too */}
         <div className={`absolute top-0 left-0 w-full h-[2px] bg-neutral-900 z-10 transition-opacity duration-1100 ${
-          isOpen ? 'opacity-100' : 'opacity-0'
+          isAnimating ? 'opacity-100' : 'opacity-0'
         }`}></div>
         
         {/* Menu Content */}

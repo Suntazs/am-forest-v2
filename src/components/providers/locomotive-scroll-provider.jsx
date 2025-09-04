@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { usePathname } from 'next/navigation';
 import { usePageTransition } from '../../contexts/PageTransitionContext';
 
 export default function LocomotiveScrollProvider({ children }) {
@@ -7,6 +8,7 @@ export default function LocomotiveScrollProvider({ children }) {
   const locomotiveScrollRef = useRef(null);
   const [isReady, setIsReady] = useState(false);
   const { isTransitioning, animationsEnabled } = usePageTransition();
+  const pathname = usePathname();
 
   useEffect(() => {
     // Ensure we're on the client side
@@ -104,6 +106,19 @@ export default function LocomotiveScrollProvider({ children }) {
       }
     }
   }, [isTransitioning, animationsEnabled]);
+
+  // Reset scroll position when pathname changes
+  useEffect(() => {
+    // Reset both window scroll and locomotive scroll
+    window.scrollTo(0, 0);
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+    
+    if (locomotiveScrollRef.current) {
+      locomotiveScrollRef.current.scrollTo(0, { duration: 0, disableLerp: true });
+      locomotiveScrollRef.current.update();
+    }
+  }, [pathname]);
 
   return (
     <div data-scroll-container ref={scrollRef}>

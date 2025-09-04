@@ -8,11 +8,37 @@ export default function PageTransition({ children }) {
   const [contentVisible, setContentVisible] = useState(true);
   const [textWidth, setTextWidth] = useState(0);
   const [mounted, setMounted] = useState(false);
+  const [pageFullyLoaded, setPageFullyLoaded] = useState(false);
+  const [stage1Complete, setStage1Complete] = useState(false);
   const textRef = useRef(null);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Only prevent scrolling when overlay is showing
+  useEffect(() => {
+    if (showOverlay) {
+      // Create and inject styles to hide scrollbars during animation
+      const style = document.createElement('style');
+      style.innerHTML = `
+        body, html {
+          overflow: hidden !important;
+          position: fixed !important;
+          width: 100% !important;
+        }
+      `;
+      style.id = 'page-transition-no-scroll';
+      document.head.appendChild(style);
+      
+      return () => {
+        const styleEl = document.getElementById('page-transition-no-scroll');
+        if (styleEl) {
+          document.head.removeChild(styleEl);
+        }
+      };
+    }
+  }, [showOverlay]);
 
   useEffect(() => {
     if (!mounted) return;
@@ -37,27 +63,84 @@ export default function PageTransition({ children }) {
       // Start with initial state (logo already on right)
       setAnimationPhase('initial');
       
-      // Phase 2: After 1.5s delay, start sliding overlay and logo to the left
+      // STAGE 1: After 1.5s delay, start text reveal animation
       setTimeout(() => {
         setAnimationPhase('revealText');
       }, 1500);
       
-      // Phase 3: Slide everything up after 4.5 seconds total
+      // Mark stage 1 complete after text reveal finishes
       setTimeout(() => {
-        setAnimationPhase('slideUp');
-      }, 4500);
-      
-      // Phase 4: Hide overlay and show page content
-      setTimeout(() => {
-        setShowOverlay(false);
-        setContentVisible(true);
-      }, 5500);
+        setStage1Complete(true);
+      }, 4000);
     } else {
       // Not first visit - immediately show content
       setShowOverlay(false);
       setContentVisible(true);
     }
   }, [mounted]);
+
+  // Detect when page is fully loaded
+  useEffect(() => {
+    if (!mounted || !stage1Complete) return;
+
+    const checkPageLoad = () => {
+      // Check if all images are loaded
+      const images = document.querySelectorAll('img');
+      const imagePromises = Array.from(images).map(img => {
+        if (img.complete) return Promise.resolve();
+        return new Promise(resolve => {
+          img.addEventListener('load', resolve, { once: true });
+          img.addEventListener('error', resolve, { once: true });
+        });
+      });
+
+      // Check if all videos are loaded
+      const videos = document.querySelectorAll('video');
+      const videoPromises = Array.from(videos).map(video => {
+        if (video.readyState >= 3) return Promise.resolve();
+        return new Promise(resolve => {
+          video.addEventListener('loadeddata', resolve, { once: true });
+          video.addEventListener('error', resolve, { once: true });
+        });
+      });
+
+      // Wait for all media to load
+      Promise.all([...imagePromises, ...videoPromises]).then(() => {
+        setPageFullyLoaded(true);
+      });
+    };
+
+    // Also listen for window load as backup
+    if (document.readyState === 'complete') {
+      checkPageLoad();
+    } else {
+      window.addEventListener('load', checkPageLoad);
+      checkPageLoad(); // Also check immediately
+    }
+
+    return () => {
+      window.removeEventListener('load', checkPageLoad);
+    };
+  }, [mounted, stage1Complete]);
+
+  // STAGE 2: Start slide-up animation when page is fully loaded and stage 1 is complete
+  useEffect(() => {
+    if (stage1Complete && pageFullyLoaded) {
+      // Small delay before starting stage 2
+      setTimeout(() => {
+        setAnimationPhase('slideUp');
+      }, 300);
+      
+      // Hide overlay and show page content after slide-up completes
+      setTimeout(() => {
+        setShowOverlay(false);
+        setContentVisible(true);
+        // Force cleanup on mobile
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+      }, 2100);
+    }
+  }, [stage1Complete, pageFullyLoaded]);
 
   return (
     <>
@@ -73,33 +156,35 @@ export default function PageTransition({ children }) {
         {mounted && showOverlay && (
           <motion.div
             className="fixed inset-0 z-[100] bg-gray-100 flex items-center justify-center"
+            style={{ overflow: 'hidden', maxWidth: '100vw' }}
             initial={{ y: '0%' }}
             animate={{ 
-              y: animationPhase === 'slideUp' ? '-100%' : '0%'
+              y: animationPhase === 'slideUp' ? '-120%' : '0%'
             }}
             transition={{ 
-              duration: 1.0, 
-              ease: [0.43, 0.13, 0.23, 0.96]
+              duration: 1.8, 
+              ease: [0.6, 0.0, 0.4, 1]
             }}
           >
-            {/* Container for centering content with overflow hidden for slideUp */}
-            <div className={`relative ${animationPhase === 'slideUp' ? 'overflow-hidden' : ''}`}>
+            {/* Container for centering content with overflow hidden */}
+            <div className="relative overflow-hidden w-full max-w-full flex items-center justify-center">
               {/* Container for text sliding up */}
               <motion.div
+                className="relative"
                 initial={{ y: '0%' }}
                 animate={{ 
-                  y: animationPhase === 'slideUp' ? '-150%' : '0%'
+                  y: animationPhase === 'slideUp' ? '-250%' : '0%'
                 }}
                 transition={{
-                  duration: 0.8,
-                  ease: [0.43, 0.13, 0.23, 0.96]
+                  duration: 1.5,
+                  ease: [0.6, 0.0, 0.4, 1]
                 }}
               >
                   {/* Container for logo and text */}
                   <div className="relative flex items-center gap-4">
                     {/* Logo - starts at right position immediately */}
                     <motion.div 
-                      className="bg-[#243c36] w-20 h-20 md:w-24 md:h-24 rounded-lg flex items-center justify-center z-20"
+                      className="bg-[#243c36] w-16 h-16 md:w-24 md:h-24 rounded-lg flex items-center justify-center z-20"
                       initial={{ 
                         x: textWidth > 0 ? `${textWidth + 20}px` : 0
                       }}
@@ -108,38 +193,44 @@ export default function PageTransition({ children }) {
                            textWidth > 0 ? `${textWidth + 20}px` : 0
                       }}
                       transition={{ 
-                        duration: 1.2,
-                        ease: [0.43, 0.13, 0.23, 0.96]
+                        duration: 1.5,
+                        ease: [0.4, 0.0, 0.2, 1]
                       }}
                     >
-                      <span className="text-[#faf6ed] font-bold text-2xl md:text-3xl">AM</span>
+                      <span className="text-[#faf6ed] font-bold text-xl md:text-3xl">AM</span>
                     </motion.div>
                     
                     {/* Text */}
                     <h1 
                       ref={textRef}
-                      className="text-4xl md:text-6xl lg:text-7xl font-bold text-[#243c36] whitespace-nowrap"
+                      className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#243c36] whitespace-nowrap opacity-0"
+                      style={{ 
+                        opacity: animationPhase === 'initial' ? 0 : 1,
+                        transition: 'opacity 0.3s'
+                      }}
                     >
                       AM Forest
                     </h1>
                     
                     {/* Overlay that covers the text initially, slides left */}
                     <motion.div 
-                      className="absolute bg-gray-100 z-10"
+                      className="absolute bg-gray-100 z-10 pointer-events-none"
                       style={{
                         top: '-10px',
                         bottom: '-10px',
                         left: '104px',
-                        right: '-20px'
+                        right: '-300px',
+                        width: 'calc(100% + 500px)'
                       }}
                       initial={{ x: '0%' }}
                       animate={{ 
                         x: animationPhase === 'revealText' || animationPhase === 'slideUp' ? 
-                          '-100%' : '0%'
+                          '-130%' : '0%'
                       }}
                       transition={{ 
-                        duration: 1.2,
-                        ease: [0.43, 0.13, 0.23, 0.96]
+                        duration: 2.5,
+                        ease: [0.4, 0.0, 0.4, 1],
+                        delay: typeof window !== 'undefined' && window.innerWidth < 768 ? -0.86 : -0.78
                       }}
                     />
                   </div>

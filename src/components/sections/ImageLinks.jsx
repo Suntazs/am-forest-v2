@@ -6,26 +6,27 @@ import Link from "next/link";
 export default function ImageLinks() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [isInView, setIsInView] = useState(false);
-  const lineRef = useRef(null);
+  const mobileLineRef = useRef(null);
+  const desktopLineRef = useRef(null);
 
   const links = [
     {
-      title: "Meža apsaimniekošana",
+      title: "Kapēc jauzkopj mežs?",
       href: "/services/forest-management",
       image: "/image/beautiful-shot-forest-with-sunlight.png"
     },
     {
-      title: "Kokmateriālu tirdzniecība",
+      title: "Kā pārdot mežu?",
       href: "/services/timber-trade",
       image: "/image/beautiful-shot-forest-with-sunlight.png"
     },
     {
-      title: "Konsultācijas",
+      title: "Kad ir īstais laiks cirst mežu?",
       href: "/services/consulting",
       image: "/image/beautiful-shot-forest-with-sunlight.png"
     },
     {
-      title: "Meža atjaunošana",
+      title: "Kas jāzina pirms meža izciršanas?",
       href: "/services/reforestation",
       image: "/image/beautiful-shot-forest-with-sunlight.png"
     }
@@ -34,22 +35,33 @@ export default function ImageLinks() {
   const currentImage = hoveredIndex !== null ? links[hoveredIndex].image : "/image/beautiful-shot-forest-with-sunlight.png";
 
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+    
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsInView(true);
         }
       },
-      { threshold: 0.5 }
+      { threshold: 0.1 }
     );
 
-    if (lineRef.current) {
-      observer.observe(lineRef.current);
+    const mobileElement = mobileLineRef.current;
+    const desktopElement = desktopLineRef.current;
+    
+    if (mobileElement) {
+      observer.observe(mobileElement);
+    }
+    if (desktopElement) {
+      observer.observe(desktopElement);
     }
 
     return () => {
-      if (lineRef.current) {
-        observer.unobserve(lineRef.current);
+      if (mobileElement) {
+        observer.unobserve(mobileElement);
+      }
+      if (desktopElement) {
+        observer.unobserve(desktopElement);
       }
     };
   }, []);
@@ -58,7 +70,7 @@ export default function ImageLinks() {
     <section className="relative py-16 md:py-24 lg:py-30 bg-[#faf6ed] overflow-visible">
       <div className="flex flex-col lg:flex-row px-6 md:px-12 lg:px-20 items-end relative">
         {/* Left side - Image */}
-        <div className="w-full lg:w-5/12 mb-8 lg:mb-0 lg:pr-12">
+        <div className="w-full lg:w-5/12 mb-4 lg:mb-0 lg:pr-12">
           <div className="relative h-[400px] lg:h-[700px] overflow-hidden">
             <img 
               src={currentImage}
@@ -71,18 +83,69 @@ export default function ImageLinks() {
           </div>
         </div>
 
+        {/* Wavy line separator - mobile only */}
+        <div ref={mobileLineRef} className="lg:hidden -mx-6 my-4" style={{ width: 'calc(100% + 3rem)' }}>
+          <div className="relative w-full">
+              <svg className="w-full" height="80" viewBox="0 0 1000 80" preserveAspectRatio="none">
+                <defs>
+                  <mask id="waveMaskMobile">
+                    <rect x={isInView ? "0" : "1000"} y="0" width="1000" height="80" fill="white">
+                      {isInView && (
+                        <animate 
+                          attributeName="x" 
+                          from="1000" 
+                          to="0" 
+                          dur="2s" 
+                          fill="freeze"
+                          begin="0s"
+                        />
+                      )}
+                    </rect>
+                  </mask>
+                </defs>
+                <path 
+                  d="M 0,15
+                     L 100,15
+                     C 150,15 150,5 200,5
+                     C 250,5 250,25 300,25
+                     C 350,25 350,5 400,5
+                     C 450,5 450,25 500,25
+                     C 550,25 550,5 600,5
+                     C 650,5 650,25 700,25
+                     C 750,25 750,5 800,5
+                     C 850,5 850,15 900,15
+                     L 1000,15
+                     L 1000,65
+                     L 900,65
+                     C 850,65 850,55 800,55
+                     C 750,55 750,75 700,75
+                     C 650,75 650,55 600,55
+                     C 550,55 550,75 500,75
+                     C 450,75 450,55 400,55
+                     C 350,55 350,75 300,75
+                     C 250,75 250,55 200,55
+                     C 150,55 150,65 100,65
+                     L 0,65
+                     Z" 
+                  fill="#243c36"
+                  mask="url(#waveMaskMobile)"
+                />
+              </svg>
+          </div>
+        </div>
+
         {/* Right side - Links */}
         <div className="w-full lg:w-7/12 relative">
-          {/* Top line above links - desktop only, centered between section top and links */}
-          <div ref={lineRef} className="hidden lg:block absolute -left-12 -right-20" style={{ 
-            width: 'calc(100% + 8rem)', 
-            top: '-280px',
-            transform: 'translateY(50%)'
-          }}>
+          {/* Top line above links - desktop only */}
+          <div ref={desktopLineRef} className="hidden lg:block absolute -left-12 -right-20" style={{ 
+              width: 'calc(100% + 8rem)', 
+              top: '-280px',
+              transform: 'translateY(50%)'
+            }}>
             <svg className="w-full" height="120" viewBox="0 0 1000 120" preserveAspectRatio="none">
               <defs>
                 <mask id="waveMask">
-                  <rect x="0" y="0" width="1000" height="120" fill="white">
+                  <rect x={isInView ? "0" : "1000"} y="0" width="1000" height="120" fill="white">
                     {isInView && (
                       <animate 
                         attributeName="x" 
@@ -127,7 +190,7 @@ export default function ImageLinks() {
               />
             </svg>
           </div>
-          <div className="border-t lg:border-t-0 border-b border-neutral-300">
+          <div className="border-t lg:border-t-0 border-b border-neutral-300 -mx-6 md:mx-0">
             {links.map((link, index) => (
               <div key={index}>
                 <Link href={link.href}>
@@ -145,7 +208,7 @@ export default function ImageLinks() {
                     />
                     
                     {/* Content */}
-                    <div className="relative z-10 flex items-center justify-between px-6 py-5">
+                    <div className="relative z-10 flex items-center justify-between px-6 md:px-6 lg:px-6 py-5">
                       <div className="flex-1">
                         <h3 className={`text-2xl md:text-3xl lg:text-4xl font-bold transition-colors duration-300 ${
                           hoveredIndex === index ? 'text-white' : 'text-neutral-700'
