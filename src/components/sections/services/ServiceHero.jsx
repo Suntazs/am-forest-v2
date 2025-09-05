@@ -1,12 +1,13 @@
 "use client";
 import React from 'react';
-
+import SplitText from '@/components/anim/split-text';
 const ServiceHero = ({ title, description }) => {
   return (
     <section className="relative bg-[#243c36] overflow-hidden">
       <div className="min-h-[500px] lg:min-h-[600px] flex items-center">
         <div className="px-6 md:px-12 lg:px-20 pt-32 pb-20 md:py-32 w-full">
           <div className="max-w-5xl">
+
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-[#faf6ed] leading-tight mb-6">
               {title}
             </h1>
