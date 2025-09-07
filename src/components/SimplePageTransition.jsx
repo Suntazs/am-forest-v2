@@ -13,6 +13,7 @@ export default function SimplePageTransition({ children }) {
   const context = usePageTransition();
   const setGlobalTransitioning = context?.setIsTransitioning || (() => {});
   const setAnimationsEnabled = context?.setAnimationsEnabled || (() => {});
+  const setTransitionComplete = context?.setTransitionComplete || (() => {});
 
   // Intercept navigation
   useEffect(() => {
@@ -31,6 +32,7 @@ export default function SimplePageTransition({ children }) {
       setPageLoaded(false);
       setGlobalTransitioning(true);
       setAnimationsEnabled(false);
+      setTransitionComplete(false);
       
       // Navigate after a short delay for fade in
       setTimeout(() => {
@@ -40,7 +42,7 @@ export default function SimplePageTransition({ children }) {
 
     document.addEventListener('click', handleClick, true);
     return () => document.removeEventListener('click', handleClick, true);
-  }, [pathname, router, setGlobalTransitioning, setAnimationsEnabled]);
+  }, [pathname, router, setGlobalTransitioning, setAnimationsEnabled, setTransitionComplete]);
 
   // Detect when pathname changes (navigation happened)
   useEffect(() => {
@@ -72,6 +74,10 @@ export default function SimplePageTransition({ children }) {
                 setShowOverlay(false);
                 setGlobalTransitioning(false);
                 setAnimationsEnabled(true);
+                // Mark transition complete after the fade out animation (200ms)
+                setTimeout(() => {
+                  setTransitionComplete(true);
+                }, 200);
               }, 100);
             });
           });
@@ -81,7 +87,7 @@ export default function SimplePageTransition({ children }) {
         setTimeout(checkPageReady, 300);
       }
     }
-  }, [pathname, showOverlay, pageLoaded, setGlobalTransitioning, setAnimationsEnabled]);
+  }, [pathname, showOverlay, pageLoaded, setGlobalTransitioning, setAnimationsEnabled, setTransitionComplete]);
 
   // Lock scroll during transition
   useEffect(() => {

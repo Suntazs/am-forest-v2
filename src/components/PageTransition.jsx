@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { usePageTransition } from '../contexts/PageTransitionContext';
 
 export default function PageTransition({ children }) {
   const [animationPhase, setAnimationPhase] = useState('waiting');
@@ -11,6 +12,7 @@ export default function PageTransition({ children }) {
   const [pageFullyLoaded, setPageFullyLoaded] = useState(false);
   const [stage1Complete, setStage1Complete] = useState(false);
   const textRef = useRef(null);
+  const { setTransitionComplete } = usePageTransition();
 
   useEffect(() => {
     setMounted(true);
@@ -76,8 +78,10 @@ export default function PageTransition({ children }) {
       // Not first visit - immediately show content
       setShowOverlay(false);
       setContentVisible(true);
+      // Mark transition as complete immediately if not showing animation
+      setTransitionComplete(true);
     }
-  }, [mounted]);
+  }, [mounted, setTransitionComplete]);
 
   // Detect when page is fully loaded
   useEffect(() => {
@@ -138,9 +142,11 @@ export default function PageTransition({ children }) {
         // Force cleanup on mobile
         document.body.style.overflow = '';
         document.documentElement.style.overflow = '';
+        // Mark the initial transition as complete so animations can start
+        setTransitionComplete(true);
       }, 2100);
     }
-  }, [stage1Complete, pageFullyLoaded]);
+  }, [stage1Complete, pageFullyLoaded, setTransitionComplete]);
 
   return (
     <>

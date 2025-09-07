@@ -14,7 +14,7 @@ export default function ProperPageTransition({ children }) {
   const previousChildren = useRef(children);
   const previousPath = useRef(pathname);
   const scrollPositionRef = useRef(0);
-  const { setIsTransitioning: setGlobalTransitioning, setAnimationsEnabled } = usePageTransition();
+  const { setIsTransitioning: setGlobalTransitioning, setAnimationsEnabled, setTransitionComplete } = usePageTransition();
 
   // Update previous children when path matches and not transitioning
   useEffect(() => {
@@ -58,6 +58,7 @@ export default function ProperPageTransition({ children }) {
       setIsTransitioning(true);
       setGlobalTransitioning(true);
       setAnimationsEnabled(false);
+      setTransitionComplete(false);
       setNewPageReady(false);
       
       // Navigate immediately to start loading the new page
@@ -82,12 +83,13 @@ export default function ProperPageTransition({ children }) {
         // Re-enable animations after transition completes
         setTimeout(() => {
           setAnimationsEnabled(true);
+          setTransitionComplete(true);
         }, 100);
       }, 1200); // Duration of the slide animation
       
       return () => clearTimeout(timer);
     }
-  }, [newPageReady, setGlobalTransitioning, setAnimationsEnabled]);
+  }, [newPageReady, setGlobalTransitioning, setAnimationsEnabled, setTransitionComplete]);
 
   // Prevent ALL scrolling during transition
   useEffect(() => {
