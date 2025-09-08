@@ -2,7 +2,6 @@
 import React, { useEffect, useRef } from "react";
 import { VideoWrapper } from "@/components/ui/AnimationWrapper";
 import { usePageTransition } from "@/contexts/PageTransitionContext";
-import SplitText from "@/components/anim/split-text"
 export default function HomeHero() {
   const { animationsEnabled } = usePageTransition();
   const flowerRef = useRef(null);
@@ -34,20 +33,9 @@ export default function HomeHero() {
         {/* Text content section */}
         <div className="px-6 md:px-12 py-20 md:py-32">
           <div className="max-w-5xl">
-            <SplitText
-            text="AM Forest profesionāla pieeja katram meža īpašniekam, katram hektāram."
-            className="text-4xl md:text-5xl font-bold text-[#dbf6a3] leading-tight"         
-            delay={40}          
-            duration={1}          
-            ease="power3.out"          
-            splitType="words"          
-            from={{ opacity: 0, y: 40 }}      
-            to={{ opacity: 1, y: 0 }}
-            threshold={0.1}
-            rootMargin="-100px"
-            textAlign="start"
-            tag="h1"
-            />
+            <h1 className="text-4xl md:text-5xl font-bold text-[#dbf6a3] leading-tight">
+            AM Forest profesionāla pieeja katram meža īpašniekam, katram hektāram.
+            </h1>
           </div>
         </div>
 
@@ -104,20 +92,9 @@ export default function HomeHero() {
         {/* Left side - Text content */}
         <div className="flex-[2] flex flex-col justify-center px-20 py-20">
           <div className="max-w-5xl">
-          <SplitText
-            text="AM Forest profesionāla pieeja katram meža īpašniekam, katram hektāram."
-            className="text-7xl font-bold text-[#dbf6a3] leading-tight mb-8"         
-            delay={40}          
-            duration={1}          
-            ease="power3.out"          
-            splitType="words"          
-            from={{ opacity: 0, y: 40 }}      
-            to={{ opacity: 1, y: 0 }}
-            threshold={0.1}
-            rootMargin="-100px"
-            textAlign="start"
-            tag="h1"
-            />
+            <h1 className="text-7xl font-bold text-[#dbf6a3] leading-tight mb-8">
+            AM Forest profesionāla pieeja katram meža īpašniekam, katram hektāram.
+            </h1>
           </div>
         </div>
 

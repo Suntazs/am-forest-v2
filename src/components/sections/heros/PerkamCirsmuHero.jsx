@@ -2,7 +2,6 @@
 import React from 'react';
 import { useContactModal } from '@/contexts/ContactModalContext';
 import { VideoWrapper } from '@/components/ui/AnimationWrapper';
-import SplitText from '@/components/anim/split-text';
 
 export default function PerkamCirsmuHero() {
   const { openContactModal } = useContactModal();
@@ -25,34 +24,12 @@ export default function PerkamCirsmuHero() {
       <div className="hidden lg:flex lg:w-1/2 items-center justify-center">
         <div className="px-6 md:px-12 lg:px-20">
           <div className="max-w-2xl">
-            <SplitText
-              text="Pērkam Cirsmu"
-              className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#243c36] leading-tight mb-8"
-              delay={50}
-              duration={1}
-              ease="power3.out"
-              splitType="words"
-              from={{ opacity: 0, y: 40 }}
-              to={{ opacity: 1, y: 0 }}
-              threshold={0.1}
-              rootMargin="-100px"
-              textAlign="start"
-              tag="h1"
-            />
-            <SplitText
-              text="Piedāvājam izdevīgus nosacījumus cirsmu iegādei. Mūsu eksperti profesionāli novērtē kokmateriālu kvalitāti un apjomu, nodrošinot taisnīgu cenu. Veicam cirsmu izstrādi ar modernu tehniku, ievērojot visas vides prasības."
-              className="text-lg md:text-xl text-neutral-700 leading-relaxed mb-6"
-              delay={30}
-              duration={0.6}
-              ease="power3.out"
-              splitType="words"
-              from={{ opacity: 0, y: 20 }}
-              to={{ opacity: 1, y: 0 }}
-              threshold={0.1}
-              rootMargin="-100px"
-              textAlign="start"
-              tag="p"
-            />
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-neutral-700 leading-tight mb-8">
+              Pērkam Cirsmu
+            </h1>
+            <p className="text-lg md:text-xl text-neutral-700 leading-relaxed mb-6">
+              Piedāvājam izdevīgus nosacījumus cirsmu iegādei. Mūsu eksperti profesionāli novērtē kokmateriālu kvalitāti un apjomu, nodrošinot taisnīgu cenu. Veicam cirsmu izstrādi ar modernu tehniku, ievērojot visas vides prasības.
+            </p>
           </div>
         </div>
       </div>
@@ -73,48 +50,15 @@ export default function PerkamCirsmuHero() {
         {/* Content overlay */}
         <div className="relative z-10 flex items-center justify-center h-full px-6 md:px-12">
           <div className="max-w-2xl text-center">
-            <SplitText
-              text="Pērkam Cirsmu"
-              className="text-4xl md:text-5xl font-bold text-[#dbf6a3] leading-tight mb-6"
-              delay={40}
-              duration={0.8}
-              ease="power3.out"
-              splitType="words"
-              from={{ opacity: 0, y: 40 }}
-              to={{ opacity: 1, y: 0 }}
-              threshold={0.1}
-              rootMargin="-100px"
-              textAlign="center"
-              tag="h1"
-            />
-            <SplitText
-              text="Piedāvājam izdevīgus nosacījumus cirsmu iegādei. Profesionāli novērtējam kokmateriālu kvalitāti un apjomu, nodrošinot taisnīgu cenu."
-              className="text-base md:text-lg text-[#faf6ed]/90 leading-relaxed mb-4"
-              delay={30}
-              duration={0.6}
-              ease="power3.out"
-              splitType="words"
-              from={{ opacity: 0, y: 20 }}
-              to={{ opacity: 1, y: 0 }}
-              threshold={0.1}
-              rootMargin="-100px"
-              textAlign="center"
-              tag="p"
-            />
-            <SplitText
-              text="Ātra samaksa un kvalitatīva cirsmu izstrāde ar modernu tehniku."
-              className="text-base md:text-lg text-[#faf6ed]/90 leading-relaxed mb-8"
-              delay={30}
-              duration={0.6}
-              ease="power3.out"
-              splitType="words"
-              from={{ opacity: 0, y: 20 }}
-              to={{ opacity: 1, y: 0 }}
-              threshold={0.1}
-              rootMargin="-100px"
-              textAlign="center"
-              tag="p"
-            />
+            <h1 className="text-4xl md:text-5xl font-bold text-[#dbf6a3] leading-tight mb-6 text-center">
+              Pērkam Cirsmu
+            </h1>
+            <p className="text-base md:text-lg text-[#faf6ed]/90 leading-relaxed mb-4 text-center">
+              Piedāvājam izdevīgus nosacījumus cirsmu iegādei. Profesionāli novērtējam kokmateriālu kvalitāti un apjomu, nodrošinot taisnīgu cenu.
+            </p>
+            <p className="text-base md:text-lg text-[#faf6ed]/90 leading-relaxed mb-8 text-center">
+              Ātra samaksa un kvalitatīva cirsmu izstrāde ar modernu tehniku.
+            </p>
             <button 
               onClick={openContactModal}
               className="bg-[#dbf6a3] text-[#243c36] px-6 py-3 rounded-full font-semibold text-base hover:bg-[#c8e885] transition-colors duration-300 shadow-lg"

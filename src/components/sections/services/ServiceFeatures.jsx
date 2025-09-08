@@ -1,17 +1,23 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import ServiceIcon from '@/components/ui/ServiceIcon';
 
 const ServiceFeatures = ({ title, features }) => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [isHovering, setIsHovering] = useState(false);
+  const [animationStarted, setAnimationStarted] = useState(false);
+  const [animationComplete, setAnimationComplete] = useState(false);
+  const gridRef = useRef(null);
+  const animationTimeouts = useRef([]);
 
   const handleMouseEnter = (index) => {
+    if (!animationComplete) return;
     setHoveredIndex(index);
     setIsHovering(true);
   };
 
   const handleMouseLeave = () => {
+    if (!animationComplete) return;
     setIsHovering(false);
     setTimeout(() => {
       if (!isHovering) {
@@ -20,6 +26,65 @@ const ServiceFeatures = ({ title, features }) => {
     }, 300);
   };
 
+  // Intersection Observer for triggering overlay animations
+  useEffect(() => {
+    if (!gridRef.current) return;
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !animationStarted) {
+            setAnimationStarted(true);
+            
+            // Wait a tick to ensure DOM is ready
+            setTimeout(() => {
+              // Get all overlay elements directly
+              const overlays = gridRef.current?.querySelectorAll('[data-overlay-index]');
+              
+              if (overlays && overlays.length > 0) {
+                // Create array of overlay elements with their indices
+                const overlayArray = Array.from(overlays);
+                const shuffled = [...overlayArray].sort(() => Math.random() - 0.5);
+                
+                // Animate each overlay with delay
+                shuffled.forEach((overlay, order) => {
+                  const delay = order * 150; // 150ms between each animation
+                  const timeout = setTimeout(() => {
+                    overlay.style.opacity = '0';
+                    
+                    // Check if this is the last overlay
+                    if (order === shuffled.length - 1) {
+                      // Add extra delay for the fade transition to complete (0.6s from CSS)
+                      setTimeout(() => {
+                        setAnimationComplete(true);
+                      }, 600);
+                    }
+                  }, delay);
+                  animationTimeouts.current.push(timeout);
+                });
+              }
+            }, 100); // Small delay to ensure DOM is ready
+          }
+        });
+      },
+      {
+        threshold: 0.05, // Trigger when 5% of the section is visible
+        rootMargin: '0px'
+      }
+    );
+
+    observer.observe(gridRef.current);
+
+    return () => {
+      if (gridRef.current) {
+        observer.unobserve(gridRef.current);
+      }
+      // Clear all animation timeouts
+      animationTimeouts.current.forEach(timeout => clearTimeout(timeout));
+      animationTimeouts.current = [];
+    };
+  }, [animationStarted]);
+
   return (
     <section className="bg-[#faf6ed] py-20 md:py-32">
       <div className="px-6 md:px-12 lg:px-20">
@@ -27,17 +92,16 @@ const ServiceFeatures = ({ title, features }) => {
           {title}
         </h2>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 relative">
-          {hoveredIndex !== null && (
+        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-3 relative">
+          {animationComplete && (
             <div
-              className={`absolute pointer-events-none z-0 transition-all ease-out ${
-                isHovering ? 'opacity-100 duration-300' : 'opacity-0 duration-500'
-              }`}
+              className={`absolute pointer-events-none z-0 transition-all ease-out duration-300`}
               style={{
-                left: `${(hoveredIndex % 3) * 33.333}%`,
-                top: `${Math.floor(hoveredIndex / 3) * 100}%`,
+                left: hoveredIndex !== null ? `${(hoveredIndex % 3) * 33.333}%` : '0%',
+                top: hoveredIndex !== null ? `${Math.floor(hoveredIndex / 3) * 100}%` : '0%',
                 width: '33.333%',
                 height: '100%',
+                opacity: hoveredIndex !== null && isHovering ? 1 : 0
               }}
             >
               <div className="w-full h-full bg-[#dbf6a3]" />
@@ -72,6 +136,16 @@ const ServiceFeatures = ({ title, features }) => {
                 <p className="text-base md:text-lg text-[#243c36] opacity-80 leading-relaxed">
                   {feature.description}
                 </p>
+                {/* Overlay that starts visible and fades out */}
+                <div 
+                  data-overlay-index={index}
+                  className="absolute inset-0 bg-[#dbf6a3] pointer-events-none"
+                  style={{ 
+                    opacity: 1,
+                    transition: 'opacity 0.6s ease-out',
+                    zIndex: 20
+                  }}
+                />
               </article>
             );
           })}

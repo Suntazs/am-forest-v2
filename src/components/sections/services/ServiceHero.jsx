@@ -1,27 +1,115 @@
 "use client";
-import React from 'react';
-import SplitText from '@/components/anim/split-text';
+import React, { useEffect, useRef } from 'react';
+import { usePageTransition } from '@/contexts/PageTransitionContext';
+
 const ServiceHero = ({ title, description }) => {
+  const { animationsEnabled } = usePageTransition();
+  const flowerRef1 = useRef(null);
+  const flowerRef2 = useRef(null);
+  const curveRef = useRef(null);
+
+  useEffect(() => {
+    // Control animations based on transition state
+    if (flowerRef1.current) {
+      if (animationsEnabled) {
+        flowerRef1.current.style.animation = 'popIn 0.6s ease-out 0.3s both, spin 8s linear 0.9s infinite';
+      } else {
+        flowerRef1.current.style.animation = 'none';
+        flowerRef1.current.style.opacity = '0';
+      }
+    }
+    if (flowerRef2.current) {
+      if (animationsEnabled) {
+        flowerRef2.current.style.animation = 'popIn 0.6s ease-out 0.5s both, spin 8s linear 1.1s infinite reverse';
+      } else {
+        flowerRef2.current.style.animation = 'none';
+        flowerRef2.current.style.opacity = '0';
+      }
+    }
+    if (curveRef.current) {
+      if (animationsEnabled) {
+        curveRef.current.style.animation = 'drawLine 2.5s cubic-bezier(0.65, 0, 0.35, 1) 0.6s forwards';
+      } else {
+        curveRef.current.style.animation = 'none';
+        curveRef.current.style.strokeDashoffset = '1000';
+      }
+    }
+  }, [animationsEnabled]);
+
   return (
     <section className="relative bg-[#243c36] overflow-hidden">
-      <div className="min-h-[500px] lg:min-h-[600px] flex items-center">
-        <div className="px-6 md:px-12 lg:px-20 pt-32 pb-20 md:py-32 w-full">
-          <div className="max-w-5xl">
-
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-[#faf6ed] leading-tight mb-6">
-              {title}
-            </h1>
-            <p className="text-lg md:text-xl lg:text-2xl text-[#faf6ed]/80 max-w-3xl leading-relaxed">
-              {description}
-            </p>
+      <div className="min-h-[600px] lg:min-h-screen flex items-center">
+        <div className="px-6 md:px-12 lg:px-20 pt-40 pb-32 md:py-32 lg:py-20 w-full">
+          <div className="max-w-7xl">
+            {/* Heading with flowers */}
+            <div className="mb-12 md:mb-16">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-[#faf6ed] leading-tight max-w-5xl">
+                <span className="inline-flex mr-3 align-middle" style={{ verticalAlign: '-0.15em' }}>
+                  <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    width="40" 
+                    height="40" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    aria-hidden="true"
+                    className="w-10 h-10 md:w-14 md:h-14 lg:w-16 lg:h-16 flower-icon"
+                    ref={flowerRef1}
+                  >
+                    <g clipPath="url(#a)">
+                      <path 
+                        fill="#dbf6a3" 
+                        d="M15.2 20.8v-1.075l.76.76a3.2 3.2 0 1 0 4.525-4.525l-.76-.76H20.8a3.2 3.2 0 0 0 0-6.4h-1.075l.76-.76a3.2 3.2 0 1 0-4.525-4.525l-.76.76V3.2a3.2 3.2 0 0 0-6.4 0v1.075l-.76-.76A3.2 3.2 0 1 0 3.515 8.04l.76.76H3.2a3.2 3.2 0 0 0 0 6.4h1.075l-.76.76a3.2 3.2 0 0 0 4.525 4.525l.76-.76V20.8a3.2 3.2 0 0 0 6.4 0"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="a">
+                        <path fill="#fff" d="M0 24h24V0H0z" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </span>
+                {title}
+                <span className="inline-flex ml-3 align-middle" style={{ verticalAlign: '-0.15em' }}>
+                  <svg 
+                    xmlns="http://www.w3.org/2000/svg" 
+                    width="40" 
+                    height="40" 
+                    fill="none" 
+                    viewBox="0 0 24 24" 
+                    aria-hidden="true"
+                    className="w-10 h-10 md:w-14 md:h-14 lg:w-16 lg:h-16 flower-icon-alt"
+                    ref={flowerRef2}
+                  >
+                    <g clipPath="url(#b)">
+                      <path 
+                        fill="#faf6ed" 
+                        d="M15.2 20.8v-1.075l.76.76a3.2 3.2 0 1 0 4.525-4.525l-.76-.76H20.8a3.2 3.2 0 0 0 0-6.4h-1.075l.76-.76a3.2 3.2 0 1 0-4.525-4.525l-.76.76V3.2a3.2 3.2 0 0 0-6.4 0v1.075l-.76-.76A3.2 3.2 0 1 0 3.515 8.04l.76.76H3.2a3.2 3.2 0 0 0 0 6.4h1.075l-.76.76a3.2 3.2 0 0 0 4.525 4.525l.76-.76V20.8a3.2 3.2 0 0 0 6.4 0"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="b">
+                        <path fill="#fff" d="M0 24h24V0H0z" />
+                      </clipPath>
+                    </defs>
+                  </svg>
+                </span>
+              </h1>
+            </div>
+            
+            {/* Description with offset */}
+            <div className="ml-12 md:ml-32 lg:ml-48">
+              <p className="text-lg md:text-xl lg:text-2xl text-[#faf6ed]/80 max-w-4xl leading-relaxed">
+                {description}
+              </p>
+            </div>
           </div>
         </div>
       </div>
       
-      {/* Bottom curve - similar to AboutHero */}
-      <div className="absolute bottom-0 right-0 pointer-events-none">
+      {/* Bottom curve - desktop only */}
+      <div className="hidden md:block absolute bottom-0 right-0">
         <svg 
-          className="w-72 h-48 md:w-[32rem] md:h-96 lg:w-[40rem] lg:h-[28rem]" 
+          className="w-[32rem] lg:w-[40rem] h-96 lg:h-[28rem]" 
           viewBox="0 0 300 200"
           xmlns="http://www.w3.org/2000/svg"
           preserveAspectRatio="none"
@@ -31,10 +119,59 @@ const ServiceHero = ({ title, description }) => {
             fill="none"
             stroke="#dbf6a3"
             strokeWidth="30"
-            className="opacity-30"
+            className="curve-path"
+            ref={curveRef}
           />
         </svg>
       </div>
+
+      <style jsx>{`
+        @keyframes popIn {
+          0% {
+            opacity: 0;
+            transform: scale(0);
+          }
+          50% {
+            transform: scale(1.1);
+          }
+          100% {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+
+        @keyframes drawLine {
+          0% {
+            stroke-dashoffset: 1000;
+          }
+          100% {
+            stroke-dashoffset: 0;
+          }
+        }
+
+        .curve-path {
+          stroke-dasharray: 1000;
+          stroke-dashoffset: 1000;
+          /* Animation controlled by JavaScript */
+        }
+
+        .flower-icon {
+          /* Animation controlled by JavaScript */
+        }
+
+        .flower-icon-alt {
+          /* Animation controlled by JavaScript */
+        }
+      `}</style>
     </section>
   );
 };

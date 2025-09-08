@@ -1,0 +1,21 @@
+User-agent: *
+Allow: /
+
+# Blog pages
+Allow: /blog
+Allow: /blog/*
+
+# Service pages
+Allow: /services
+Allow: /services/*
+
+# Static pages
+Allow: /about
+Allow: /contact
+
+# Sitemap
+Sitemap: https://amforest.lv/sitemap.xml
+
+# Disallow admin/studio pages
+Disallow: /studio
+Disallow: /admin

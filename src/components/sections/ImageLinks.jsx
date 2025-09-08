@@ -6,8 +6,12 @@ import Link from "next/link";
 export default function ImageLinks() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [isInView, setIsInView] = useState(false);
+  const [animationStarted, setAnimationStarted] = useState(false);
+  const [animatedLinks, setAnimatedLinks] = useState([]); // Track which links have been animated
   const mobileLineRef = useRef(null);
   const desktopLineRef = useRef(null);
+  const linksContainerRef = useRef(null);
+  const animationTimeouts = useRef([]);
 
   const links = [
     {
@@ -33,6 +37,58 @@ export default function ImageLinks() {
   ];
 
   const currentImage = hoveredIndex !== null ? links[hoveredIndex].image : "/image/beautiful-shot-forest-with-sunlight.png";
+
+  // Intersection Observer for triggering overlay animations on links
+  useEffect(() => {
+    if (!linksContainerRef.current) return;
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !animationStarted) {
+            setAnimationStarted(true);
+            
+            // Wait a tick to ensure DOM is ready
+            setTimeout(() => {
+              // Get all overlay elements in order (top to bottom)
+              const overlays = linksContainerRef.current?.querySelectorAll('[data-link-overlay]');
+              
+              if (overlays && overlays.length > 0) {
+                // Animate each overlay in order from top to bottom
+                overlays.forEach((overlay, index) => {
+                  const delay = index * 200; // 200ms between each animation
+                  const timeout = setTimeout(() => {
+                    overlay.style.transform = 'translateY(100%)';
+                    
+                    // Mark this link as animated after transition completes
+                    setTimeout(() => {
+                      setAnimatedLinks(prev => [...prev, index]);
+                    }, 500); // Match the transition duration
+                  }, delay);
+                  animationTimeouts.current.push(timeout);
+                });
+              }
+            }, 100); // Small delay to ensure DOM is ready
+          }
+        });
+      },
+      {
+        threshold: 0.0, // Trigger when even 20px is visible
+        rootMargin: '-20px 0px 0px 0px' // Start when 20px of container is visible
+      }
+    );
+
+    observer.observe(linksContainerRef.current);
+
+    return () => {
+      if (linksContainerRef.current) {
+        observer.unobserve(linksContainerRef.current);
+      }
+      // Clear all animation timeouts
+      animationTimeouts.current.forEach(timeout => clearTimeout(timeout));
+      animationTimeouts.current = [];
+    };
+  }, [animationStarted]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -190,14 +246,23 @@ export default function ImageLinks() {
               />
             </svg>
           </div>
-          <div className="border-t lg:border-t-0 border-b border-neutral-300 -mx-6 md:mx-0">
+          <div ref={linksContainerRef} className="border-t lg:border-t-0 border-b border-neutral-300 -mx-6 md:mx-0">
             {links.map((link, index) => (
               <div key={index}>
                 <Link href={link.href}>
                   <div 
                     className="relative group cursor-pointer overflow-hidden"
-                    onMouseEnter={() => setHoveredIndex(index)}
-                    onMouseLeave={() => setHoveredIndex(null)}
+                    onMouseEnter={() => {
+                      // Only allow hover if this link's overlay has been animated
+                      if (animatedLinks.includes(index)) {
+                        setHoveredIndex(index);
+                      }
+                    }}
+                    onMouseLeave={() => {
+                      if (animatedLinks.includes(index)) {
+                        setHoveredIndex(null);
+                      }
+                    }}
                   >
                     {/* Hover background effect - reveals from bottom to top */}
                     <div 
@@ -238,6 +303,16 @@ export default function ImageLinks() {
                         </svg>
                       </div>
                     </div>
+                    
+                    {/* Initial overlay that covers the text - slides down like unhover */}
+                    <div 
+                      data-link-overlay={index}
+                      className="absolute inset-0 bg-[#243c36] pointer-events-none z-20"
+                      style={{
+                        transform: 'translateY(0%)',
+                        transition: 'transform 500ms ease-out'
+                      }}
+                    />
                   </div>
                 </Link>
                 

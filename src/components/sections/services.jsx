@@ -4,10 +4,15 @@ import Link from 'next/link';
 export default function Services({ showHeader = true, showFullServices = false }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [isHovering, setIsHovering] = useState(false);
+  const [animationStarted, setAnimationStarted] = useState(false);
+  const [animationComplete, setAnimationComplete] = useState(false);
   const gridRef = useRef(null);
   const timeoutRef = useRef(null);
+  const animationTimeouts = useRef([]);
   
   const handleMouseEnter = (index) => {
+    if (!animationComplete) return; // Don't allow hover until animation is done
+    
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
     }
@@ -16,6 +21,8 @@ export default function Services({ showHeader = true, showFullServices = false }
   };
 
   const handleMouseLeave = () => {
+    if (!animationComplete) return; // Don't allow hover until animation is done
+    
     setIsHovering(false);
     timeoutRef.current = setTimeout(() => {
       setHoveredIndex(null);
@@ -243,6 +250,70 @@ export default function Services({ showHeader = true, showFullServices = false }
   // Show only first 8 services on homepage, all on services page
   const services = showFullServices ? baseServices : baseServices.slice(0, 8);
 
+  // Intersection Observer for triggering overlay animations
+  useEffect(() => {
+    if (!gridRef.current) return;
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !animationStarted) {
+            setAnimationStarted(true);
+            
+            // Wait a tick to ensure DOM is ready
+            setTimeout(() => {
+              // Get all overlay elements directly
+              const overlays = gridRef.current?.querySelectorAll('[data-overlay-index]');
+              console.log('Found overlays:', overlays?.length);
+              
+              if (overlays && overlays.length > 0) {
+                // Create array of overlay elements with their indices
+                const overlayArray = Array.from(overlays);
+                const shuffled = [...overlayArray].sort(() => Math.random() - 0.5);
+                
+                console.log('Starting animation for', shuffled.length, 'overlays');
+                
+                // Animate each overlay with delay
+                shuffled.forEach((overlay, order) => {
+                  const delay = order * 150; // 150ms between each animation
+                  const timeout = setTimeout(() => {
+                    console.log(`Hiding overlay ${order + 1}/${shuffled.length}`);
+                    overlay.style.opacity = '0';
+                    
+                    // Check if this is the last overlay
+                    if (order === shuffled.length - 1) {
+                      // Add extra delay for the fade transition to complete (0.6s from CSS)
+                      setTimeout(() => {
+                        setAnimationComplete(true);
+                        console.log('All animations complete, hover enabled');
+                      }, 600);
+                    }
+                  }, delay);
+                  animationTimeouts.current.push(timeout);
+                });
+              }
+            }, 100); // Small delay to ensure DOM is ready
+          }
+        });
+      },
+      {
+        threshold: 0.05, // Trigger when 5% of the section is visible
+        rootMargin: '0px'
+      }
+    );
+
+    observer.observe(gridRef.current);
+
+    return () => {
+      if (gridRef.current) {
+        observer.unobserve(gridRef.current);
+      }
+      // Clear all animation timeouts
+      animationTimeouts.current.forEach(timeout => clearTimeout(timeout));
+      animationTimeouts.current = [];
+    };
+  }, [animationStarted]);
+
   return (
     <section className={`relative ${showHeader ? 'py-16 md:py-24 lg:py-30' : ''} bg-[#faf6ed] overflow-hidden`}>
       <div className="flex flex-col">
@@ -266,10 +337,13 @@ export default function Services({ showHeader = true, showFullServices = false }
             className="grid grid-cols-2 md:grid-cols-4 relative overflow-hidden"
             onMouseLeave={handleMouseLeave}
           >
-            {hoveredIndex !== null && (
+            {animationComplete && (
               <div
-                className={`absolute pointer-events-none z-0 transition-all ease-out ${isHovering ? 'opacity-100 duration-300' : 'opacity-0 duration-500'}`}
-                style={getGridPosition(hoveredIndex)}
+                className={`absolute pointer-events-none z-0 transition-all ease-out duration-300`}
+                style={{
+                  ...getGridPosition(hoveredIndex !== null ? hoveredIndex : 0),
+                  opacity: hoveredIndex !== null && isHovering ? 1 : 0
+                }}
               >
                 <div className="w-full h-full bg-[#dbf6a3]" />
               </div>
@@ -279,8 +353,9 @@ export default function Services({ showHeader = true, showFullServices = false }
               const cols = isMobile ? 2 : 4;
               const totalRows = Math.ceil(services.length / cols);
               const currentRow = Math.floor(index / cols);
+              const currentCol = index % cols;
               const isLastRow = currentRow === totalRows - 1;
-              const isLastCol = (index + 1) % cols === 0;
+              const isLastCol = currentCol === cols - 1;
               
               return (
                 <Link 
@@ -314,6 +389,16 @@ export default function Services({ showHeader = true, showFullServices = false }
                     <span className="mt-3 md:mt-4 lg:mt-6 text-2xl md:text-3xl lg:text-4xl text-[#243c36] opacity-50 hover:rotate-90 transition-transform duration-300 inline-block">
                       +
                     </span>
+                    {/* Overlay that starts visible and fades out */}
+                    <div 
+                      data-overlay-index={index}
+                      className="absolute inset-0 bg-[#dbf6a3] pointer-events-none"
+                      style={{ 
+                        opacity: 1,
+                        transition: 'opacity 0.6s ease-out',
+                        zIndex: 20
+                      }}
+                    />
                   </div>
                 </Link>
               );

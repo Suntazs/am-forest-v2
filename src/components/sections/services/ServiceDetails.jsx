@@ -10,7 +10,7 @@ const ServiceDetails = ({
   reverse = false 
 }) => {
   return (
-    <section className="bg-white py-20 md:py-32">
+    <section className=" py-20 md:py-32">
       <div className="px-6 md:px-12 lg:px-20">
         <div className={`grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center ${
           reverse ? 'lg:flex-row-reverse' : ''

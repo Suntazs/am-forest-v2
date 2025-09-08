@@ -10,16 +10,25 @@ const BuyingProcess = () => {
   const [mobileActiveIndex, setMobileActiveIndex] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
   const [linkHeight, setLinkHeight] = useState(80);
+  const [animationStarted, setAnimationStarted] = useState(false);
+  const [animationComplete, setAnimationComplete] = useState(false);
+  const [linksAnimationStarted, setLinksAnimationStarted] = useState(false);
+  const [animatedLinkIndices, setAnimatedLinkIndices] = useState([]); // Track which links have been animated
   const linksRef = useRef(null);
   const linkRefs = useRef([]);
+  const gridRef = useRef(null);
+  const animationTimeouts = useRef([]);
+  const linksAnimationTimeouts = useRef([]);
   const { showFollower, hideFollower } = useMouseFollower();
 
   const handleMouseEnter = (index) => {
+    if (!animationComplete) return;
     setHoveredIndex(index);
     setIsHovering(true);
   };
 
   const handleMouseLeave = () => {
+    if (!animationComplete) return;
     setIsHovering(false);
     setTimeout(() => {
       if (!isHovering) {
@@ -27,6 +36,117 @@ const BuyingProcess = () => {
       }
     }, 300);
   };
+
+  // Intersection Observer for triggering overlay animations
+  useEffect(() => {
+    if (!gridRef.current) return;
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !animationStarted) {
+            setAnimationStarted(true);
+            
+            // Wait a tick to ensure DOM is ready
+            setTimeout(() => {
+              // Get all overlay elements directly
+              const overlays = gridRef.current?.querySelectorAll('[data-overlay-index]');
+              
+              if (overlays && overlays.length > 0) {
+                // Create array of overlay elements with their indices
+                const overlayArray = Array.from(overlays);
+                const shuffled = [...overlayArray].sort(() => Math.random() - 0.5);
+                
+                // Animate each overlay with delay
+                shuffled.forEach((overlay, order) => {
+                  const delay = order * 150; // 150ms between each animation
+                  const timeout = setTimeout(() => {
+                    overlay.style.opacity = '0';
+                    
+                    // Check if this is the last overlay
+                    if (order === shuffled.length - 1) {
+                      // Add extra delay for the fade transition to complete (0.6s from CSS)
+                      setTimeout(() => {
+                        setAnimationComplete(true);
+                      }, 600);
+                    }
+                  }, delay);
+                  animationTimeouts.current.push(timeout);
+                });
+              }
+            }, 100); // Small delay to ensure DOM is ready
+          }
+        });
+      },
+      {
+        threshold: 0.05, // Trigger when 5% of the section is visible
+        rootMargin: '0px'
+      }
+    );
+
+    observer.observe(gridRef.current);
+
+    return () => {
+      if (gridRef.current) {
+        observer.unobserve(gridRef.current);
+      }
+      // Clear all animation timeouts
+      animationTimeouts.current.forEach(timeout => clearTimeout(timeout));
+      animationTimeouts.current = [];
+    };
+  }, [animationStarted]);
+
+  // Intersection Observer for triggering overlay animations on links
+  useEffect(() => {
+    if (!linksRef.current) return;
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !linksAnimationStarted) {
+            setLinksAnimationStarted(true);
+            
+            // Wait a tick to ensure DOM is ready
+            setTimeout(() => {
+              // Get all link overlay elements in order (top to bottom)
+              const overlays = linksRef.current?.querySelectorAll('[data-link-overlay]');
+              
+              if (overlays && overlays.length > 0) {
+                // Animate each overlay in order from top to bottom
+                overlays.forEach((overlay, index) => {
+                  const delay = index * 200; // 200ms between each animation
+                  const timeout = setTimeout(() => {
+                    overlay.style.transform = 'translateY(100%)';
+                    
+                    // Mark this link as animated after transition completes
+                    setTimeout(() => {
+                      setAnimatedLinkIndices(prev => [...prev, index]);
+                    }, 500); // Match the transition duration
+                  }, delay);
+                  linksAnimationTimeouts.current.push(timeout);
+                });
+              }
+            }, 100); // Small delay to ensure DOM is ready
+          }
+        });
+      },
+      {
+        threshold: 0.0, // Trigger when even 20px is visible
+        rootMargin: '-20px 0px 0px 0px' // Start when 20px of container is visible
+      }
+    );
+
+    observer.observe(linksRef.current);
+
+    return () => {
+      if (linksRef.current) {
+        observer.unobserve(linksRef.current);
+      }
+      // Clear all animation timeouts
+      linksAnimationTimeouts.current.forEach(timeout => clearTimeout(timeout));
+      linksAnimationTimeouts.current = [];
+    };
+  }, [linksAnimationStarted]);
 
   // Check if mobile and get link height
   useEffect(() => {
@@ -188,17 +308,16 @@ const BuyingProcess = () => {
           AM forest. Pērkam meža īpašumus visos stāvokļos
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 relative md:mx-12 lg:mx-20">
-          {hoveredIndex !== null && !isMobile && (
+        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-3 relative md:mx-12 lg:mx-20">
+          {!isMobile && animationComplete && (
             <div
-              className={`absolute pointer-events-none z-0 transition-all ease-out ${
-                isHovering ? 'opacity-100 duration-300' : 'opacity-0 duration-500'
-              }`}
+              className={`absolute pointer-events-none z-0 transition-all ease-out duration-300`}
               style={{
-                left: `${(hoveredIndex % 3) * 33.333}%`,
-                top: `${Math.floor(hoveredIndex / 3) * 100}%`,
+                left: hoveredIndex !== null ? `${(hoveredIndex % 3) * 33.333}%` : '0%',
+                top: hoveredIndex !== null ? `${Math.floor(hoveredIndex / 3) * 100}%` : '0%',
                 width: '33.333%',
                 height: '100%',
+                opacity: hoveredIndex !== null && isHovering ? 1 : 0
               }}
             >
               <div className="w-full h-full bg-[#dbf6a3]" />
@@ -243,6 +362,16 @@ const BuyingProcess = () => {
                     +
                   </button>
                 </div>
+                {/* Overlay that starts visible and fades out */}
+                <div 
+                  data-overlay-index={index}
+                  className="absolute inset-0 bg-[#dbf6a3] pointer-events-none"
+                  style={{ 
+                    opacity: 1,
+                    transition: 'opacity 0.6s ease-out',
+                    zIndex: 20
+                  }}
+                />
               </article>
             );
           })}
@@ -262,7 +391,8 @@ const BuyingProcess = () => {
                 <div 
                   className="relative group cursor-pointer overflow-hidden"
                   onMouseEnter={() => {
-                    if (!isMobile) {
+                    // Only allow hover if this link's overlay has been animated
+                    if (!isMobile && animatedLinkIndices.includes(index)) {
                       setHoveredLinkIndex(index);
                       const content = service.mediaType === 'video' ? (
                         <div className="w-80 h-52 overflow-hidden rounded-lg shadow-xl">
@@ -287,7 +417,7 @@ const BuyingProcess = () => {
                     }
                   }}
                   onMouseLeave={() => {
-                    if (!isMobile) {
+                    if (!isMobile && animatedLinkIndices.includes(index)) {
                       setHoveredLinkIndex(null);
                       hideFollower();
                     }
@@ -332,6 +462,16 @@ const BuyingProcess = () => {
                       </svg>
                     </div>
                   </div>
+                  
+                  {/* Initial overlay that covers the text - slides down like unhover */}
+                  <div 
+                    data-link-overlay={index}
+                    className="absolute inset-0 bg-[#243c36] pointer-events-none z-20"
+                    style={{
+                      transform: 'translateY(0%)',
+                      transition: 'transform 500ms ease-out'
+                    }}
+                  />
                 </div>
               </Link>
               
