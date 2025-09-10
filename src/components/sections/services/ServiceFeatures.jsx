@@ -86,21 +86,28 @@ const ServiceFeatures = ({ title, features }) => {
   }, [animationStarted]);
 
   return (
-    <section className="bg-[#faf6ed] py-20 md:py-32">
-      <div className="px-6 md:px-12 lg:px-20">
+    <section className="bg-[#faf6ed] border-t border-[#243c36]">
+      <div className="px-6 md:px-12 lg:px-20 py-20 md:py-32">
         <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold text-neutral-700 mb-12">
           {title}
         </h2>
+      </div>
         
-        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-3 relative">
+      <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-3 relative md:px-12 lg:px-20">
           {animationComplete && (
             <div
               className={`absolute pointer-events-none z-0 transition-all ease-out duration-300`}
               style={{
-                left: hoveredIndex !== null ? `${(hoveredIndex % 3) * 33.333}%` : '0%',
-                top: hoveredIndex !== null ? `${Math.floor(hoveredIndex / 3) * 100}%` : '0%',
-                width: '33.333%',
-                height: '100%',
+                left: typeof window !== 'undefined' && window.innerWidth < 768 
+                  ? '0%' 
+                  : hoveredIndex !== null ? `${(hoveredIndex % 3) * 33.333}%` : '0%',
+                top: typeof window !== 'undefined' && window.innerWidth < 768
+                  ? hoveredIndex !== null ? `${hoveredIndex * (100 / features.length)}%` : '0%'
+                  : hoveredIndex !== null ? `${Math.floor(hoveredIndex / 3) * (100 / Math.ceil(features.length / 3))}%` : '0%',
+                width: typeof window !== 'undefined' && window.innerWidth < 768 ? '100%' : '33.333%',
+                height: typeof window !== 'undefined' && window.innerWidth < 768 
+                  ? `${100 / features.length}%` 
+                  : `${100 / Math.ceil(features.length / 3)}%`,
                 opacity: hoveredIndex !== null && isHovering ? 1 : 0
               }}
             >
@@ -109,6 +116,7 @@ const ServiceFeatures = ({ title, features }) => {
           )}
           
           {features.map((feature, index) => {
+            const isLastItem = index === features.length - 1;
             const isLastCol = (index + 1) % 3 === 0;
             const isLastRow = index >= features.length - 3;
             
@@ -119,9 +127,11 @@ const ServiceFeatures = ({ title, features }) => {
                 onMouseLeave={handleMouseLeave}
                 className={`
                   relative flex flex-col items-start justify-start 
-                  p-8 md:p-10 lg:p-12 z-10
-                  ${!isLastRow ? 'border-b' : 'md:border-b-0'} border-[#243c36]
-                  ${!isLastCol && index !== features.length - 1 ? 'md:border-r border-[#243c36]' : ''}
+                  px-6 py-8 md:p-10 lg:p-12 z-10
+                  ${!isLastItem ? 'border-b md:border-b' : ''} 
+                  ${!isLastRow ? 'md:border-b' : 'md:border-b-0'} 
+                  ${!isLastCol && index !== features.length - 1 ? 'md:border-r' : ''}
+                  border-[#243c36]
                   transition-all duration-300
                 `}
               >
@@ -149,7 +159,6 @@ const ServiceFeatures = ({ title, features }) => {
               </article>
             );
           })}
-        </div>
       </div>
     </section>
   );

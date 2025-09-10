@@ -170,23 +170,25 @@ export default function MenuModal({ isOpen, onClose }) {
               {/* Bottom button section */}
               <div className="sm:border-r border-b border-neutral-900 w-full">
                 {/* Full width button */}
-                <div className="flex items-center hover:bg-[#dbf6a3] transition-all group cursor-pointer" onClick={() => {
+                <Link href="/blog" onClick={() => {
                       // Delay closing to allow transition to start
                       setTimeout(() => onClose(), 800);
                     }}>
-                  <div
-                    className="flex-1 text-2xl xs:text-3xl sm:text-4xl lg:text-6xl font-light text-neutral-900 group-hover:text-[#243c36] transition-colors py-8 xs:py-8 sm:py-8 px-4 xs:px-5 sm:px-8 text-left"
-                  >
-                    Get Consultation
+                  <div className="flex items-center hover:bg-[#dbf6a3] transition-all group cursor-pointer">
+                    <div
+                      className="flex-1 text-2xl xs:text-3xl sm:text-4xl lg:text-6xl font-light text-neutral-900 group-hover:text-[#243c36] transition-colors py-8 xs:py-8 sm:py-8 px-4 xs:px-5 sm:px-8 text-left"
+                    >
+                      Jaunumi
+                    </div>
+                    
+                    {/* Plus sign on the right */}
+                    <div 
+                      className="text-2xl xs:text-3xl sm:text-4xl lg:text-6xl font-light text-neutral-900 group-hover:text-[#243c36] transition-colors py-8 xs:py-8 sm:py-8 px-4 xs:px-5 sm:px-8"
+                    >
+                      +
+                    </div>
                   </div>
-                  
-                  {/* Plus sign on the right */}
-                  <div 
-                    className="text-2xl xs:text-3xl sm:text-4xl lg:text-6xl font-light text-neutral-900 group-hover:text-[#243c36] transition-colors py-8 xs:py-8 sm:py-8 px-4 xs:px-5 sm:px-8"
-                  >
-                    +
-                  </div>
-                </div>
+                </Link>
               </div>
             </div>
 

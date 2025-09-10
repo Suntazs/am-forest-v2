@@ -247,8 +247,23 @@ export default function Services({ showHeader = true, showFullServices = false }
     },
   ];
 
-  // Show only first 8 services on homepage, all on services page
-  const services = showFullServices ? baseServices : baseServices.slice(0, 8);
+  // Show only first 7 services on homepage with "View All" as 8th, or all on services page
+  const services = showFullServices ? baseServices : [
+    ...baseServices.slice(0, 7),
+    {
+      icon: (
+        <svg className="w-12 h-12 md:w-16 md:h-16 lg:w-20 lg:h-20" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <line x1="20" y1="50" x2="70" y2="50" />
+          <polyline points="60,40 70,50 60,60" />
+        </svg>
+      ),
+      title: "Visi",
+      subtitle: "pakalpojumi",
+      link: "/services",
+      description: "Skatīt visus mūsu pakalpojumus",
+      isViewAll: true
+    }
+  ];
 
   // Intersection Observer for triggering overlay animations
   useEffect(() => {
@@ -361,7 +376,7 @@ export default function Services({ showHeader = true, showFullServices = false }
                 <Link 
                   href={service.link || '#'}
                   key={index}
-                  className="block"
+                  className="block group"
                 >
                   <div
                     onMouseEnter={() => handleMouseEnter(index)}
@@ -386,7 +401,7 @@ export default function Services({ showHeader = true, showFullServices = false }
                         </h3>
                       )}
                     </div>
-                    <span className="mt-3 md:mt-4 lg:mt-6 text-2xl md:text-3xl lg:text-4xl text-[#243c36] opacity-50 hover:rotate-90 transition-transform duration-300 inline-block">
+                    <span className="mt-3 md:mt-4 lg:mt-6 text-2xl md:text-3xl lg:text-4xl text-[#243c36] opacity-50 group-hover:rotate-90 transition-transform duration-300 inline-block">
                       +
                     </span>
                     {/* Overlay that starts visible and fades out */}
