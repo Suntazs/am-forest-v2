@@ -1,5 +1,6 @@
 "use client";
 import React from 'react';
+import { ProgressiveImage } from '@/components/ui/ProgressiveMedia';
 
 export default function AboutContent() {
   return (
@@ -9,10 +10,10 @@ export default function AboutContent() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
             {/* Image on the left */}
             <div className="relative h-[400px] md:h-[500px] lg:h-[600px] rounded-lg overflow-hidden">
-              <img 
+              <ProgressiveImage
                 src="/image/beautiful-shot-forest-with-sunlight.png"
                 alt="Forest with sunlight"
-                className="w-full h-full object-cover"
+                className="w-full h-full"
               />
             </div>
 

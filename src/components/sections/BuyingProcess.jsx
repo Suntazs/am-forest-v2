@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useMouseFollower } from '@/contexts/MouseFollowerContext';
+import { ProgressiveImage, ProgressiveVideo } from '@/components/ui/ProgressiveMedia';
 
 const BuyingProcess = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -202,10 +203,10 @@ const BuyingProcess = () => {
             const service = relatedServices[activeIndex];
             const content = (
               <div className="w-48 h-32 overflow-hidden shadow-lg">
-                <img 
+                <ProgressiveImage
                   src={service.media}
                   alt=""
-                  className="w-full h-full object-cover"
+                  className="w-full h-full"
                 />
               </div>
             );
@@ -396,9 +397,9 @@ const BuyingProcess = () => {
                       setHoveredLinkIndex(index);
                       const content = service.mediaType === 'video' ? (
                         <div className="w-80 h-52 overflow-hidden rounded-lg shadow-xl">
-                          <video 
+                          <ProgressiveVideo
                             src={service.media}
-                            className="w-full h-full object-cover"
+                            className="w-full h-full"
                             autoPlay
                             muted
                             loop
@@ -406,10 +407,10 @@ const BuyingProcess = () => {
                         </div>
                       ) : (
                         <div className="w-80 h-52 overflow-hidden rounded-lg shadow-xl">
-                          <img 
+                          <ProgressiveImage
                             src={service.media}
                             alt=""
-                            className="w-full h-full object-cover"
+                            className="w-full h-full"
                           />
                         </div>
                       );
@@ -501,10 +502,10 @@ const BuyingProcess = () => {
             >
               <div className="w-60 h-36 overflow-hidden shadow-2xl">
                 {mobileActiveIndex !== null && (
-                  <img 
+                  <ProgressiveImage
                     src={relatedServices[mobileActiveIndex]?.media}
                     alt=""
-                    className="w-full h-full object-cover"
+                    className="w-full h-full"
                     key={mobileActiveIndex} // Force re-render for smooth image change
                   />
                 )}

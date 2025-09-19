@@ -1,5 +1,6 @@
 "use client";
 import React from 'react';
+import { ProgressiveImage } from '@/components/ui/ProgressiveMedia';
 
 const ServiceDetails = ({ 
   title, 
@@ -39,10 +40,10 @@ const ServiceDetails = ({
           <div className={`${reverse ? 'lg:order-1' : ''} relative`}>
             {imageUrl ? (
               <div className="aspect-[4/3] overflow-hidden">
-                <img 
+                <ProgressiveImage
                   src={imageUrl}
                   alt={imageAlt}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full"
                 />
               </div>
             ) : (

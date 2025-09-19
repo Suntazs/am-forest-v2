@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useRef } from "react";
-import { VideoWrapper } from "@/components/ui/AnimationWrapper";
+import { ProgressiveVideo } from "@/components/ui/ProgressiveMedia";
 import { usePageTransition } from "@/contexts/PageTransitionContext";
 export default function HomeHero() {
   const { animationsEnabled } = usePageTransition();
@@ -75,14 +75,13 @@ export default function HomeHero() {
 
         {/* Video section */}
         <div className="relative h-[400px] md:h-[500px]">
-          <VideoWrapper 
+          <ProgressiveVideo
             src="/video/vid-bg-amforest(1).mp4"
             autoPlay
             loop
             muted
             playsInline
-            alt="Aerial view of forest and suburban area"
-            className="w-full h-full object-cover"
+            className="w-full h-full"
           />
         </div>
       </div>
@@ -103,14 +102,13 @@ export default function HomeHero() {
 
         {/* Right side - Video */}
         <div className="flex-1 relative">
-          <VideoWrapper 
+          <ProgressiveVideo
             src="/video/vid-bg-amforest(1).mp4"
             autoPlay
             loop
             muted
             playsInline
-            alt="Aerial view of forest and suburban area"
-            className="w-full h-full object-cover"
+            className="w-full h-full"
           />
         </div>
       </div>

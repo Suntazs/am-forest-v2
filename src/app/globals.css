@@ -30,11 +30,19 @@ body {
   font-family: 'Helvetica Now Display', Helvetica, sans-serif;
 }
 
-/* Prevent horizontal overflow on mobile */
+/* Prevent horizontal overflow on mobile and ensure fixed positioning works */
 @media (max-width: 768px) {
   html, body {
     max-width: 100%;
     overflow-x: hidden;
+  }
+
+  /* Ensure fixed positioning works on mobile Safari and other mobile browsers */
+  nav {
+    position: fixed !important;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform;
   }
 }
 

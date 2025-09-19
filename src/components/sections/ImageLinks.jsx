@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { ProgressiveImage } from "@/components/ui/ProgressiveMedia";
 
 export default function ImageLinks() {
   const [hoveredIndex, setHoveredIndex] = useState(null);
@@ -128,10 +129,10 @@ export default function ImageLinks() {
         {/* Left side - Image */}
         <div className="w-full lg:w-5/12 mb-4 lg:mb-0 lg:pr-12">
           <div className="relative h-[400px] lg:h-[700px] overflow-hidden">
-            <img 
+            <ProgressiveImage
               src={currentImage}
               alt="Forest"
-              className="w-full h-full object-cover transition-all duration-700 ease-in-out transform"
+              className="w-full h-full transition-all duration-700 ease-in-out transform"
               style={{
                 transform: hoveredIndex !== null ? 'scale(1.05)' : 'scale(1)'
               }}

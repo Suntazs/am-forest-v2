@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import { useContactModal } from '../../contexts/ContactModalContext';
+import { ProgressiveImage } from '@/components/ui/ProgressiveMedia';
 
 export default function CTA() {
   const { openContactModal } = useContactModal();
@@ -11,10 +12,10 @@ export default function CTA() {
         {/* Left side - Image touching the edge */}
         <div className="hidden lg:block lg:w-2/5 relative h-full">
           <div className="absolute inset-0">
-            <img 
-              src="/image/beautiful-shot-forest-with-sunlight.png" 
-              alt="Aerial view of forest" 
-              className="w-full h-full object-cover opacity-70"
+            <ProgressiveImage
+              src="/image/beautiful-shot-forest-with-sunlight.png"
+              alt="Aerial view of forest"
+              className="w-full h-full opacity-70"
             />
           </div>
         </div>
@@ -36,10 +37,10 @@ export default function CTA() {
 
         {/* Mobile image - below content */}
         <div className="lg:hidden w-full h-64 relative">
-          <img 
-            src="/image/beautiful-shot-forest-with-sunlight.png" 
-            alt="Aerial view of forest" 
-            className="w-full h-full object-cover opacity-70"
+          <ProgressiveImage
+            src="/image/beautiful-shot-forest-with-sunlight.png"
+            alt="Aerial view of forest"
+            className="w-full h-full opacity-70"
           />
         </div>
       </div>

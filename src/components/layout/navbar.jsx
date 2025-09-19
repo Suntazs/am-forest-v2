@@ -100,10 +100,9 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
 
   return (
     <>
-    <nav className={`bg-[#243c36] fixed left-0 right-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.4,0.0,0.2,1)] ${
+    <nav className={`bg-[#243c36] fixed top-0 left-0 right-0 w-full z-50 transition-all duration-500 ease-[cubic-bezier(0.4,0.0,0.2,1)] ${
       isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-95'
-    }`}
-    style={{ top: 0 }}>
+    }`}>
       <div className="w-full px-4 sm:px-6 md:px-8 py-4 md:py-6">
         <div className="flex items-center justify-between">
           {/* Left side - Logo, company name, and contact information */}
@@ -115,7 +114,7 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
                 <span className="text-[#243c36] font-bold text-lg md:text-xl lg:text-2xl">AM</span>
               </div>
               <div className="text-neutral-200 font-semibold text-lg md:text-xl lg:text-2xl whitespace-nowrap">
-                AM Forest
+                Forest
               </div>
             </div>
 
