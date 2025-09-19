@@ -103,8 +103,8 @@ export default function SimplePageTransition({ children }) {
   return (
     <>
       {children}
-      
-      {/* Simple white overlay */}
+
+      {/* Simple white overlay for page transitions */}
       <AnimatePresence>
         {showOverlay && (
           <motion.div
@@ -113,8 +113,8 @@ export default function SimplePageTransition({ children }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ 
-              duration: 0.2, 
+            transition={{
+              duration: 0.2,
               ease: 'easeOut'
             }}
           />

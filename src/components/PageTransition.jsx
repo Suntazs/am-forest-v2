@@ -11,6 +11,8 @@ export default function PageTransition({ children }) {
   const [mounted, setMounted] = useState(false);
   const [pageFullyLoaded, setPageFullyLoaded] = useState(false);
   const [stage1Complete, setStage1Complete] = useState(false);
+  const [loadingPercentage, setLoadingPercentage] = useState(0);
+  const [showPercentage, setShowPercentage] = useState(false);
   const textRef = useRef(null);
   const { setTransitionComplete } = usePageTransition();
 
@@ -73,6 +75,21 @@ export default function PageTransition({ children }) {
       // Mark stage 1 complete after text reveal finishes
       setTimeout(() => {
         setStage1Complete(true);
+        setShowPercentage(true); // Show percentage after box moves
+
+        // Animate percentage
+        let current = 0;
+        const interval = setInterval(() => {
+          current += Math.floor(Math.random() * 15) + 5;
+
+          if (current >= 100) {
+            current = 100;
+            setLoadingPercentage(current);
+            clearInterval(interval);
+          } else {
+            setLoadingPercentage(current);
+          }
+        }, 100);
       }, 4000);
     } else {
       // Not first visit - immediately show content
@@ -178,7 +195,7 @@ export default function PageTransition({ children }) {
               <motion.div
                 className="relative"
                 initial={{ y: '0%' }}
-                animate={{ 
+                animate={{
                   y: animationPhase === 'slideUp' ? '-250%' : '0%'
                 }}
                 transition={{
@@ -189,7 +206,7 @@ export default function PageTransition({ children }) {
                   {/* Container for logo and text */}
                   <div className="relative flex items-center gap-4">
                     {/* Logo - starts at right position immediately */}
-                    <motion.div 
+                    <motion.div
                       className="bg-[#243c36] w-16 h-16 md:w-24 md:h-24 rounded-lg flex items-center justify-center z-20"
                       initial={{ 
                         x: textWidth > 0 ? `${textWidth + 20}px` : 0
@@ -207,10 +224,10 @@ export default function PageTransition({ children }) {
                     </motion.div>
                     
                     {/* Text */}
-                    <h1 
+                    <h1
                       ref={textRef}
                       className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#243c36] whitespace-nowrap opacity-0"
-                      style={{ 
+                      style={{
                         opacity: animationPhase === 'initial' ? 0 : 1,
                         transition: 'opacity 0.3s'
                       }}
@@ -242,6 +259,23 @@ export default function PageTransition({ children }) {
                   </div>
               </motion.div>
             </div>
+
+            {/* Loading percentage in overlay, not in container */}
+            {showPercentage && (
+              <motion.div
+                className="absolute text-[#243c36]/70 text-sm"
+                style={{
+                  bottom: '40%',
+                  left: '50%',
+                  transform: 'translateX(-50%)'
+                }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+              >
+                {loadingPercentage}%
+              </motion.div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
