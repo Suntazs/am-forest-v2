@@ -140,6 +140,7 @@ export function ProgressiveVideo({
   const containerRef = useRef(null);
   const [isInView, setIsInView] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [videoLoaded, setVideoLoaded] = useState(false);
 
   // Check if mobile on mount
   useEffect(() => {
@@ -189,14 +190,40 @@ export function ProgressiveVideo({
     // Set up video attributes
     if (poster) video.poster = poster;
 
-    // On desktop, try to autoplay when in view
-    if (!isMobile && autoPlay) {
-      video.play().catch(() => {
-        // Autoplay blocked, that's ok
-        console.log('Autoplay blocked');
-      });
+    // Handle video load
+    const handleLoadedData = () => {
+      setVideoLoaded(true);
+
+      // Try to autoplay on both mobile and desktop when in view
+      if (autoPlay && muted) {
+        video.play().catch(() => {
+          // Autoplay blocked, that's ok
+          console.log('Autoplay blocked');
+        });
+      }
+    };
+
+    video.addEventListener('loadeddata', handleLoadedData);
+
+    // For mobile, limit video duration to first 5 seconds only
+    if (isMobile) {
+      const handleTimeUpdate = () => {
+        if (video.currentTime > 5) {
+          video.currentTime = 0; // Loop back to start after 5 seconds
+        }
+      };
+      video.addEventListener('timeupdate', handleTimeUpdate);
+
+      return () => {
+        video.removeEventListener('loadeddata', handleLoadedData);
+        video.removeEventListener('timeupdate', handleTimeUpdate);
+      };
     }
-  }, [isInView, isMobile, autoPlay, poster]);
+
+    return () => {
+      video.removeEventListener('loadeddata', handleLoadedData);
+    };
+  }, [isInView, isMobile, autoPlay, muted, poster]);
 
   return (
     <div ref={containerRef} className={`relative ${className}`} {...props}>
@@ -207,10 +234,10 @@ export function ProgressiveVideo({
         loop={loop}
         muted={muted}
         playsInline
-        preload={isMobile ? 'none' : 'metadata'}
+        preload={isMobile ? 'metadata' : 'metadata'}
         poster={poster}
-        autoPlay={!isMobile && autoPlay}
-        controls={isMobile}
+        autoPlay={autoPlay && muted}
+        controls={false}
       />
     </div>
   );
