@@ -104,6 +104,11 @@ export default function PageTransition({ children }) {
   useEffect(() => {
     if (!mounted || !stage1Complete) return;
 
+    // Set a timeout to ensure we don't get stuck
+    const timeoutId = setTimeout(() => {
+      setPageFullyLoaded(true);
+    }, 2000); // 2 second max wait
+
     const checkPageLoad = () => {
       // Check if all images are loaded
       const images = document.querySelectorAll('img');
@@ -115,18 +120,10 @@ export default function PageTransition({ children }) {
         });
       });
 
-      // Check if all videos are loaded
-      const videos = document.querySelectorAll('video');
-      const videoPromises = Array.from(videos).map(video => {
-        if (video.readyState >= 3) return Promise.resolve();
-        return new Promise(resolve => {
-          video.addEventListener('loadeddata', resolve, { once: true });
-          video.addEventListener('error', resolve, { once: true });
-        });
-      });
-
-      // Wait for all media to load
-      Promise.all([...imagePromises, ...videoPromises]).then(() => {
+      // Don't wait for videos - they load lazily now
+      // Just wait for images
+      Promise.all(imagePromises).then(() => {
+        clearTimeout(timeoutId);
         setPageFullyLoaded(true);
       });
     };
@@ -140,6 +137,7 @@ export default function PageTransition({ children }) {
     }
 
     return () => {
+      clearTimeout(timeoutId);
       window.removeEventListener('load', checkPageLoad);
     };
   }, [mounted, stage1Complete]);

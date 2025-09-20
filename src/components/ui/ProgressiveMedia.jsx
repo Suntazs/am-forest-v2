@@ -133,16 +133,26 @@ export function ProgressiveVideo({
   autoPlay = true,
   loop = true,
   muted = true,
+  poster = null,
   ...props
 }) {
   const videoRef = useRef(null);
-  const canvasRef = useRef(null);
   const containerRef = useRef(null);
   const [isInView, setIsInView] = useState(false);
-  const [videoReady, setVideoReady] = useState(false);
-  const [animationDone, setAnimationDone] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  // Intersection Observer
+  // Check if mobile on mount
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth <= 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      setIsMobile(mobile);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Intersection Observer for lazy loading
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -170,114 +180,37 @@ export function ProgressiveVideo({
     };
   }, []);
 
-  // Capture first frame and prepare video
+  // Handle video loading and autoplay
   useEffect(() => {
-    if (!videoRef.current || !canvasRef.current) return;
+    if (!videoRef.current || !isInView) return;
 
     const video = videoRef.current;
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
 
-    const captureFrame = () => {
-      canvas.width = video.videoWidth || 1920;
-      canvas.height = video.videoHeight || 1080;
+    // Set up video attributes
+    if (poster) video.poster = poster;
 
-      // Draw first frame at really shitty quality
-      ctx.imageSmoothingEnabled = false;
-      ctx.drawImage(video, 0, 0, 10, 10);
-      ctx.drawImage(canvas, 0, 0, 10, 10, 0, 0, canvas.width, canvas.height);
-
-      setVideoReady(true);
-    };
-
-    video.addEventListener('loadeddata', captureFrame);
-
-    if (video.readyState >= 2) {
-      captureFrame();
+    // On desktop, try to autoplay when in view
+    if (!isMobile && autoPlay) {
+      video.play().catch(() => {
+        // Autoplay blocked, that's ok
+        console.log('Autoplay blocked');
+      });
     }
-
-    return () => {
-      video.removeEventListener('loadeddata', captureFrame);
-    };
-  }, []);
-
-  // Animate quality improvement when in view
-  useEffect(() => {
-    if (!isInView || !videoReady || animationDone) return;
-
-    const canvas = canvasRef.current;
-    const video = videoRef.current;
-    if (!canvas || !video) return;
-
-    const ctx = canvas.getContext('2d');
-
-    // Pixel steps from really shitty to good
-    const pixelSteps = [10, 15, 20, 30, 40, 60, 80, 120, 200, 400, 800];
-    let stepIndex = 0;
-
-    const animate = () => {
-      if (stepIndex >= pixelSteps.length) {
-        // Final draw at full quality
-        ctx.imageSmoothingEnabled = true;
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-        // Hide canvas and show video
-        setTimeout(() => {
-          canvas.style.opacity = '0';
-          video.style.opacity = '1';
-          if (autoPlay) {
-            video.play().catch(console.error);
-          }
-          setAnimationDone(true);
-        }, 100);
-        return;
-      }
-
-      const pixelSize = pixelSteps[stepIndex];
-
-      // Clear and redraw
-      ctx.imageSmoothingEnabled = false;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Draw small
-      ctx.drawImage(video, 0, 0, pixelSize, pixelSize);
-
-      // Scale up pixelated
-      ctx.drawImage(canvas, 0, 0, pixelSize, pixelSize, 0, 0, canvas.width, canvas.height);
-
-      stepIndex++;
-      setTimeout(animate, 100);
-    };
-
-    animate();
-  }, [isInView, videoReady, animationDone, autoPlay]);
+  }, [isInView, isMobile, autoPlay, poster]);
 
   return (
     <div ref={containerRef} className={`relative ${className}`} {...props}>
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{
-          imageRendering: 'pixelated',
-          zIndex: 2,
-          opacity: 1,
-          transition: 'opacity 0.3s ease-out'
-        }}
-      />
-
       <video
         ref={videoRef}
-        src={src}
+        src={isInView ? src : undefined}
         className="w-full h-full object-cover"
-        style={{
-          display: 'block',
-          opacity: 0,
-          transition: 'opacity 0.3s ease-out'
-        }}
         loop={loop}
         muted={muted}
         playsInline
-        preload="auto"
+        preload={isMobile ? 'none' : 'metadata'}
+        poster={poster}
+        autoPlay={!isMobile && autoPlay}
+        controls={isMobile}
       />
     </div>
   );
