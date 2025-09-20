@@ -67,18 +67,16 @@ function AppContent({ Component, pageProps }) {
             isContactOpen ? 'transform -translate-x-full md:-translate-x-[480px] lg:-translate-x-[550px]' : 'transform translate-x-0'
           }`}>
             {/* Navbar inside transform so it moves with the page */}
-            <div style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 200 }}>
-              <Navbar onMenuToggle={setMenuOpen} isMenuOpen={menuOpen} setIsMenuOpen={setMenuOpen} />
-            </div>
+            <Navbar onMenuToggle={setMenuOpen} isMenuOpen={menuOpen} setIsMenuOpen={setMenuOpen} />
 
             {/* Main content */}
             <LocomotiveScrollProvider>
               <Component {...pageProps} />
               <Footer />
             </LocomotiveScrollProvider>
-            
+
             {/* Dark overlay that slides with the page */}
-            <div 
+            <div
               className={`fixed inset-0 bg-black/50 z-[100] pointer-events-none ${
                 isContactOpen ? 'opacity-100' : 'opacity-0'
               }`}

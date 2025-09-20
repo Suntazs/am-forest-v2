@@ -1,21 +1,19 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/router";
 
 export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
   const [isVisible, setIsVisible] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const lastScrollY = useRef(0);
+  const ticking = useRef(false);
   const router = useRouter();
 
   // Check if mobile on mount and resize
   useEffect(() => {
     const checkMobile = () => {
-      const mobile = window.innerWidth <= 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      const mobile = window.innerWidth <= 768;
       setIsMobile(mobile);
-      if (mobile) {
-        setIsVisible(true); // Always visible on mobile
-      }
     };
 
     checkMobile();
@@ -23,103 +21,68 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Scroll handling - only on desktop
+  // Scroll handling for desktop only
   useEffect(() => {
-    if (isMobile) return; // Skip all scroll handling on mobile
+    if (isMobile) {
+      setIsVisible(true); // Always visible on mobile
+      return;
+    }
 
-    let locomotiveScroll;
-    let normalScrollHandler;
+    const updateNavbar = () => {
+      const currentScrollY = window.scrollY;
 
-    // Handler for Locomotive Scroll
-    const handleLocomotiveScroll = (obj) => {
-      const currentScrollY = obj.scroll.y;
-
-      if (currentScrollY > lastScrollY && currentScrollY > 80) {
+      if (currentScrollY < 80) {
+        // Always show at the top
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY.current) {
+        // Scrolling down - hide
         setIsVisible(false);
-      } else {
+      } else if (currentScrollY < lastScrollY.current) {
+        // Scrolling up - show
         setIsVisible(true);
       }
 
-      setLastScrollY(currentScrollY);
+      lastScrollY.current = currentScrollY;
+      ticking.current = false;
     };
 
-    // Fallback handler for normal scroll
-    normalScrollHandler = () => {
-      const currentScrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
-
-      if (currentScrollY > lastScrollY && currentScrollY > 80) {
-        setIsVisible(false);
-      } else {
-        setIsVisible(true);
-      }
-
-      setLastScrollY(currentScrollY);
-    };
-
-    // Try to use Locomotive Scroll first, with fallback to normal scroll
-    const initScrollListener = () => {
-      // Check for Locomotive Scroll
-      if (window.locomotiveScroll) {
-        locomotiveScroll = window.locomotiveScroll;
-        locomotiveScroll.on('scroll', handleLocomotiveScroll);
-      } else {
-        // Use normal scroll as fallback
-        window.addEventListener('scroll', normalScrollHandler, { passive: true });
+    const handleScroll = () => {
+      if (!ticking.current) {
+        window.requestAnimationFrame(updateNavbar);
+        ticking.current = true;
       }
     };
 
-    // Initialize on mount and route change
-    initScrollListener();
+    // Set initial state
+    lastScrollY.current = window.scrollY;
+    if (window.scrollY > 80) {
+      setIsVisible(false);
+    }
 
-    // Re-initialize after a small delay to ensure DOM is ready
-    const reinitTimer = setTimeout(() => {
-      initScrollListener();
-    }, 500);
-
-    // Check periodically for Locomotive Scroll (in case it loads later)
-    const checkInterval = setInterval(() => {
-      if (window.locomotiveScroll && !locomotiveScroll) {
-        initScrollListener();
-        clearInterval(checkInterval);
-      }
-    }, 1000);
-
-    // Clear check interval after 5 seconds (stop checking)
-    const clearCheckTimeout = setTimeout(() => {
-      clearInterval(checkInterval);
-    }, 5000);
+    // Listen for scroll events
+    window.addEventListener('scroll', handleScroll, { passive: true });
 
     return () => {
-      clearTimeout(reinitTimer);
-      clearTimeout(clearCheckTimeout);
-      clearInterval(checkInterval);
-      if (locomotiveScroll) {
-        locomotiveScroll.off('scroll', handleLocomotiveScroll);
-      }
-      window.removeEventListener('scroll', normalScrollHandler);
+      window.removeEventListener('scroll', handleScroll);
     };
-  }, [isMobile, lastScrollY, router.pathname]); // Re-run when route changes
+  }, [isMobile]);
 
-  const toggleMenu = () => {
+  const toggleMenu = useCallback(() => {
     const newState = !isMenuOpen;
     setIsMenuOpen(newState);
     if (onMenuToggle) onMenuToggle(newState);
-  };
-
-  const closeMenu = () => {
-    setIsMenuOpen(false);
-    if (onMenuToggle) onMenuToggle(false);
-  };
+  }, [isMenuOpen, setIsMenuOpen, onMenuToggle]);
 
   return (
     <>
-    <nav className={`bg-[#243c36] fixed top-0 left-0 right-0 w-full z-[20000] ${
-      isMobile
-        ? 'translate-y-0 opacity-100' // Always visible on mobile
-        : `transition-all duration-500 ease-[cubic-bezier(0.4,0.0,0.2,1)] ${
-            isVisible ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-95'
-          }`
-    }`}>
+    <nav className={`bg-[#243c36] fixed top-0 left-0 right-0 w-full z-[50] transition-transform duration-300 ease-out ${
+      isVisible ? 'translate-y-0' : '-translate-y-full'
+    }`}
+    style={{
+      willChange: 'transform',
+      backfaceVisibility: 'hidden',
+      WebkitBackfaceVisibility: 'hidden',
+    }}>
       <div className="w-full px-4 sm:px-6 md:px-8 py-4 md:py-6">
         <div className="flex items-center justify-between">
           {/* Left side - Logo, company name, and contact information */}
@@ -138,71 +101,71 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
             {/* Contact links - responsive sizing */}
             <div className="hidden lg:flex items-center gap-4 xl:gap-6 2xl:gap-8">
               {/* Email */}
-              <a 
-                href="mailto:info@amforest.lv" 
+              <a
+                href="mailto:info@amforest.lv"
                 className="flex items-center gap-1.5 md:gap-2 text-neutral-200 hover:text-[#dbf6a3] transition-colors"
               >
-                <svg 
-                  className="w-3.5 h-3.5 lg:w-4 lg:h-4 flex-shrink-0" 
-                  fill="none" 
-                  stroke="currentColor" 
+                <svg
+                  className="w-3.5 h-3.5 lg:w-4 lg:h-4 flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" 
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                   />
                 </svg>
                 <span className="text-sm lg:text-base xl:text-lg whitespace-nowrap">info@amforest.lv</span>
               </a>
 
               {/* Phone */}
-              <a 
-                href="tel:+37129123456" 
+              <a
+                href="tel:+37129123456"
                 className="flex items-center gap-1.5 md:gap-2 text-neutral-200 hover:text-[#dbf6a3] transition-colors"
               >
-                <svg 
-                  className="w-3.5 h-3.5 lg:w-4 lg:h-4 flex-shrink-0" 
-                  fill="none" 
-                  stroke="currentColor" 
+                <svg
+                  className="w-3.5 h-3.5 lg:w-4 lg:h-4 flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" 
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
                   />
                 </svg>
                 <span className="text-sm lg:text-base xl:text-lg whitespace-nowrap">+371 29 123 456</span>
               </a>
 
               {/* Address */}
-              <a 
-                href="https://maps.google.com/?q=Riga,Latvia" 
+              <a
+                href="https://maps.google.com/?q=Riga,Latvia"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-1.5 md:gap-2 text-neutral-200 hover:text-[#dbf6a3] transition-colors"
               >
-                <svg 
-                  className="w-3.5 h-3.5 lg:w-4 lg:h-4 flex-shrink-0" 
-                  fill="none" 
-                  stroke="currentColor" 
+                <svg
+                  className="w-3.5 h-3.5 lg:w-4 lg:h-4 flex-shrink-0"
+                  fill="none"
+                  stroke="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" 
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
                   />
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" 
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                   />
                 </svg>
                 <span className="text-sm lg:text-base xl:text-lg whitespace-nowrap">Riga, Latvia</span>
@@ -211,7 +174,7 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
           </div>
 
           {/* Right side - Unique hamburger menu button */}
-          <button 
+          <button
             onClick={toggleMenu}
             className="relative group p-3 hover:bg-[#faf6ed]/10 rounded-lg transition-colors"
           >
@@ -220,18 +183,18 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
               <div className="w-6 h-0.5 bg-[#faf6ed] rounded-full ml-1 group-hover:w-8 group-hover:ml-0 transition-all duration-300"></div>
               <div className="w-7 h-0.5 bg-[#faf6ed] rounded-full group-hover:translate-x-1 transition-transform duration-300"></div>
             </div>
-            
+
             {/* Decorative dots */}
             <div className="absolute -right-1 -top-1 w-2 h-2 bg-[#dbf6a3] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <div className="absolute -left-1 -bottom-1 w-1.5 h-1.5 bg-[#faf6ed] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75"></div>
           </button>
         </div>
       </div>
-      
+
       {/* Bottom border line */}
       <div className="w-full h-px bg-[#c7dccd]"></div>
     </nav>
-    
+
     </>
   );
 }
