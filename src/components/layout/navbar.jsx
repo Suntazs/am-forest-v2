@@ -10,31 +10,59 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
   useEffect(() => {
     let locomotiveScroll;
     let normalScrollHandler;
-    
+    let touchStartY = 0;
+    let isMobile = false;
+
+    // Check if mobile
+    const checkMobile = () => {
+      isMobile = window.innerWidth <= 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    };
+    checkMobile();
+
     // Handler for Locomotive Scroll
     const handleLocomotiveScroll = (obj) => {
       const currentScrollY = obj.scroll.y;
-      
+
       if (currentScrollY > lastScrollY && currentScrollY > 80) {
         setIsVisible(false);
       } else {
         setIsVisible(true);
       }
-      
+
       setLastScrollY(currentScrollY);
     };
 
     // Fallback handler for normal scroll
     normalScrollHandler = () => {
-      const currentScrollY = window.scrollY;
-      
-      if (currentScrollY > lastScrollY && currentScrollY > 80) {
-        setIsVisible(false);
-      } else {
+      const currentScrollY = window.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+
+      // On mobile, always keep navbar visible for better UX
+      if (isMobile) {
         setIsVisible(true);
+      } else {
+        if (currentScrollY > lastScrollY && currentScrollY > 80) {
+          setIsVisible(false);
+        } else {
+          setIsVisible(true);
+        }
       }
-      
+
       setLastScrollY(currentScrollY);
+    };
+
+    // Touch handlers for mobile
+    const handleTouchStart = (e) => {
+      touchStartY = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e) => {
+      if (!isMobile) return;
+
+      const touchY = e.touches[0].clientY;
+      const scrollDiff = touchStartY - touchY;
+
+      // Always keep visible on mobile
+      setIsVisible(true);
     };
 
     // Try to use Locomotive Scroll first, with fallback to normal scroll
@@ -44,14 +72,22 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
         locomotiveScroll.off('scroll', handleLocomotiveScroll);
       }
       window.removeEventListener('scroll', normalScrollHandler);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
 
       // Check for Locomotive Scroll
-      if (window.locomotiveScroll) {
+      if (window.locomotiveScroll && !isMobile) {
         locomotiveScroll = window.locomotiveScroll;
         locomotiveScroll.on('scroll', handleLocomotiveScroll);
       } else {
         // Use normal scroll as fallback
-        window.addEventListener('scroll', normalScrollHandler);
+        window.addEventListener('scroll', normalScrollHandler, { passive: true });
+
+        // Add touch listeners for mobile
+        if (isMobile) {
+          window.addEventListener('touchstart', handleTouchStart, { passive: true });
+          window.addEventListener('touchmove', handleTouchMove, { passive: true });
+        }
       }
     };
 
@@ -65,7 +101,7 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
 
     // Check periodically for Locomotive Scroll (in case it loads later)
     const checkInterval = setInterval(() => {
-      if (window.locomotiveScroll && !locomotiveScroll) {
+      if (window.locomotiveScroll && !locomotiveScroll && !isMobile) {
         initScrollListener();
         clearInterval(checkInterval);
       }
@@ -76,6 +112,13 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
       clearInterval(checkInterval);
     }, 5000);
 
+    // Handle resize
+    const handleResize = () => {
+      checkMobile();
+      initScrollListener();
+    };
+    window.addEventListener('resize', handleResize);
+
     return () => {
       clearTimeout(reinitTimer);
       clearTimeout(clearCheckTimeout);
@@ -84,6 +127,9 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
         locomotiveScroll.off('scroll', handleLocomotiveScroll);
       }
       window.removeEventListener('scroll', normalScrollHandler);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('resize', handleResize);
     };
   }, [lastScrollY, router.pathname]); // Re-run when route changes
 

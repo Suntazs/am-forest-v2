@@ -16,6 +16,17 @@ export default function ProperPageTransition({ children }) {
   const scrollPositionRef = useRef(0);
   const { setIsTransitioning: setGlobalTransitioning, setAnimationsEnabled, setTransitionComplete } = usePageTransition();
 
+  // Debug logging
+  useEffect(() => {
+    console.log('ProperPageTransition state:', {
+      pathname,
+      nextPath,
+      isTransitioning,
+      newPageReady,
+      frozenPage: !!frozenPage
+    });
+  }, [pathname, nextPath, isTransitioning, newPageReady, frozenPage]);
+
   // Update previous children when path matches and not transitioning
   useEffect(() => {
     if (pathname === previousPath.current && !isTransitioning) {
@@ -23,35 +34,36 @@ export default function ProperPageTransition({ children }) {
     }
   }, [children, pathname, isTransitioning]);
 
-  // Check when new page content is ready after navigation
+  // Simplified approach - just use a timer after navigation starts
   useEffect(() => {
-    if (pathname === nextPath && nextPath !== null) {
-      // New page content has arrived, now start the reveal animation
-      // Wait for next frame to ensure DOM is ready
-      requestAnimationFrame(() => {
-        // Give time for images and videos to initialize
-        setTimeout(() => {
-          setNewPageReady(true);
-        }, 400); // Slightly longer delay to prevent flash
-      });
+    if (isTransitioning && !newPageReady) {
+      console.log('Starting transition timer');
+      // Simply wait a fixed time for the page to load, then start animation
+      const timer = setTimeout(() => {
+        console.log('Timer complete, starting animation');
+        setNewPageReady(true);
+      }, 500); // Half second should be enough for route change
+
+      return () => clearTimeout(timer);
     }
-  }, [pathname, nextPath]);
+  }, [isTransitioning, newPageReady]);
 
   // Intercept navigation
   useEffect(() => {
     const handleClick = (e) => {
       const link = e.target.closest('a');
       if (!link) return;
-      
+
       const href = link.getAttribute('href');
       if (!href || href.startsWith('http') || href.startsWith('#') || href === pathname) return;
-      
+
       // Prevent default navigation
       e.preventDefault();
-      
+      e.stopPropagation();
+
       // Save current scroll position
       scrollPositionRef.current = window.scrollY;
-      
+
       // Freeze current page (it will stay until animation completes)
       setFrozenPage(previousChildren.current);
       setNextPath(href);
@@ -60,15 +72,18 @@ export default function ProperPageTransition({ children }) {
       setAnimationsEnabled(false);
       setTransitionComplete(false);
       setNewPageReady(false);
-      
+
       // Navigate immediately to start loading the new page
       router.push(href);
       previousPath.current = href;
     };
 
     document.addEventListener('click', handleClick, true);
-    return () => document.removeEventListener('click', handleClick, true);
-  }, [pathname, router]);
+
+    return () => {
+      document.removeEventListener('click', handleClick, true);
+    };
+  }, [pathname, router, setGlobalTransitioning, setAnimationsEnabled, setTransitionComplete]);
 
   // Clean up after animation completes
   useEffect(() => {
@@ -86,10 +101,34 @@ export default function ProperPageTransition({ children }) {
           setTransitionComplete(true);
         }, 100);
       }, 1200); // Duration of the slide animation
-      
+
       return () => clearTimeout(timer);
     }
   }, [newPageReady, setGlobalTransitioning, setAnimationsEnabled, setTransitionComplete]);
+
+  // Fallback timeout to ensure transition always completes
+  useEffect(() => {
+    if (isTransitioning) {
+      // Force complete the transition after 2 seconds if something goes wrong
+      const fallbackTimer = setTimeout(() => {
+        console.log('Transition fallback triggered - forcing completion');
+        setNewPageReady(true); // First try to trigger the animation
+
+        // Then force cleanup after animation time
+        setTimeout(() => {
+          setIsTransitioning(false);
+          setGlobalTransitioning(false);
+          setFrozenPage(null);
+          setNextPath(null);
+          setNewPageReady(false);
+          setAnimationsEnabled(true);
+          setTransitionComplete(true);
+        }, 1200);
+      }, 2000);
+
+      return () => clearTimeout(fallbackTimer);
+    }
+  }, [isTransitioning, setGlobalTransitioning, setAnimationsEnabled, setTransitionComplete]);
 
   // Prevent ALL scrolling during transition
   useEffect(() => {
@@ -125,10 +164,10 @@ export default function ProperPageTransition({ children }) {
         e.stopImmediatePropagation();
         return false;
       };
-      
+
       // Block all scroll-related events
-      const events = ['wheel', 'touchmove', 'scroll', 'mousewheel', 'DOMMouseScroll', 'keydown'];
-      
+      const events = ['wheel', 'touchmove', 'touchstart', 'scroll', 'mousewheel', 'DOMMouseScroll', 'keydown'];
+
       const keyHandler = (e) => {
         // Block arrow keys, page up/down, home/end, spacebar
         if ([32, 33, 34, 35, 36, 37, 38, 39, 40].includes(e.keyCode)) {
@@ -136,10 +175,23 @@ export default function ProperPageTransition({ children }) {
           return false;
         }
       };
-      
+
+      // Special handler for touch events to prevent mobile scrolling
+      const touchHandler = (e) => {
+        // Allow touches on buttons and links during transition
+        if (e.target.tagName === 'BUTTON' || e.target.tagName === 'A') {
+          return;
+        }
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      };
+
       events.forEach(event => {
         if (event === 'keydown') {
           document.addEventListener(event, keyHandler, { passive: false, capture: true });
+        } else if (event === 'touchmove' || event === 'touchstart') {
+          document.addEventListener(event, touchHandler, { passive: false, capture: true });
         } else {
           document.addEventListener(event, preventAll, { passive: false, capture: true });
         }
