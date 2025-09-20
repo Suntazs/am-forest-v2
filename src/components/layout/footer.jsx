@@ -1,7 +1,9 @@
 "use client";
 import React from "react";
+import { useContactModal } from '@/contexts/ContactModalContext';
 
 export default function Footer() {
+  const { openContactModal } = useContactModal();
   return (
     <footer className="bg-[#2a2a2a] py-16 md:py-24 lg:py-30">
       <div className="px-6 md:px-12 lg:px-20">
@@ -70,65 +72,66 @@ export default function Footer() {
         {/* Divider line */}
         <div className="w-full h-px bg-gray-600 mb-6 md:mb-8"></div>
 
-        {/* Bottom section with navigation and copyright */}
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6 md:gap-8">
-          {/* Navigation links and actions */}
-          <div className="flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-8">
-            {/* Navigation links */}
-            <nav className="flex flex-wrap items-center gap-6 md:gap-8">
-              <a 
-                href="/about" 
-                className="text-white hover:text-gray-300 transition-colors text-base md:text-lg"
-              >
-                About
-              </a>
-              <a 
-                href="/services" 
-                className="text-white hover:text-gray-300 transition-colors text-base md:text-lg"
-              >
-                Services
-              </a>
-              <a 
-                href="/projects" 
-                className="text-white hover:text-gray-300 transition-colors text-base md:text-lg"
-              >
-                Projects
-              </a>
-              <a 
-                href="/contact" 
-                className="text-white hover:text-gray-300 transition-colors text-base md:text-lg"
-              >
-                Contact
-              </a>
-            </nav>
+        {/* Copyright */}
+        <div className="text-gray-400 text-base md:text-lg mb-6 md:mb-8">
+          © Copyright 2024, All Rights Reserved
+        </div>
 
-            {/* Contact button and social links */}
-            <div className="flex items-center gap-4 md:gap-6">
-              <button className="bg-[#f3ecda] text-[#2a2a2a] px-4 md:px-6 py-2 rounded-lg font-semibold text-base md:text-lg hover:bg-[#e6d9c2] transition-colors">
-                Sazinies ar mums
-              </button>
-
-              {/* Social links */}
-              <a 
-                href="https://facebook.com" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white hover:text-gray-300 transition-colors"
-              >
-                <svg 
-                  className="w-5 h-5 md:w-6 md:h-6" 
-                  fill="currentColor" 
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-              </a>
-            </div>
+        {/* Bottom section with button and links */}
+        <div className="flex flex-col gap-6">
+          {/* Contact button - full width on mobile */}
+          <div>
+            <button
+              onClick={openContactModal}
+              className="bg-[#f3ecda] text-[#2a2a2a] px-6 py-2 rounded-lg font-semibold text-base md:text-lg hover:bg-[#e6d9c2] transition-colors w-full sm:w-auto">
+              Sazinies ar mums
+            </button>
           </div>
 
-          {/* Copyright */}
-          <div className="text-gray-400 text-base md:text-lg order-first lg:order-last">
-            © Copyright 2024, All Rights Reserved
+          {/* Navigation links and social - separate row */}
+          <div className="flex flex-wrap items-center gap-6 md:gap-8">
+            <a
+              href="/about"
+              className="text-white hover:text-gray-300 transition-colors text-base md:text-lg"
+            >
+              About
+            </a>
+            <a
+              href="/services"
+              className="text-white hover:text-gray-300 transition-colors text-base md:text-lg"
+            >
+              Services
+            </a>
+            <a
+              href="/projects"
+              className="text-white hover:text-gray-300 transition-colors text-base md:text-lg"
+            >
+              Projects
+            </a>
+            <a
+              href="/contact"
+              className="text-white hover:text-gray-300 transition-colors text-base md:text-lg"
+            >
+              Contact
+            </a>
+          </div>
+
+          {/* Social link - separate row on mobile */}
+          <div>
+            <a
+              href="https://facebook.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-white hover:text-gray-300 transition-colors inline-block"
+            >
+              <svg
+                className="w-5 h-5 md:w-6 md:h-6"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+              </svg>
+            </a>
           </div>
         </div>
       </div>

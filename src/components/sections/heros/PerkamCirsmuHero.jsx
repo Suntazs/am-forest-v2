@@ -9,7 +9,7 @@ export default function PerkamCirsmuHero() {
   return (
     <section className="relative overflow-hidden">
       {/* Mobile Layout */}
-      <div className="block lg:hidden pt-20 md:pt-24">
+      <div className="block lg:hidden pt-18 md:pt-22">
         {/* Video section */}
         <div className="relative h-[400px] md:h-[500px]">
           <ProgressiveVideo
@@ -21,10 +21,10 @@ export default function PerkamCirsmuHero() {
             className="w-full h-full"
           />
           {/* Dark overlay for better text visibility */}
-          <div className="absolute inset-0 bg-black/30"></div>
+          <div className="absolute inset-0 bg-black/30 z-10"></div>
 
           {/* Content overlay */}
-          <div className="absolute inset-0 flex items-center justify-center px-6 md:px-12">
+          <div className="absolute inset-0 flex items-center justify-center px-6 md:px-12 z-20">
             <div className="max-w-2xl text-center">
               <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
                 Pērkam Cirsmu
@@ -64,9 +64,15 @@ export default function PerkamCirsmuHero() {
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-neutral-700 leading-tight mb-8">
                 Pērkam Cirsmu
               </h1>
-              <p className="text-lg md:text-xl text-neutral-700 leading-relaxed mb-6">
+              <p className="text-lg md:text-xl text-neutral-700 leading-relaxed mb-8">
                 Piedāvājam izdevīgus nosacījumus cirsmu iegādei. Mūsu eksperti profesionāli novērtē kokmateriālu kvalitāti un apjomu, nodrošinot taisnīgu cenu. Veicam cirsmu izstrādi ar modernu tehniku, ievērojot visas vides prasības.
               </p>
+              <button
+                onClick={openContactModal}
+                className="bg-[#dbf6a3] text-[#243c36] px-8 py-4 rounded-full font-semibold text-lg hover:bg-[#c8e885] transition-colors duration-300 shadow-lg"
+              >
+                Saņemt piedāvājumu
+              </button>
             </div>
           </div>
         </div>

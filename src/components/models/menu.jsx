@@ -1,6 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import { urlFor } from '@/lib/sanity.image';
 
 export default function MenuModal({ isOpen, onClose }) {
   const [isMounted, setIsMounted] = useState(false);
@@ -8,6 +10,7 @@ export default function MenuModal({ isOpen, onClose }) {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [isHovering, setIsHovering] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
+  const [randomPost, setRandomPost] = useState(null);
   
   const handleMouseLeave = () => {
     setIsHovering(false);
@@ -27,6 +30,26 @@ export default function MenuModal({ isOpen, onClose }) {
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  // Fetch blog posts when modal opens
+  useEffect(() => {
+    if (isOpen && !randomPost) {
+      const fetchPosts = async () => {
+        try {
+          // Use fetch API directly to avoid CORS issues
+          const response = await fetch('/api/get-random-post');
+          if (response.ok) {
+            const post = await response.json();
+            setRandomPost(post);
+          }
+        } catch (error) {
+          console.error('Error fetching blog post:', error);
+          // Silently fail - the blog section just won't show
+        }
+      };
+      fetchPosts();
+    }
+  }, [isOpen, randomPost]);
 
   useEffect(() => {
     if (isOpen && !hasBeenOpened) {
@@ -192,9 +215,53 @@ export default function MenuModal({ isOpen, onClose }) {
               </div>
             </div>
 
-            {/* Right Side - Empty space with green background - fills remaining width */}
-            <div className="flex-1 bg-[#384d3a] hidden lg:block">
-              {/* Empty space */}
+            {/* Right Side - Blog post preview with green background - fills remaining width */}
+            <div className="flex-1 bg-[#384d3a] hidden lg:block relative overflow-hidden">
+              {randomPost && (
+                <Link href={`/blog/${randomPost.slug.current}`} onClick={onClose}>
+                  <div className="p-8 lg:p-12 h-full flex flex-col group cursor-pointer">
+                    {/* Label */}
+                    <p className="text-[#dbf6a3] text-sm uppercase tracking-wider mb-3 opacity-80">
+                      Jaunākais raksts
+                    </p>
+
+                    {/* Blog post image - uses all available height */}
+                    {randomPost.mainImage && (
+                      <div className="relative w-full flex-grow mb-4 overflow-hidden rounded-lg">
+                        <Image
+                          src={urlFor(randomPost.mainImage).url()}
+                          alt={randomPost.mainImage.alt || randomPost.title}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          sizes="(max-width: 1200px) 50vw, 40vw"
+                        />
+                      </div>
+                    )}
+
+                    {/* Title */}
+                    <h3 className="text-xl lg:text-2xl font-semibold text-[#faf6ed] mb-2 line-clamp-2 group-hover:text-[#dbf6a3] transition-colors duration-300">
+                      {randomPost.title}
+                    </h3>
+
+                    {/* Excerpt */}
+                    {randomPost.excerpt && (
+                      <p className="text-[#faf6ed]/80 mb-3 line-clamp-2 text-sm lg:text-base">
+                        {randomPost.excerpt}
+                      </p>
+                    )}
+
+                    {/* Read more button */}
+                    <div className="flex-shrink-0">
+                      <span className="inline-flex items-center text-[#dbf6a3] font-medium text-sm group-hover:gap-3 transition-all duration-300">
+                        <span>Lasīt vairāk</span>
+                        <svg className="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              )}
             </div>
           </div>
         </div>

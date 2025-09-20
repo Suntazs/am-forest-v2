@@ -5,7 +5,7 @@ import ServiceHero from '@/components/sections/services/ServiceHero';
 import ServiceFeatures from '@/components/sections/services/ServiceFeatures';
 import ServiceDetails from '@/components/sections/services/ServiceDetails';
 import FAQ from '@/components/sections/faq';
-import ServiceCTA from '@/components/sections/services/ServiceCTA';
+import CTA from '@/components/sections/cta';
 import servicesData from '@/data/servicesData';
 
 // Remove the inline data as we're now using the external file
@@ -285,7 +285,7 @@ const ServicePage = ({ slug, serviceData }) => {
     return <div>Service not found</div>;
   }
 
-  const { meta, hero, features, details, faq, cta } = serviceData;
+  const { meta, hero, features, details, faq } = serviceData;
 
   return (
     <>
@@ -326,12 +326,8 @@ const ServicePage = ({ slug, serviceData }) => {
           </div>
         </section>
       )}
-      
-      <ServiceCTA 
-        title={cta.title}
-        description={cta.description}
-        buttonText={cta.buttonText}
-      />
+
+      <CTA />
     </>
   );
 };
