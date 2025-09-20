@@ -63,6 +63,28 @@ export default function MenuModal({ isOpen, onClose }) {
     }
   }, [isOpen, hasBeenOpened]);
 
+  // Prevent body scroll when menu is open on mobile
+  useEffect(() => {
+    if (isOpen) {
+      // Save current scroll position
+      const scrollY = window.scrollY;
+
+      // Prevent scroll on mobile
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+
+      return () => {
+        // Restore scroll
+        const savedScrollY = document.body.style.top;
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.width = '';
+        window.scrollTo(0, parseInt(savedScrollY || '0', 10) * -1);
+      };
+    }
+  }, [isOpen]);
+
 
   // Don't render anything until mounted and has been opened at least once
   if (!isMounted || !hasBeenOpened) return null;
@@ -70,20 +92,21 @@ export default function MenuModal({ isOpen, onClose }) {
   return (
     <>
       {/* Backdrop */}
-      <div 
-        className={`fixed inset-0 bg-black/30 z-[10001] transition-opacity duration-600 ${
+      <div
+        className={`fixed inset-0 bg-black/30 z-[19998] transition-opacity duration-300 md:duration-600 ${
           isAnimating ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         onClick={onClose}
       />
-      
+
       {/* Modal */}
-      <div 
-        className={`fixed bottom-0 left-0 right-0 z-[10002] h-auto sm:min-h-[500px] ${
+      <div
+        className={`fixed bottom-0 left-0 right-0 z-[19999] h-auto sm:min-h-[500px] ${
           isAnimating ? 'menu-reveal-open' : 'menu-reveal-closed'
         }`}
         style={{
-          transformOrigin: 'bottom right'
+          transformOrigin: 'bottom right',
+          willChange: 'transform'
         }}
       >
         {/* Background - Split colors */}
@@ -269,24 +292,47 @@ export default function MenuModal({ isOpen, onClose }) {
 
       {/* Smooth Angled Animation */}
       <style jsx>{`
-        .menu-reveal-open {
-          transform: translateY(0) skewY(0deg);
-          opacity: 1;
-          clip-path: polygon(0 0%, 100% 0%, 100% 100%, 0 100%);
-          transition: transform 1100ms cubic-bezier(0.4, 0, 0.2, 1),
-                      clip-path 1100ms cubic-bezier(0.4, 0, 0.2, 1),
-                      opacity 1100ms cubic-bezier(0.4, 0, 0.2, 1);
+        @media (max-width: 768px) {
+          .menu-reveal-open {
+            transform: translateY(0) translateZ(0);
+            opacity: 1;
+            transition: transform 400ms cubic-bezier(0.25, 0.1, 0.25, 1),
+                        opacity 300ms ease-out;
+            -webkit-transform: translateY(0) translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+          }
+
+          .menu-reveal-closed {
+            transform: translateY(100%) translateZ(0);
+            opacity: 0;
+            transition: transform 400ms cubic-bezier(0.25, 0.1, 0.25, 1),
+                        opacity 300ms ease-out;
+            -webkit-transform: translateY(100%) translateZ(0);
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+          }
         }
 
-        .menu-reveal-closed {
-          transform: translateY(120%) skewY(-3deg);
-          opacity: 1;
-          clip-path: polygon(0 45%, 100% 0%, 100% 100%, 0 100%);
-          transition: transform 1100ms cubic-bezier(0.4, 0, 0.2, 1),
-                      clip-path 1100ms cubic-bezier(0.4, 0, 0.2, 1),
-                      opacity 1100ms cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        @media (min-width: 769px) {
+          .menu-reveal-open {
+            transform: translateY(0) skewY(0deg);
+            opacity: 1;
+            clip-path: polygon(0 0%, 100% 0%, 100% 100%, 0 100%);
+            transition: transform 1100ms cubic-bezier(0.4, 0, 0.2, 1),
+                        clip-path 1100ms cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 1100ms cubic-bezier(0.4, 0, 0.2, 1);
+          }
 
+          .menu-reveal-closed {
+            transform: translateY(120%) skewY(-3deg);
+            opacity: 1;
+            clip-path: polygon(0 45%, 100% 0%, 100% 100%, 0 100%);
+            transition: transform 1100ms cubic-bezier(0.4, 0, 0.2, 1),
+                        clip-path 1100ms cubic-bezier(0.4, 0, 0.2, 1),
+                        opacity 1100ms cubic-bezier(0.4, 0, 0.2, 1);
+          }
+        }
       `}</style>
     </>
   );

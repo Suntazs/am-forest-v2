@@ -48,41 +48,86 @@ export default function SimplePageTransition({ children }) {
   useEffect(() => {
     if (pathname !== previousPathname.current) {
       previousPathname.current = pathname;
-      
+
       // Scroll to top when page changes
       window.scrollTo(0, 0);
-      
+
       // Page has navigated, wait for it to load
       if (showOverlay && !pageLoaded) {
+        let hasCompleted = false;
+
+        // Force complete after 1 second maximum
+        const forceCompleteTimeout = setTimeout(() => {
+          if (!hasCompleted) {
+            console.log('Force completing page transition after 1s');
+            hasCompleted = true;
+            setPageLoaded(true);
+            setShowOverlay(false);
+            setGlobalTransitioning(false);
+            setAnimationsEnabled(true);
+            setTimeout(() => {
+              setTransitionComplete(true);
+            }, 200);
+          }
+        }, 1000); // 1 second maximum
+
         // Check if page is ready
         const checkPageReady = () => {
-          // Wait for next frame and all images to load
+          // Skip image loading on mobile for better performance
+          const isMobile = window.innerWidth <= 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+          if (isMobile || hasCompleted) {
+            // On mobile, immediately complete
+            if (!hasCompleted) {
+              clearTimeout(forceCompleteTimeout);
+              hasCompleted = true;
+              setPageLoaded(true);
+              setShowOverlay(false);
+              setGlobalTransitioning(false);
+              setAnimationsEnabled(true);
+              setTimeout(() => {
+                setTransitionComplete(true);
+              }, 200);
+            }
+            return;
+          }
+
+          // Desktop: wait for images but with timeout
           requestAnimationFrame(() => {
             const images = document.querySelectorAll('img');
-            const imagePromises = Array.from(images).map(img => {
+            const imagePromises = Array.from(images).slice(0, 5).map(img => { // Only check first 5 images
               if (img.complete) return Promise.resolve();
               return new Promise(resolve => {
-                img.addEventListener('load', resolve, { once: true });
-                img.addEventListener('error', resolve, { once: true });
+                const timer = setTimeout(resolve, 500); // 500ms timeout per image
+                img.addEventListener('load', () => {
+                  clearTimeout(timer);
+                  resolve();
+                }, { once: true });
+                img.addEventListener('error', () => {
+                  clearTimeout(timer);
+                  resolve();
+                }, { once: true });
               });
             });
-            
+
             Promise.all(imagePromises).then(() => {
-              // Add small delay to ensure everything is rendered
-              setTimeout(() => {
-                setPageLoaded(true);
-                setShowOverlay(false);
-                setGlobalTransitioning(false);
-                setAnimationsEnabled(true);
-                // Mark transition complete after the fade out animation (200ms)
+              if (!hasCompleted) {
+                clearTimeout(forceCompleteTimeout);
+                hasCompleted = true;
                 setTimeout(() => {
-                  setTransitionComplete(true);
-                }, 200);
-              }, 100);
+                  setPageLoaded(true);
+                  setShowOverlay(false);
+                  setGlobalTransitioning(false);
+                  setAnimationsEnabled(true);
+                  setTimeout(() => {
+                    setTransitionComplete(true);
+                  }, 200);
+                }, 100);
+              }
             });
           });
         };
-        
+
         // Start checking after a minimum time
         setTimeout(checkPageReady, 300);
       }

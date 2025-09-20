@@ -11,21 +11,27 @@ export default function ProperPageTransition({ children }) {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [nextPath, setNextPath] = useState(null);
   const [newPageReady, setNewPageReady] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const previousChildren = useRef(children);
   const previousPath = useRef(pathname);
   const scrollPositionRef = useRef(0);
   const { setIsTransitioning: setGlobalTransitioning, setAnimationsEnabled, setTransitionComplete } = usePageTransition();
 
-  // Debug logging
+  // Check if mobile
   useEffect(() => {
-    console.log('ProperPageTransition state:', {
-      pathname,
-      nextPath,
-      isTransitioning,
-      newPageReady,
-      frozenPage: !!frozenPage
-    });
-  }, [pathname, nextPath, isTransitioning, newPageReady, frozenPage]);
+    const checkMobile = () => {
+      const mobile = window.innerWidth <= 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      setIsMobile(mobile);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // If mobile, don't use page transitions at all
+  if (isMobile) {
+    return children;
+  }
 
   // Update previous children when path matches and not transitioning
   useEffect(() => {
@@ -34,19 +40,25 @@ export default function ProperPageTransition({ children }) {
     }
   }, [children, pathname, isTransitioning]);
 
-  // Simplified approach - just use a timer after navigation starts
+  // Force the transition to complete after 1 second no matter what
   useEffect(() => {
-    if (isTransitioning && !newPageReady) {
+    if (isTransitioning) {
       console.log('Starting transition timer');
-      // Simply wait a fixed time for the page to load, then start animation
+      // Force complete after 1 second
       const timer = setTimeout(() => {
-        console.log('Timer complete, starting animation');
+        console.log('Force completing transition after 1s');
         setNewPageReady(true);
-      }, 500); // Half second should be enough for route change
+        setIsTransitioning(false);
+        setGlobalTransitioning(false);
+        setFrozenPage(null);
+        setNextPath(null);
+        setAnimationsEnabled(true);
+        setTransitionComplete(true);
+      }, 1000); // 1 second max duration
 
       return () => clearTimeout(timer);
     }
-  }, [isTransitioning, newPageReady]);
+  }, [isTransitioning, setGlobalTransitioning, setAnimationsEnabled, setTransitionComplete]);
 
   // Intercept navigation
   useEffect(() => {
@@ -106,29 +118,6 @@ export default function ProperPageTransition({ children }) {
     }
   }, [newPageReady, setGlobalTransitioning, setAnimationsEnabled, setTransitionComplete]);
 
-  // Fallback timeout to ensure transition always completes
-  useEffect(() => {
-    if (isTransitioning) {
-      // Force complete the transition after 2 seconds if something goes wrong
-      const fallbackTimer = setTimeout(() => {
-        console.log('Transition fallback triggered - forcing completion');
-        setNewPageReady(true); // First try to trigger the animation
-
-        // Then force cleanup after animation time
-        setTimeout(() => {
-          setIsTransitioning(false);
-          setGlobalTransitioning(false);
-          setFrozenPage(null);
-          setNextPath(null);
-          setNewPageReady(false);
-          setAnimationsEnabled(true);
-          setTransitionComplete(true);
-        }, 1200);
-      }, 2000);
-
-      return () => clearTimeout(fallbackTimer);
-    }
-  }, [isTransitioning, setGlobalTransitioning, setAnimationsEnabled, setTransitionComplete]);
 
   // Prevent ALL scrolling during transition
   useEffect(() => {
