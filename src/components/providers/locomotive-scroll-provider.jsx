@@ -24,7 +24,14 @@ export default function LocomotiveScrollProvider({ children }) {
 
   useEffect(() => {
     if (!isReady || !scrollRef.current) return;
-    
+
+    // Detect if browser is Chrome
+    const isChrome = typeof window !== 'undefined' &&
+      (window.chrome !== undefined ||
+       (navigator.userAgent.indexOf('Chrome') > -1 &&
+        navigator.userAgent.indexOf('Edg') === -1 &&
+        navigator.userAgent.indexOf('OPR') === -1));
+
     // Only import and initialize on client side
     const initLocomotiveScroll = async () => {
       try {
@@ -34,17 +41,23 @@ export default function LocomotiveScrollProvider({ children }) {
           return;
         }
 
+        // Skip locomotive scroll initialization for Chrome
+        if (isChrome) {
+          console.log('Chrome detected - Locomotive Scroll disabled');
+          return;
+        }
+
         const LocomotiveScroll = (await import("locomotive-scroll")).default;
         await import("locomotive-scroll/dist/locomotive-scroll.css");
-        
+
         // Add a small delay to ensure DOM is fully ready
         await new Promise(resolve => setTimeout(resolve, 100));
-        
+
         if (!scrollRef.current) {
           console.warn('Scroll container lost during initialization');
           return;
         }
-        
+
         locomotiveScrollRef.current = new LocomotiveScroll({
           el: scrollRef.current,
           smooth: true,
@@ -77,12 +90,13 @@ export default function LocomotiveScrollProvider({ children }) {
       }
     };
 
-    if (typeof window !== 'undefined') {
+    // Only add resize listener if not Chrome
+    if (typeof window !== 'undefined' && !isChrome) {
       window.addEventListener("resize", handleUpdate);
     }
 
     return () => {
-      if (typeof window !== 'undefined') {
+      if (typeof window !== 'undefined' && !isChrome) {
         window.removeEventListener("resize", handleUpdate);
       }
       if (locomotiveScrollRef.current) {
