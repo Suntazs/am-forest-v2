@@ -9,7 +9,7 @@ export default function PerkamCirsmuHero() {
   return (
     <section className="relative overflow-hidden">
       {/* Mobile Layout */}
-      <div className="block lg:hidden pt-18 md:pt-22">
+      <div className="block lg:hidden pt-18 md:pt-22 ">
         {/* Video section */}
         <div className="relative h-[400px] md:h-[500px]">
           <ProgressiveVideo

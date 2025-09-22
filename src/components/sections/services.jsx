@@ -364,16 +364,24 @@ export default function Services({ showHeader = true, showFullServices = false }
               </div>
             )}
             {services.map((service, index) => {
-              const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
-              const cols = isMobile ? 2 : 4;
-              const totalRows = Math.ceil(services.length / cols);
-              const currentRow = Math.floor(index / cols);
-              const currentCol = index % cols;
-              const isLastRow = currentRow === totalRows - 1;
-              const isLastCol = currentCol === cols - 1;
-              
+              // Mobile: 2 columns
+              const mobileCol = index % 2;
+              const mobileRow = Math.floor(index / 2);
+              const mobileTotalRows = Math.ceil(services.length / 2);
+
+              // Desktop: 4 columns
+              const desktopCol = index % 4;
+              const desktopRow = Math.floor(index / 4);
+              const desktopTotalRows = Math.ceil(services.length / 4);
+
+              // Determine which borders to show
+              const showMobileBottomBorder = mobileRow < mobileTotalRows - 1;
+              const showMobileRightBorder = mobileCol === 0;
+              const showDesktopBottomBorder = desktopRow < desktopTotalRows - 1;
+              const showDesktopRightBorder = desktopCol < 3;
+
               return (
-                <Link 
+                <Link
                   href={service.link || '#'}
                   key={index}
                   className="block group"
@@ -381,10 +389,13 @@ export default function Services({ showHeader = true, showFullServices = false }
                   <div
                     onMouseEnter={() => handleMouseEnter(index)}
                     className={`
-                      relative flex flex-col items-start justify-center 
+                      relative flex flex-col items-start justify-center
                       p-6 md:p-10 lg:p-16 z-10 h-full
-                      ${!isLastRow ? 'border-b border-[#243c36]' : ''}
-                      ${!isLastCol ? 'border-r border-[#243c36]' : ''}
+                      ${showMobileBottomBorder ? 'border-b' : ''}
+                      ${showMobileRightBorder ? 'border-r' : ''}
+                      ${showDesktopBottomBorder ? 'md:border-b' : 'md:border-b-0'}
+                      ${showDesktopRightBorder ? 'md:border-r' : 'md:border-r-0'}
+                      border-[#243c36]
                       transition-all duration-300 hover:bg-opacity-10
                     `}
                   >

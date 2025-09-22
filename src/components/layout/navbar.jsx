@@ -75,8 +75,8 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
 
   return (
     <>
-    <nav className={`bg-[#243c36] fixed top-0 left-0 right-0 w-full z-[50] transition-transform duration-300 ease-out ${
-      isVisible ? 'translate-y-0' : '-translate-y-full'
+    <nav className={`bg-[#243c36] ${isMobile ? 'absolute' : 'fixed'} top-0 left-0 right-0 w-full z-[50] transition-transform duration-300 ease-out ${
+      isVisible || isMobile ? 'translate-y-0' : '-translate-y-full'
     }`}
     style={{
       willChange: 'transform',
