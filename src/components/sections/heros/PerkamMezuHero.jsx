@@ -13,7 +13,7 @@ export default function PerkamMezuHero() {
         {/* Video section */}
         <div className="relative h-[400px] md:h-[500px]">
           <ProgressiveVideo
-            src="/video/vid-bg-amforest(1).mp4"
+            src="/video/vid-bg-amforest-optimized.mp4"
             autoPlay
             loop
             muted
@@ -48,7 +48,7 @@ export default function PerkamMezuHero() {
         {/* Left side - Video touching edge */}
         <div className="w-1/2 relative h-full">
           <ProgressiveVideo
-            src="/video/vid-bg-amforest(1).mp4"
+            src="/video/vid-bg-amforest-optimized.mp4"
             autoPlay
             loop
             muted

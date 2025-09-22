@@ -205,39 +205,38 @@ export function ProgressiveVideo({
 
     video.addEventListener('loadeddata', handleLoadedData);
 
-    // For mobile, limit video duration to first 5 seconds only
-    if (isMobile) {
-      const handleTimeUpdate = () => {
-        if (video.currentTime > 5) {
-          video.currentTime = 0; // Loop back to start after 5 seconds
-        }
-      };
-      video.addEventListener('timeupdate', handleTimeUpdate);
-
-      return () => {
-        video.removeEventListener('loadeddata', handleLoadedData);
-        video.removeEventListener('timeupdate', handleTimeUpdate);
-      };
-    }
+    // Limit video to 9 seconds maximum for all devices
+    const handleTimeUpdate = () => {
+      if (video.currentTime > 9) {
+        video.currentTime = 0; // Loop back to start after 9 seconds
+      }
+    };
+    video.addEventListener('timeupdate', handleTimeUpdate);
 
     return () => {
       video.removeEventListener('loadeddata', handleLoadedData);
+      video.removeEventListener('timeupdate', handleTimeUpdate);
     };
-  }, [isInView, isMobile, autoPlay, muted, poster]);
+  }, [isInView, autoPlay, muted, poster]);
 
   return (
     <div ref={containerRef} className={`relative ${className}`} {...props}>
       <video
         ref={videoRef}
-        src={isInView ? src : undefined}
+        src={src}
         className="w-full h-full object-cover"
         loop={loop}
         muted={muted}
         playsInline
-        preload={isMobile ? 'metadata' : 'metadata'}
+        preload="metadata"
         poster={poster}
         autoPlay={autoPlay && muted}
         controls={false}
+        style={{
+          // Optimize rendering for performance
+          willChange: 'transform',
+          transform: 'translateZ(0)',
+        }}
       />
     </div>
   );
