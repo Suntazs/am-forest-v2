@@ -73,6 +73,12 @@ export default function MenuModal({ isOpen, onClose }) {
       document.body.style.position = 'fixed';
       document.body.style.top = `-${scrollY}px`;
       document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+
+      // Also prevent touch scrolling
+      document.documentElement.style.overflow = 'hidden';
+      document.documentElement.style.position = 'fixed';
+      document.documentElement.style.width = '100%';
 
       return () => {
         // Restore scroll
@@ -80,6 +86,12 @@ export default function MenuModal({ isOpen, onClose }) {
         document.body.style.position = '';
         document.body.style.top = '';
         document.body.style.width = '';
+        document.body.style.overflow = '';
+
+        document.documentElement.style.overflow = '';
+        document.documentElement.style.position = '';
+        document.documentElement.style.width = '';
+
         window.scrollTo(0, parseInt(savedScrollY || '0', 10) * -1);
       };
     }
@@ -96,6 +108,7 @@ export default function MenuModal({ isOpen, onClose }) {
         className={`fixed inset-0 bg-black/30 z-[19998] transition-opacity duration-300 md:duration-600 ${
           isAnimating ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
+        style={{ touchAction: 'none' }}
         onClick={onClose}
       />
 
@@ -134,7 +147,7 @@ export default function MenuModal({ isOpen, onClose }) {
           </div>
 
           {/* Main Container - Responsive Layout */}
-          <div className="flex-1 flex flex-col sm:flex-row overflow-y-auto sm:pt-0">
+          <div className="flex-1 flex flex-col sm:flex-row overflow-y-auto sm:overflow-y-scroll sm:pt-0" style={{ WebkitOverflowScrolling: 'touch' }}>
             {/* Left Side - Navigation Links - Full width on mobile, auto on desktop */}
             <div className="flex flex-col flex-shrink-0 w-full sm:w-auto">
               {/* Navigation Links - responsive columns */}

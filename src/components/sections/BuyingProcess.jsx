@@ -484,34 +484,8 @@ const BuyingProcess = () => {
           ))}
           </div>
           
-          {/* Mobile Image Display - Smoothly moves below active link */}
-          {isMobile && (
-            <div 
-              className={`md:hidden absolute pointer-events-none transition-all duration-700 ease-in-out ${
-                mobileActiveIndex === null ? 'opacity-0' : 'opacity-100'
-              }`}
-              style={{
-                top: mobileActiveIndex !== null ? `${(mobileActiveIndex + 1) * linkHeight + 10}px` : '0px',
-                left: '50%',
-                transform: mobileActiveIndex === 0 ? 'translateX(-50%) translateX(-80px)' :
-                          mobileActiveIndex === 1 ? 'translateX(-50%)' :
-                          mobileActiveIndex === 2 ? 'translateX(-50%) translateX(80px)' : 
-                          'translateX(-50%)',
-                zIndex: 10
-              }}
-            >
-              <div className="w-60 h-36 overflow-hidden shadow-2xl">
-                {mobileActiveIndex !== null && (
-                  <ProgressiveImage
-                    src={relatedServices[mobileActiveIndex]?.media}
-                    alt=""
-                    className="w-full h-full"
-                    key={mobileActiveIndex} // Force re-render for smooth image change
-                  />
-                )}
-              </div>
-            </div>
-          )}
+          {/* Mobile Image Display - Hidden on mobile */}
+          {/* Removed: Image display on mobile to improve UX */}
         </div>
       </section>
     </>
