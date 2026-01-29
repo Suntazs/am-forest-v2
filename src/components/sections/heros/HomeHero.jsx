@@ -2,8 +2,10 @@
 import React, { useEffect, useRef } from "react";
 import { ProgressiveVideo } from "@/components/ui/ProgressiveMedia";
 import { usePageTransition } from "@/contexts/PageTransitionContext";
+import { useTranslation } from 'next-i18next';
 export default function HomeHero() {
   const { animationsEnabled } = usePageTransition();
+  const { t } = useTranslation('common');
   const flowerRef = useRef(null);
   const flowerRef2 = useRef(null);
 
@@ -34,7 +36,7 @@ export default function HomeHero() {
         <div className="px-6 md:px-12 py-20 md:py-32">
           <div className="max-w-5xl">
             <h1 className="text-4xl md:text-5xl font-bold text-[#dbf6a3] leading-tight">
-            AM Forest profesionāla pieeja katram meža īpašniekam, katram hektāram.
+            {t('homeHero.heading')}
             </h1>
           </div>
         </div>
@@ -92,7 +94,7 @@ export default function HomeHero() {
         <div className="flex-[2] flex flex-col justify-center px-20 py-20">
           <div className="max-w-5xl">
             <h1 className="text-7xl font-bold text-[#dbf6a3] leading-tight mb-8">
-            AM Forest profesionāla pieeja katram meža īpašniekam, katram hektāram.
+            {t('homeHero.heading')}
             </h1>
           </div>
         </div>

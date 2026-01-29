@@ -3,8 +3,10 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { ProgressiveImage } from "@/components/ui/ProgressiveMedia";
+import { useTranslation } from 'next-i18next';
 
 export default function ImageLinks() {
+  const { t } = useTranslation('common');
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [isInView, setIsInView] = useState(false);
   const [animationStarted, setAnimationStarted] = useState(false);
@@ -16,22 +18,22 @@ export default function ImageLinks() {
 
   const links = [
     {
-      title: "Kapēc jauzkopj mežs?",
+      title: t('imageLinks.link1'),
       href: "/services/forest-management",
       image: "/image/beautiful-shot-forest-with-sunlight.png"
     },
     {
-      title: "Kā pārdot mežu?",
+      title: t('imageLinks.link2'),
       href: "/services/timber-trade",
       image: "/image/beautiful-shot-forest-with-sunlight.png"
     },
     {
-      title: "Kad ir īstais laiks cirst mežu?",
+      title: t('imageLinks.link3'),
       href: "/services/consulting",
       image: "/image/beautiful-shot-forest-with-sunlight.png"
     },
     {
-      title: "Kas jāzina pirms meža izciršanas?",
+      title: t('imageLinks.link4'),
       href: "/services/reforestation",
       image: "/image/beautiful-shot-forest-with-sunlight.png"
     }
@@ -131,7 +133,7 @@ export default function ImageLinks() {
           <div className="relative h-[400px] lg:h-[700px] overflow-hidden">
             <ProgressiveImage
               src={currentImage}
-              alt="Forest"
+              alt={t('imageLinks.imageAlt')}
               className="w-full h-full transition-all duration-700 ease-in-out transform"
               style={{
                 transform: hoveredIndex !== null ? 'scale(1.05)' : 'scale(1)'

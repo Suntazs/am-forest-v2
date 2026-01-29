@@ -1,6 +1,8 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import ServiceHero from '@/components/sections/services/ServiceHero';
 import ServiceFeatures from '@/components/sections/services/ServiceFeatures';
 import ServiceDetails from '@/components/sections/services/ServiceDetails';
@@ -251,15 +253,21 @@ const servicesDataTemp = {
 };
 */
 
-export async function getStaticPaths() {
-  const paths = Object.keys(servicesData).map((slug) => ({
-    params: { slug },
-  }));
+export async function getStaticPaths({ locales }) {
+  const slugs = Object.keys(servicesData);
+  
+  // Generate paths for all slugs and all locales
+  const paths = slugs.flatMap((slug) =>
+    locales.map((locale) => ({
+      params: { slug },
+      locale,
+    }))
+  );
 
   return { paths, fallback: false };
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params, locale }) {
   const serviceData = servicesData[params.slug];
   
   if (!serviceData) {
@@ -270,22 +278,39 @@ export async function getStaticProps({ params }) {
     props: {
       slug: params.slug,
       serviceData,
+      ...(await serverSideTranslations(locale, ['common'])),
     },
   };
 }
 
 const ServicePage = ({ slug, serviceData }) => {
   const router = useRouter();
+  const { t } = useTranslation('common');
 
   if (router.isFallback) {
-    return <div>Loading...</div>;
+    return <div>{t('serviceSlug.loading')}</div>;
   }
 
   if (!serviceData) {
-    return <div>Service not found</div>;
+    return <div>{t('serviceSlug.notFound')}</div>;
   }
 
-  const { meta, hero, features, details, faq } = serviceData;
+  // Get translated text from translation files
+  const meta = t(`serviceData.${slug}.meta`, { returnObjects: true });
+  const hero = t(`serviceData.${slug}.hero`, { returnObjects: true });
+  const featuresTranslated = t(`serviceData.${slug}.features`, { returnObjects: true });
+  const detailsTranslated = t(`serviceData.${slug}.details`, { returnObjects: true });
+  const faqTranslated = t(`serviceData.${slug}.faq`, { returnObjects: true });
+  const ctaTranslated = t(`serviceData.${slug}.cta`, { returnObjects: true });
+
+  // Merge translated feature text with iconPath data from servicesData
+  const featuresWithIcons = featuresTranslated.items?.map((item, i) => ({
+    ...item,
+    iconPath: serviceData.features?.items?.[i]?.iconPath || null,
+  })) || [];
+
+  const hasFeatures = featuresWithIcons.length > 0 && featuresTranslated.title;
+  const hasFaq = Array.isArray(faqTranslated) && faqTranslated.length > 0;
 
   return (
     <>
@@ -304,25 +329,27 @@ const ServicePage = ({ slug, serviceData }) => {
         description={hero.description}
       />
       
-      <ServiceFeatures 
-        title={features.title}
-        features={features.items}
-      />
+      {hasFeatures && (
+        <ServiceFeatures 
+          title={featuresTranslated.title}
+          features={featuresWithIcons}
+        />
+      )}
       
       <ServiceDetails 
-        title={details.title}
-        description={details.description}
-        bulletPoints={details.bulletPoints}
-        imageUrl={details.imageUrl}
+        title={detailsTranslated.title}
+        description={detailsTranslated.description}
+        bulletPoints={detailsTranslated.bulletPoints}
+        imageUrl={serviceData.details?.imageUrl}
       />
 
-      {faq && faq.length > 0 && (
+      {hasFaq && (
         <section className="relative py-20 bg-[#faf6ed] overflow-hidden">
           <div className="flex flex-col px-6 md:px-12 lg:px-20">
             <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold text-neutral-700 leading-tight mb-8 md:mb-12 lg:mb-16">
-              Biežāk uzdotie jautājumi
+              {t('serviceSlug.faqHeading')}
             </h2>
-            <FAQ faqData={faq} />
+            <FAQ faqData={faqTranslated} />
           </div>
         </section>
       )}

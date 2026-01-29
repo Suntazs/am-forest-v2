@@ -2,8 +2,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import AnimatedCounter from '@/components/ui/AnimatedCounter';
+import { useTranslation } from 'next-i18next';
 
 const ProcessSteps = () => {
+  const { t } = useTranslation('common');
   const [visibleSteps, setVisibleSteps] = useState([false, false, false]);
   const stepRefs = useRef([]);
 
@@ -34,26 +36,13 @@ const ProcessSteps = () => {
       });
     };
   }, []);
-  const steps = [
-    {
-      number: "01",
-      title: "Sākotnējā konsultācija",
-      description: "Mēs sazināmies ar jums, lai saprastu jūsu vajadzības un meža īpašuma specifiku. Nosakām vērtību un apspriežam turpmākos soļus.",
-      bgDark: true
-    },
-    {
-      number: "02",
-      title: "Īpašuma novērtēšana",
-      description: "Mūsu eksperti veic detalizētu meža inventarizāciju un novērtē īpašuma vērtību, ņemot vērā koksnes kvalitāti, platību un tirgus situāciju.",
-      bgDark: false
-    },
-    {
-      number: "03",
-      title: "Darījuma noformēšana",
-      description: "Sagatavojam visus nepieciešamos dokumentus un nodrošinām juridiski korektu darījuma norisi. Garantējam drošu un caurspīdīgu procesu.",
-      bgDark: true
-    }
-  ];
+  const translatedSteps = t('processSteps', { returnObjects: true });
+  const steps = (Array.isArray(translatedSteps) ? translatedSteps : []).map((step, index) => ({
+    number: String(index + 1).padStart(2, '0'),
+    title: step.title,
+    description: step.description,
+    bgDark: index % 2 === 0
+  }));
 
   return (
     <>

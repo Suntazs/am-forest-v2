@@ -1,7 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
+import { useTranslation } from 'next-i18next';
 
 export default function ContactModal({ isOpen, onClose }) {
+  const { t } = useTranslation('common');
   const [isMounted, setIsMounted] = useState(false);
   const [formData, setFormData] = useState({
     firstName: '',
@@ -76,7 +78,7 @@ export default function ContactModal({ isOpen, onClose }) {
           {/* Header row with close button */}
           <div className="flex items-center justify-between px-6 sm:px-8 lg:px-10 py-6 border-b border-[#2a2a2a]">
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-light text-[#2a2a2a]">
-              Contact Us
+              {t('contactModal.heading')}
             </h2>
             <button 
               onClick={onClose}
@@ -100,7 +102,7 @@ export default function ContactModal({ isOpen, onClose }) {
                     name="firstName"
                     value={formData.firstName}
                     onChange={handleInputChange}
-                    placeholder="First Name"
+                    placeholder={t('contactModal.firstName')}
                     required
                     className="w-full px-6 sm:px-8 lg:px-10 py-6 bg-transparent text-[#2a2a2a] placeholder-[#2a2a2a]/50 focus:outline-none transition-colors text-base sm:text-lg appearance-none"
                     style={{
@@ -117,7 +119,7 @@ export default function ContactModal({ isOpen, onClose }) {
                     name="lastName"
                     value={formData.lastName}
                     onChange={handleInputChange}
-                    placeholder="Last Name"
+                    placeholder={t('contactModal.lastName')}
                     required
                     className="w-full px-6 sm:px-8 lg:px-10 py-6 bg-transparent text-[#2a2a2a] placeholder-[#2a2a2a]/50 focus:outline-none transition-colors text-base sm:text-lg appearance-none"
                     style={{
@@ -136,7 +138,7 @@ export default function ContactModal({ isOpen, onClose }) {
                   name="email"
                   value={formData.email}
                   onChange={handleInputChange}
-                  placeholder="Email"
+                  placeholder={t('contactModal.email')}
                   required
                   className="w-full px-6 sm:px-8 lg:px-10 py-6 bg-transparent text-[#2a2a2a] placeholder-[#2a2a2a]/50 focus:outline-none transition-colors text-base sm:text-lg appearance-none"
                   style={{
@@ -154,7 +156,7 @@ export default function ContactModal({ isOpen, onClose }) {
                   name="phone"
                   value={formData.phone}
                   onChange={handleInputChange}
-                  placeholder="Phone Number"
+                  placeholder={t('contactModal.phone')}
                   required
                   className="w-full px-6 sm:px-8 lg:px-10 py-6 bg-transparent text-[#2a2a2a] placeholder-[#2a2a2a]/50 focus:outline-none transition-colors text-base sm:text-lg appearance-none"
                   style={{
@@ -171,7 +173,7 @@ export default function ContactModal({ isOpen, onClose }) {
                   name="message"
                   value={formData.message}
                   onChange={handleInputChange}
-                  placeholder="Message"
+                  placeholder={t('contactModal.message')}
                   required
                   rows="8"
                   className="w-full px-6 sm:px-8 lg:px-10 py-6 bg-transparent text-[#2a2a2a] placeholder-[#2a2a2a]/50 focus:outline-none transition-colors text-base sm:text-lg resize-none appearance-none"
@@ -188,7 +190,7 @@ export default function ContactModal({ isOpen, onClose }) {
                 type="submit"
                 className="w-full py-6 bg-transparent border-b border-[#2a2a2a] text-[#2a2a2a] text-base sm:text-lg font-medium hover:bg-[#dbf6a3] transition-all duration-300"
               >
-                Send Message
+                {t('contactModal.send')}
               </button>
             </form>
           </div>

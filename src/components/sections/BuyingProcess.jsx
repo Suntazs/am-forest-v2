@@ -3,8 +3,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useMouseFollower } from '@/contexts/MouseFollowerContext';
 import { ProgressiveImage, ProgressiveVideo } from '@/components/ui/ProgressiveMedia';
+import { useTranslation } from 'next-i18next';
 
 const BuyingProcess = () => {
+  const { t } = useTranslation('common');
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [isHovering, setIsHovering] = useState(false);
   const [hoveredLinkIndex, setHoveredLinkIndex] = useState(null);
@@ -244,69 +246,32 @@ const BuyingProcess = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isMobile, mobileActiveIndex]);
 
-  const relatedServices = [
-    {
-      title: "Meža inventarizācija",
-      href: "/services/forest-inventory",
-      ariaLabel: "Meža inventarizācijas pakalpojumi",
-      media: "/image/beautiful-shot-forest-with-sunlight.png",
-      mediaType: "image" // Can be "image" or "video"
-    },
-    {
-      title: "Taksācijas pakalpojumi",
-      href: "/services/taxation",
-      ariaLabel: "Meža taksācijas un vērtēšanas pakalpojumi",
-      media: "/image/beautiful-shot-forest-with-sunlight.png",
-      mediaType: "image"
-    },
-    {
-      title: "Juridiskās konsultācijas",
-      href: "/services/legal-consulting",
-      ariaLabel: "Juridiskās konsultācijas meža īpašumu jautājumos",
-      media: "/image/beautiful-shot-forest-with-sunlight.png",
-      mediaType: "image"
-    }
-  ];
+  const translatedRelatedServices = t('buyingProcess.relatedServices', { returnObjects: true });
+  const relatedServices = (Array.isArray(translatedRelatedServices) ? translatedRelatedServices : []).map((service, index) => ({
+    title: service.title,
+    href: ["/services/forest-inventory", "/services/taxation", "/services/legal-consulting"][index],
+    ariaLabel: service.aria,
+    media: "/image/beautiful-shot-forest-with-sunlight.png",
+    mediaType: "image"
+  }));
 
-  const forestStates = [
-    {
-      title: "Izstrādātus meža īpašumus",
-      description: "Pilnībā apstrādāti un gatavi tālākai attīstībai",
-      icon: (
-        <svg className="w-12 h-12 md:w-14 md:h-14" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.5">
-          <circle cx="50" cy="50" r="30" />
-          <path d="M35 50 L45 60 L65 40" strokeWidth="2"/>
-        </svg>
-      )
-    },
-    {
-      title: "Daļēji izstrādātus meža īpašumus",
-      description: "Ar iesāktiem darbiem un potenciālu turpināšanai",
-      icon: (
-        <svg className="w-12 h-12 md:w-14 md:h-14" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.5">
-          <circle cx="50" cy="50" r="30" />
-          <path d="M50 20 L50 50 L65 65" strokeWidth="2"/>
-        </svg>
-      )
-    },
-    {
-      title: "Neizstrādātus meža īpašumus",
-      description: "Dabīgi meži ar pilnu attīstības potenciālu",
-      icon: (
-        <svg className="w-12 h-12 md:w-14 md:h-14" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.5">
-          <circle cx="50" cy="50" r="30" />
-          <circle cx="50" cy="50" r="20" />
-          <circle cx="50" cy="50" r="10" />
-        </svg>
-      )
-    }
+  const translatedStates = t('buyingProcess.states', { returnObjects: true });
+  const stateIcons = [
+    (<svg className="w-12 h-12 md:w-14 md:h-14" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="50" cy="50" r="30" /><path d="M35 50 L45 60 L65 40" strokeWidth="2"/></svg>),
+    (<svg className="w-12 h-12 md:w-14 md:h-14" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="50" cy="50" r="30" /><path d="M50 20 L50 50 L65 65" strokeWidth="2"/></svg>),
+    (<svg className="w-12 h-12 md:w-14 md:h-14" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="50" cy="50" r="30" /><circle cx="50" cy="50" r="20" /><circle cx="50" cy="50" r="10" /></svg>)
   ];
+  const forestStates = (Array.isArray(translatedStates) ? translatedStates : []).map((state, index) => ({
+    title: state.title,
+    description: state.description,
+    icon: stateIcons[index]
+  }));
 
   return (
     <>
       <section className="bg-[#faf6ed] py-16 md:py-24 lg:py-30">
         <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold text-neutral-700 leading-tight max-w-7xl mb-8 md:mb-12 lg:mb-16 px-6 md:px-12 lg:px-20">
-          AM forest. Pērkam meža īpašumus visos stāvokļos
+          {t('buyingProcess.heading')}
         </h2>
 
         <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-3 relative md:mx-12 lg:mx-20">
@@ -357,7 +322,7 @@ const BuyingProcess = () => {
                   </p>
                   <button 
                     className="mt-6 text-3xl md:text-4xl text-[#243c36] opacity-50 hover:rotate-90 transition-transform duration-300 cursor-pointer"
-                    aria-label="Papildu informācija"
+                    aria-label={t('buyingProcess.moreInfoAria')}
                     type="button"
                   >
                     +
@@ -380,12 +345,12 @@ const BuyingProcess = () => {
 
 
         <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-neutral-700 my-8 md:my-12 px-6 md:px-12 lg:px-20">
-          Saistītie pakalpojumi kas var palīdzēt jūsu mežam
+          {t('buyingProcess.relatedHeading')}
         </h3>
 
         {/* Services Links */}
         <div className="relative md:px-12 lg:px-20">
-          <div ref={linksRef} className="border-t border-b border-neutral-300" role="list" aria-label="Saistītie pakalpojumi">
+          <div ref={linksRef} className="border-t border-b border-neutral-300" role="list" aria-label={t('buyingProcess.relatedAria')}>
             {relatedServices.map((service, index) => (
             <div key={index} role="listitem" ref={el => linkRefs.current[index] = el}>
               <Link href={service.href} aria-label={service.ariaLabel}>

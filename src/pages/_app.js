@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { appWithTranslation } from 'next-i18next';
 import Navbar from '../components/layout/navbar';
 import Footer from '../components/layout/footer';
 import LocomotiveScrollProvider from '../components/providers/locomotive-scroll-provider';
@@ -100,7 +101,7 @@ function AppContent({ Component, pageProps }) {
   );
 }
 
-export default function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }) {
   return (
     <PageTransitionProvider>
       <ContactModalProvider>
@@ -111,3 +112,5 @@ export default function MyApp({ Component, pageProps }) {
     </PageTransitionProvider>
   );
 }
+
+export default appWithTranslation(MyApp);

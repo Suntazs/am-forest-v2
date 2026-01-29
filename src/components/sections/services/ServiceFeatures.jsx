@@ -1,14 +1,27 @@
 "use client";
 import React, { useState, useRef, useEffect } from 'react';
 import ServiceIcon from '@/components/ui/ServiceIcon';
+import { useTranslation } from 'next-i18next';
 
 const ServiceFeatures = ({ title, features }) => {
+  const { t } = useTranslation('common');
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [isHovering, setIsHovering] = useState(false);
   const [animationStarted, setAnimationStarted] = useState(false);
   const [animationComplete, setAnimationComplete] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
   const gridRef = useRef(null);
   const animationTimeouts = useRef([]);
+
+  // Handle window resize and initial mount
+  useEffect(() => {
+    setHasMounted(true);
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleMouseEnter = (index) => {
     if (!animationComplete) return;
@@ -28,7 +41,7 @@ const ServiceFeatures = ({ title, features }) => {
 
   // Intersection Observer for triggering overlay animations
   useEffect(() => {
-    if (!gridRef.current) return;
+    if (!gridRef.current || !hasMounted) return;
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -44,7 +57,12 @@ const ServiceFeatures = ({ title, features }) => {
               if (overlays && overlays.length > 0) {
                 // Create array of overlay elements with their indices
                 const overlayArray = Array.from(overlays);
-                const shuffled = [...overlayArray].sort(() => Math.random() - 0.5);
+                // Shuffle using Fisher-Yates (only runs on client)
+                const shuffled = [...overlayArray];
+                for (let i = shuffled.length - 1; i > 0; i--) {
+                  const j = Math.floor(Math.random() * (i + 1));
+                  [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+                }
 
                 // Animate each overlay with delay
                 shuffled.forEach((overlay, order) => {
@@ -83,10 +101,10 @@ const ServiceFeatures = ({ title, features }) => {
       animationTimeouts.current.forEach(timeout => clearTimeout(timeout));
       animationTimeouts.current = [];
     };
-  }, [animationStarted]);
+  }, [animationStarted, hasMounted]);
 
+  // Use state-based isMobile check (safe for SSR)
   const getGridPosition = (index) => {
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
     const cols = isMobile ? 1 : 3;
     const totalRows = Math.ceil(features.length / cols);
     const rowHeight = 100 / totalRows;
@@ -110,7 +128,7 @@ const ServiceFeatures = ({ title, features }) => {
       <div className="w-full md:px-12 lg:px-20">
         <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-3 relative overflow-hidden">
           {/* Hover background effect - positioned to fill full width */}
-          {animationComplete && (
+          {animationComplete && hasMounted && (
             <div
               className="absolute pointer-events-none z-0 transition-all ease-out duration-300"
               style={{
@@ -155,7 +173,7 @@ const ServiceFeatures = ({ title, features }) => {
                     {feature.description}
                   </p>
                 ) : (
-                  <p className="text-base md:text-lg text-red-500">No description available</p>
+                  <p className="text-base md:text-lg text-red-500">{t('serviceSlug.noDescription')}</p>
                 )}
               </div>
               {/* Overlay that starts visible and fades out */}

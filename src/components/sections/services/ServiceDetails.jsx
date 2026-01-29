@@ -1,15 +1,18 @@
 "use client";
 import React from 'react';
 import { ProgressiveImage } from '@/components/ui/ProgressiveMedia';
+import { useTranslation } from 'next-i18next';
 
 const ServiceDetails = ({ 
   title, 
   description, 
   bulletPoints = [], 
   imageUrl = null,
-  imageAlt = "Service image",
+  imageAlt,
   reverse = false 
 }) => {
+  const { t } = useTranslation('common');
+  const resolvedAlt = imageAlt || t('serviceSlug.noDescription');
   return (
     <section className=" py-20 md:py-32">
       <div className="px-6 md:px-12 lg:px-20">
@@ -42,13 +45,13 @@ const ServiceDetails = ({
               <div className="aspect-[4/3] overflow-hidden">
                 <ProgressiveImage
                   src={imageUrl}
-                  alt={imageAlt}
+                  alt={resolvedAlt}
                   className="w-full h-full"
                 />
               </div>
             ) : (
               <div className="aspect-[4/3] bg-[#f3ecda] flex items-center justify-center">
-                <p className="text-[#243c36] text-xl opacity-50">Attēls</p>
+                <p className="text-[#243c36] text-xl opacity-50">{resolvedAlt}</p>
               </div>
             )}
           </div>

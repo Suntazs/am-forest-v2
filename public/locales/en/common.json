@@ -1,0 +1,379 @@
+{
+  "nav": {
+    "address": "Riga, Latvia"
+  },
+  "footer": {
+    "heading": "Trust your forest to us",
+    "copyright": "© Copyright 2024, All Rights Reserved",
+    "contactBtn": "Contact us",
+    "about": "About",
+    "services": "Services",
+    "projects": "Projects",
+    "contact": "Contact"
+  },
+  "menu": {
+    "home": "Home",
+    "about": "About",
+    "services": "Services",
+    "perkamMezu": "We buy forests",
+    "perkamCirsmu": "We buy timber stands",
+    "contact": "Contact"
+  },
+  "contactModal": {
+    "heading": "Contact Us",
+    "closeAria": "Close modal",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone Number",
+    "message": "Message",
+    "send": "Send Message"
+  },
+  "homeHero": {
+    "heading": "AM Forest — a professional approach for every forest owner, every hectare."
+  },
+  "servicesSection": {
+    "heading": "Our services offer a complete range of forestry solutions from planning to management",
+    "subheading": "We ensure an individual approach and high quality at every stage of forestry.",
+    "viewAllTitle": "All",
+    "viewAllSubtitle": "services",
+    "viewAllDesc": "View all our services"
+  },
+  "servicesPage": {
+    "heading": "Our Services",
+    "description": "AM Forest offers a wide range of forest management and machinery services. Our professional team provides quality solutions for all your needs."
+  },
+  "servicesList": {
+    "treilera": { "title": "Trailer", "subtitle": "services", "description": "Professional trailer services for forest and timber transportation." },
+    "mezizvedeja": { "title": "Forwarder", "subtitle": "tractor", "description": "Specialized forwarder tractor services for timber collection." },
+    "universala": { "title": "Universal tractor", "subtitle": "services", "description": "9-ton universal wheeled tractor services for various tasks." },
+    "kezu": { "title": "Crawler excavator", "subtitle": "services", "description": "20-ton crawler excavator services for stump removal and ditch digging." },
+    "kniebeja": { "title": "Wheeled excavator", "subtitle": "services", "description": "Wheeled excavator services for precision earthworks." },
+    "kokvedeja": { "title": "Timber truck", "subtitle": "services", "description": "Timber truck services for large-volume timber transportation." },
+    "puspiekabe": { "title": "Timber semi-trailer", "subtitle": "services", "description": "Timber semi-trailer services for long loads." },
+    "malka": { "title": "Log splitter", "subtitle": "services", "description": "Professional firewood splitting with high-capacity equipment." },
+    "autoServiss": { "title": "Auto service", "subtitle": "services", "description": "Specialized auto service for forest machinery maintenance and repair." },
+    "telpas": { "title": "Space", "subtitle": "rental", "description": "Office and warehouse space rental with convenient access." },
+    "dastosana": { "title": "Timber scaling", "subtitle": "services", "description": "Precise forest scaling and measurement for professional purposes." },
+    "taksacija": { "title": "Forest project", "subtitle": "inventory", "description": "Forest inventory and project development for sustainable management." },
+    "stigosana": { "title": "Forest marking", "subtitle": "services", "description": "Forest marking and boundary identification with precise equipment." },
+    "konsultacijas": { "title": "Free", "subtitle": "consultations", "description": "We offer free consultations on forest management, sales, and valuation. Our experts will help you choose the best solution for your forest property." }
+  },
+  "homeAbout": {
+    "heading1": "About AM Forest",
+    "heading2": "In Forestry",
+    "description": "AM Forest is a leading forest management company in Latvia with over 14 years of industry experience. We offer a full range of services, from forest inventory to timber trading.",
+    "years": "years +",
+    "inForestry": "In Forestry"
+  },
+  "aboutHero": {
+    "heading1": "Expertise",
+    "heading2": "that inspires confidence and security at every",
+    "heading3": "step",
+    "description": "Thanks to the dedication and expertise of our team at AM Forest, we continue to grow and inspire confidence. Each member plays a key role in the success of your forestry projects, combining rigor with a human approach to sustainable forest management."
+  },
+  "aboutContent": {
+    "imageAlt": "Forest with sunlight",
+    "heading": "Our Story",
+    "p1": "Founded with a vision to revolutionize forest management in Latvia, AM Forest has grown from a small team of passionate foresters to a leading force in sustainable forestry practices.",
+    "p2": "We combine decades of traditional forestry knowledge with cutting-edge technology to provide comprehensive forest management solutions that benefit both nature and our clients.",
+    "p3": "Our commitment to excellence and sustainability has earned us the trust of landowners, communities, and environmental organizations throughout the Baltic region.",
+    "stat1Value": "20+",
+    "stat1Label": "Years of Experience",
+    "stat2Value": "500+",
+    "stat2Label": "Projects Completed",
+    "stat3Value": "100k+",
+    "stat3Label": "Hectares Managed"
+  },
+  "reviews": {
+    "heading": "Reviews",
+    "quote": "Very professional team and excellent service! They showed high quality in their work and were very responsive to all our needs. I definitely recommend to everyone looking for reliable forestry specialists.",
+    "author": "Andris Ozols",
+    "role": "Client"
+  },
+  "imageLinks": {
+    "link1": "Why should you maintain your forest?",
+    "link2": "How to sell a forest?",
+    "link3": "When is the right time to harvest?",
+    "link4": "What to know before logging?",
+    "imageAlt": "Forest"
+  },
+  "cta": {
+    "heading": "Ready? Contact us to get started",
+    "button": "Contact us",
+    "imageAlt": "Aerial view of forest"
+  },
+  "faq": {
+    "heading": "Frequently Asked Questions"
+  },
+  "homeFaq": [
+    { "question": "What forest management services are offered?", "answer": "We offer a full forest management cycle: forest inventory, management plan development, young stand tending, forest planting, sanitary felling, as well as consultations on sustainable forest management." },
+    { "question": "Do you offer timber purchasing?", "answer": "Yes, we purchase timber directly from forest owners. We ensure competitive prices, professional assessment, and fast payment. We work with various timber species — pine, spruce, birch, and other tree species." },
+    { "question": "How does forest inventory work?", "answer": "Forest inventory includes a detailed account and evaluation of forest resources. Our specialists use modern technologies and methods to determine tree species composition, age, growth volumes, and forest health status. After the inventory, you will receive a detailed report with recommendations." },
+    { "question": "What are the forest restoration options after harvesting?", "answer": "We offer several forest restoration methods: natural regeneration, artificial forest restoration by planting or seeding. We help choose the most suitable tree species for specific growing conditions and provide quality planting material." },
+    { "question": "Do you provide consultations on EU and state support programs?", "answer": "Yes, our specialists provide consultations on available EU funds and state support programs for forest owners. We help prepare the necessary documentation and applications, and advise on the conditions for receiving support." },
+    { "question": "How is the timber price determined?", "answer": "Timber price is determined taking into account several factors: tree species, quality, assortment structure, forwarding distance, and market situation. For each object, we perform an individual assessment and offer the best possible price." }
+  ],
+  "contact": {
+    "pvnLabel": "VAT Reg. No.:",
+    "addressLabel": "Legal address:",
+    "codeLabel": "Code:",
+    "accountLabel": "Account:",
+    "description": "We're here to help with all your forestry needs. Whether you have questions about our services, need a consultation, or want to discuss a project, don't hesitate to reach out.",
+    "button": "Get in Contact"
+  },
+  "perkamMezu": {
+    "heading": "We Buy Forests",
+    "descriptionMobile": "We are a trusted partner in forest property acquisition. We offer fair prices, fast transaction processing, and professional consultation.",
+    "descriptionDesktop": "We are a trusted partner in forest property acquisition. We offer fair prices, fast transaction processing, and professional consultation. Our experienced experts ensure a transparent process from initial inspection to closing the deal.",
+    "ctaButton": "Get an offer"
+  },
+  "perkamCirsmu": {
+    "heading": "We Buy Timber Stands",
+    "descriptionMobile": "We offer favorable conditions for timber stand acquisition. We professionally assess timber quality and volume, ensuring a fair price.",
+    "descriptionDesktop": "We offer favorable conditions for timber stand acquisition. Our experts professionally assess timber quality and volume, ensuring a fair price. We carry out stand harvesting with modern equipment, meeting all environmental requirements.",
+    "ctaButton": "Get an offer"
+  },
+  "buyingProcess": {
+    "heading": "AM forest. We buy forest properties in all conditions",
+    "relatedHeading": "Related services that can help your forest",
+    "moreInfoAria": "More information",
+    "relatedAria": "Related services",
+    "states": [
+      { "title": "Harvested forest properties", "description": "Fully processed and ready for further development" },
+      { "title": "Partially harvested forest properties", "description": "With ongoing work and potential for continuation" },
+      { "title": "Unharvested forest properties", "description": "Natural forests with full development potential" }
+    ],
+    "relatedServices": [
+      { "title": "Forest inventory", "aria": "Forest inventory services" },
+      { "title": "Inventory services", "aria": "Forest inventory and valuation services" },
+      { "title": "Legal consultations", "aria": "Legal consultations on forest property matters" }
+    ]
+  },
+  "processSteps": [
+    { "title": "Initial consultation", "description": "We get in touch with you to understand your needs and the specifics of your forest property. We determine the value and discuss the next steps." },
+    { "title": "Property assessment", "description": "Our experts perform a detailed forest inventory and assess the property value, taking into account wood quality, area, and market situation." },
+    { "title": "Transaction processing", "description": "We prepare all necessary documents and ensure a legally correct transaction. We guarantee a safe and transparent process." }
+  ],
+  "reviewsSection": {
+    "quote": "AM Forest helped us sell our forest property quickly and for a fair price. Professional approach and excellent communication throughout the process.",
+    "author": "Janis Berzins",
+    "googleBtn": "Leave a Google review"
+  },
+  "perkamMezuFaq": [
+    { "question": "What is the forest property price per hectare in Latvia in 2024?", "answer": "Forest property prices in Latvia in 2024 range from 2,000 to 8,000 EUR per hectare depending on tree species, age, quality, and location. Pine and spruce stands with good accessibility and 40-80 years of age reach the highest prices. AM Forest offers free professional assessment to determine the exact market value of your forest property." },
+    { "question": "How to sell a forest property in Latvia — step by step?", "answer": "Forest property selling process: 1) Contact AM Forest for a free consultation, 2) Our experts perform a professional forest inventory and assessment, 3) Receive a fair price offer within 48 hours, 4) We process all documents at the notary, 5) Money is transferred immediately after the transaction. On average, the process takes 7-14 days." },
+    { "question": "Is it more profitable to sell forest with a timber stand or after harvesting?", "answer": "AM Forest buys forest properties in all conditions — both with ready timber stands and after harvesting. Unharvested forest with mature stands (60-80 years) is often more valuable as the buyer has more freedom of choice. Harvested properties with young stands (5-20 years) are also in demand for long-term investments. We ensure a competitive price regardless of forest condition." },
+    { "question": "What documents are needed for selling a forest property?", "answer": "For forest sale you need: land register certificate, forest inventory data (not older than 10 years), personal identification document, and tax payment confirmation. AM Forest helps arrange missing documents, performs new inventory at no cost, and provides legal support throughout the transaction process, including communication with the State Forest Service." }
+  ],
+  "perkamCirsmuFaq": [
+    { "question": "What is the timber stand price per cubic meter in Latvia in 2024?", "answer": "Timber stand prices in Latvia in 2024 range from 35 to 85 EUR per cubic meter depending on tree species, quality, diameter, and accessibility. Pine and spruce stands with large-diameter trees and good accessibility reach the highest prices. AM Forest offers free professional assessment to determine the exact market value of your timber stand." },
+    { "question": "How to sell a timber stand in Latvia — step by step?", "answer": "Timber stand selling process: 1) Contact AM Forest for a free consultation, 2) Our experts perform a professional stand measurement and assessment, 3) Receive a fair price offer within 24 hours, 4) We process the timber stand purchase agreement, 5) Money is transferred immediately after signing. On average, the process takes 3-7 days." },
+    { "question": "Is it more profitable to sell a standing timber stand or harvested timber?", "answer": "AM Forest buys timber stands in all forms — both standing and already harvested timber. Standing timber is more convenient for the forest owner as all work is done by the buyer. Harvested timber can yield higher profit but requires additional investment and risk. We ensure a competitive price in both cases and can help choose the most profitable option." },
+    { "question": "What factors affect the timber stand value?", "answer": "Main factors: tree species (pine, spruce, birch), tree diameter and height, timber quality (straightness, number of branches), accessibility (road quality, distance), stand size and concentration. AM Forest experts evaluate all these factors to offer the most favorable price for your timber stand." }
+  ],
+  "serviceSlug": {
+    "loading": "Loading...",
+    "notFound": "Service not found",
+    "faqHeading": "Frequently Asked Questions",
+    "noDescription": "No description available"
+  },
+  "serviceData": {
+    "treilera-pakalpojumi": {
+      "meta": { "title": "Trailer Services | AM Forest", "description": "Professional trailer services for forest and timber transportation in Latvia. Safe and efficient cargo handling.", "keywords": "trailer services, timber transportation, forest equipment" },
+      "hero": { "title": "Trailer Services", "description": "Professional trailer services for forest and timber transportation. Our specialized equipment ensures safe and efficient cargo handling." },
+      "features": { "title": "Key Advantages", "items": [
+        { "title": "High load capacity", "description": "Our trailers can transport up to 25 tons of cargo, ensuring efficient timber transportation." },
+        { "title": "All types of roads", "description": "Specialized equipment allows working on both forest roads and difficult terrain." },
+        { "title": "Experienced operators", "description": "Our team ensures professional and safe cargo transportation in any conditions." }
+      ]},
+      "details": { "title": "Service Description", "description": "Our trailer services include a complete timber transportation cycle from forest to destination. Specialized equipment and experienced operators guarantee quality and timely service.", "bulletPoints": ["Timber loading and unloading", "Transportation on forest roads", "Cargo securing and safety", "Documentation processing"] },
+      "faq": [
+        { "question": "What is the maximum load capacity?", "answer": "Our trailers can transport loads up to 25 tons, depending on the specific vehicle specifications and road conditions." },
+        { "question": "Do you work in all weather conditions?", "answer": "Yes, our equipment is suitable for work in various weather conditions. However, in extreme conditions, we evaluate safety risks." },
+        { "question": "How is the service price calculated?", "answer": "The price is calculated taking into account distance, load volume, road conditions, and work specifics. Each project receives an individual offer." }
+      ],
+      "cta": { "title": "Need trailer services?", "description": "Contact us to receive an individual offer for your project.", "buttonText": "Request an offer" }
+    },
+    "mezizvedeja-traktora-pakalpojumi": {
+      "meta": { "title": "Forwarder Tractor Services | AM Forest", "description": "Specialized forwarder tractor services for timber collection and transportation in difficult forest conditions.", "keywords": "forwarder tractor, timber extraction, forest work" },
+      "hero": { "title": "Forwarder Tractor Services", "description": "Specialized forwarder tractor services for timber collection and transportation in difficult forest conditions." },
+      "features": { "title": "Equipment Advantages", "items": [
+        { "title": "High passability", "description": "The forwarder tractor can work in wet and difficult areas where other equipment cannot access." },
+        { "title": "Forest-friendly", "description": "Minimal ground pressure and precise maneuvering reduces forest damage." },
+        { "title": "Efficient loading", "description": "The powerful hydraulic manipulator ensures fast and precise timber loading." }
+      ]},
+      "details": { "title": "What the service includes", "description": "Forwarder tractor services provide a complete timber extraction cycle from the felling site to the roadside storage.", "bulletPoints": ["Timber collection at the felling site", "Transportation to storage", "Assortment sorting", "Storage area setup"] },
+      "faq": [
+        { "question": "What terrain can the forwarder tractor work on?", "answer": "The forwarder tractor is suitable for working in wet, swampy areas and steep slopes where regular equipment cannot access." },
+        { "question": "How much timber can be transported in one trip?", "answer": "Depending on the tractor model, 10-15 cubic meters of timber can be transported per trip." }
+      ],
+      "cta": { "title": "Need timber extraction?", "description": "Our professional team will ensure quality and timely service.", "buttonText": "Contact us" }
+    },
+    "universala-ritenu-traktora-pakalpojumi": {
+      "meta": { "title": "Universal Wheeled Tractor Services | AM Forest", "description": "9-ton universal wheeled tractor services for various forest work. Professional equipment and operators.", "keywords": "universal tractor, wheeled tractor, forest equipment, 9 tons" },
+      "hero": { "title": "Universal Wheeled Tractor Services", "description": "9-ton universal wheeled tractor services for various forest and agricultural work." },
+      "features": { "title": "Tractor Capabilities", "items": [
+        { "title": "9-ton power", "description": "Powerful 9-ton tractor suitable for heavy work and large loads." },
+        { "title": "Universal application", "description": "Suitable for forest work, agriculture, and construction projects." },
+        { "title": "Various attachments", "description": "Can be equipped with various working attachments according to the specific task." }
+      ]},
+      "details": { "title": "Service Offering", "description": "Universal wheeled tractor services cover a wide range of work — from forest maintenance to road upkeep.", "bulletPoints": ["Forest road construction and maintenance", "Cargo movement and transportation", "Land leveling work", "Snow clearing in winter"] },
+      "faq": [
+        { "question": "What work can be done with the universal tractor?", "answer": "The universal tractor is suitable for road construction, cargo movement, land leveling, and other work." },
+        { "question": "What is the tractor's lifting capacity?", "answer": "Our 9-ton universal tractor can safely work with loads up to 9 tons." }
+      ],
+      "cta": { "title": "Need a universal tractor?", "description": "Professional equipment and experienced operators for your project implementation.", "buttonText": "Request service" }
+    },
+    "kezu-ekskavatora-pakalpojumi": {
+      "meta": { "title": "Crawler Excavator Services | AM Forest", "description": "20-ton crawler excavator services for stump removal, ditch digging, and earthworks.", "keywords": "crawler excavator, stump removal, ditch digging, 20 tons" },
+      "hero": { "title": "Crawler Excavator Services", "description": "20-ton crawler excavator services for stump removal and ditch digging. Precise and efficient earthworks." },
+      "features": { "title": "Excavator Advantages", "items": [
+        { "title": "20-ton power", "description": "Powerful 20-ton excavator for heavy earthworks and stump removal." },
+        { "title": "Stability", "description": "Crawler chassis provides excellent stability and passability in difficult terrain." },
+        { "title": "Precision", "description": "Modern hydraulics allow very precise work even in limited spaces." }
+      ]},
+      "details": { "title": "Service Range", "description": "Crawler excavator services cover a wide range of earthwork in forest areas and construction sites.", "bulletPoints": ["Stump removal and root extraction", "Ditch and drainage system digging", "Pond and reservoir digging", "Road base preparation"] },
+      "faq": [
+        { "question": "How large a stump can be removed?", "answer": "Our 20-ton excavator can remove stumps up to 1.5 meters in diameter." },
+        { "question": "What is the maximum digging depth?", "answer": "The excavator can dig up to 6 meters deep depending on working conditions." }
+      ],
+      "cta": { "title": "Need excavator services?", "description": "Quality earthworks with professional equipment.", "buttonText": "Get an offer" }
+    },
+    "kniebeja-ekskavatora-pakalpojumi": {
+      "meta": { "title": "Wheeled Excavator Services | AM Forest", "description": "Wheeled excavator services for precision earthworks. Maneuverable equipment for tight spaces.", "keywords": "wheeled excavator, precision earthworks" },
+      "hero": { "title": "Wheeled Excavator Services", "description": "Wheeled excavator services for precision earthworks. Ideally suited for work in limited areas." },
+      "features": { "title": "Excavator Features", "items": [
+        { "title": "Maneuverability", "description": "Wheeled chassis allows fast movement and work in tight spaces." },
+        { "title": "Versatility", "description": "Suitable for both digging and loading operations." },
+        { "title": "Speed", "description": "Can quickly move between work sites without additional transport." }
+      ]},
+      "details": { "title": "What we can do", "description": "Wheeled excavator services are ideal for precision work in urban areas and limited territories.", "bulletPoints": ["Precision digging work", "Utility installation", "Landscaping", "Debris removal and cleanup work"] },
+      "faq": [
+        { "question": "Where can the wheeled excavator work?", "answer": "The wheeled excavator is ideal for work in cities, narrow streets, and areas with limited access." },
+        { "question": "Can it travel on public roads?", "answer": "Yes, the wheeled excavator can travel on paved roads without damaging them." }
+      ],
+      "cta": { "title": "Need precision earthworks?", "description": "Our wheeled excavator operators will ensure quality work execution.", "buttonText": "Request service" }
+    },
+    "kokvedeja-pakalpojumi": {
+      "meta": { "title": "Timber Truck Services | AM Forest", "description": "Timber truck services for large-volume timber transportation. Safe and efficient logistics.", "keywords": "timber truck, timber transport, forest logistics" },
+      "hero": { "title": "Timber Truck Services", "description": "Timber truck services for large-volume timber transportation. Our fleet ensures safe and timely delivery." },
+      "features": { "title": "Transport Advantages", "items": [
+        { "title": "High load capacity", "description": "Our timber trucks can transport up to 40 tons of timber." },
+        { "title": "Modern equipment", "description": "Equipped with the latest safety systems and cargo securing devices." },
+        { "title": "Logistics optimization", "description": "Efficient route planning reduces transportation costs." }
+      ]},
+      "details": { "title": "Service Description", "description": "Timber truck services provide a complete timber transportation cycle from forest to end consumer.", "bulletPoints": ["Timber loading with manipulator", "Secure cargo fastening", "Highway transportation", "Documentation processing"] },
+      "faq": [
+        { "question": "What is the maximum transportable volume?", "answer": "In one trip, we can transport up to 40 tons of timber depending on the assortment." },
+        { "question": "Do you perform international transportation?", "answer": "Yes, we provide timber transportation both in Latvia and to other EU countries." }
+      ],
+      "cta": { "title": "Need timber truck transport?", "description": "Trust your cargo to professionals with experience.", "buttonText": "Order transport" }
+    },
+    "kokvedeja-puspiekabes-pakalpojumi": {
+      "meta": { "title": "Timber Semi-trailer Services | AM Forest", "description": "Timber semi-trailer services for long loads. Specialized transport for long timber.", "keywords": "timber semi-trailer, long timber, timber transport" },
+      "hero": { "title": "Timber Semi-trailer Services", "description": "Specialized timber semi-trailer services for long timber transportation. Ideally suited for long timber loads." },
+      "features": { "title": "Semi-trailer Advantages", "items": [
+        { "title": "Long timber transport", "description": "Specially designed for transporting long timber up to 24 meters." },
+        { "title": "Flexible configuration", "description": "Adjustable length semi-trailer for various size loads." },
+        { "title": "Secure cargo fixation", "description": "Modern cargo securing system for safe transportation." }
+      ]},
+      "details": { "title": "Specialized Transportation", "description": "Timber semi-trailer services are optimal for long timber and special cargo transportation.", "bulletPoints": ["Log and long timber transport", "Special structure transportation", "Cargo securing and safety", "Route coordination"] },
+      "faq": [
+        { "question": "What is the maximum cargo length?", "answer": "Our semi-trailers can safely transport loads up to 24 meters in length." },
+        { "question": "Are special permits required?", "answer": "For long timber transportation, we process all necessary permits and approvals." }
+      ],
+      "cta": { "title": "Need to transport long timber?", "description": "Our specialized equipment will ensure safe transportation.", "buttonText": "Get a consultation" }
+    },
+    "malkas-skalditaja-pakalpojumi": {
+      "meta": { "title": "Log Splitter Services | AM Forest", "description": "Professional firewood splitting with high-capacity equipment. Quality fuel wood preparation.", "keywords": "firewood splitting, fuel wood, firewood preparation" },
+      "hero": { "title": "Log Splitter Services", "description": "Professional firewood splitting with high-capacity equipment. We ensure quality fuel wood preparation in any volume." },
+      "features": { "title": "Service Advantages", "items": [
+        { "title": "High output", "description": "We can prepare up to 100 cubic meters of firewood per day." },
+        { "title": "Various sizes", "description": "Adjustable firewood piece length from 20 to 50 cm." },
+        { "title": "Quality result", "description": "Evenly split firewood for optimal drying and burning." }
+      ]},
+      "details": { "title": "What we offer", "description": "Log splitter services include a complete fuel wood preparation cycle.", "bulletPoints": ["Firewood splitting in any volume", "Various size firewood preparation", "Firewood sorting by quality", "Stacking services"] },
+      "faq": [
+        { "question": "What types of wood can be split?", "answer": "We can split all tree species — both deciduous and coniferous trees up to 60 cm in diameter." },
+        { "question": "Can you work on the client's site?", "answer": "Yes, our mobile log splitter can work at any location designated by the client." }
+      ],
+      "cta": { "title": "Need firewood splitting?", "description": "Quality fuel wood preparation with professional equipment.", "buttonText": "Order service" }
+    },
+    "auto-servisa-pakalpojumi": {
+      "meta": { "title": "Auto Service | AM Forest", "description": "Specialized auto service for forest machinery maintenance and repair. Professional technical service.", "keywords": "auto service, forest machinery repair, technical maintenance" },
+      "hero": { "title": "Auto Service", "description": "Specialized auto service for forest machinery maintenance and repair. We ensure quality service for all forest equipment." },
+      "features": { "title": "Service Capabilities", "items": [
+        { "title": "Full service", "description": "We perform both preventive maintenance and complex repairs." },
+        { "title": "Mobile service", "description": "Ability to perform maintenance and repairs on client's site." },
+        { "title": "Original spare parts", "description": "We provide quality spare parts for all equipment." }
+      ]},
+      "details": { "title": "Service Offerings", "description": "Auto service specializes in forest and heavy equipment maintenance and repair.", "bulletPoints": ["Preventive technical maintenance", "Engine and transmission repair", "Hydraulic system maintenance", "Diagnostics and adjustment"] },
+      "faq": [
+        { "question": "What equipment do you service?", "answer": "We service all types of forest equipment — tractors, excavators, timber trucks, and other specialized equipment." },
+        { "question": "Do you offer repair warranty?", "answer": "Yes, all repair work and installed parts come with a warranty of up to 12 months." }
+      ],
+      "cta": { "title": "Need equipment maintenance?", "description": "Trust your equipment to professionals.", "buttonText": "Schedule maintenance" }
+    },
+    "telpu-ire": {
+      "meta": { "title": "Space Rental | AM Forest", "description": "Office and warehouse space rental with convenient access. Modern spaces for your business.", "keywords": "space rental, office space, warehouse space" },
+      "hero": { "title": "Space Rental", "description": "Office and warehouse space rental with convenient access. We offer modern and functional spaces for your business needs." },
+      "features": { "title": "Space Advantages", "items": [
+        { "title": "Convenient location", "description": "Spaces are located with good access and transport connections." },
+        { "title": "Various sizes", "description": "We offer spaces from 50 to 500 square meters." },
+        { "title": "Modern infrastructure", "description": "All necessary utilities and security systems." }
+      ]},
+      "details": { "title": "What we offer", "description": "Space rental services include both office and warehouse spaces with full infrastructure.", "bulletPoints": ["Office space from 50 m²", "Warehouse space up to 500 m²", "24/7 security and surveillance", "Parking and loading ramps"] },
+      "faq": [
+        { "question": "What is the minimum rental term?", "answer": "The minimum rental term is 6 months, but we offer flexible contract terms." },
+        { "question": "Are utility costs included in the rent?", "answer": "Utility costs are charged separately based on actual consumption." }
+      ],
+      "cta": { "title": "Looking for space to rent?", "description": "We offer the best solutions for your business needs.", "buttonText": "View spaces" }
+    },
+    "dastosanas-pakalpojumi": {
+      "meta": { "title": "Timber Scaling Services | AM Forest", "description": "Precise forest scaling and measurement for professional purposes. Certified specialists.", "keywords": "forest scaling, timber measurement, forest inventory" },
+      "hero": { "title": "Timber Scaling Services", "description": "Precise forest scaling and measurement for professional purposes. Our certified specialists ensure high measurement accuracy." },
+      "features": { "title": "Service Quality", "items": [
+        { "title": "High accuracy", "description": "We use modern measurement technologies and methods." },
+        { "title": "Certified specialists", "description": "All our employees are certified and experienced." },
+        { "title": "Fast execution", "description": "Efficient data processing and report preparation." }
+      ]},
+      "details": { "title": "Scaling Process", "description": "Timber scaling services include a complete timber accounting and quality assessment cycle.", "bulletPoints": ["Timber volume determination", "Quality assessment", "Assortment classification", "Detailed report preparation"] },
+      "faq": [
+        { "question": "What is the measurement accuracy?", "answer": "Our measurement accuracy is ±2%, which meets the highest industry standards." },
+        { "question": "How quickly is the report prepared?", "answer": "We prepare standard reports within 1-2 business days after measurements." }
+      ],
+      "cta": { "title": "Need precise timber scaling?", "description": "Trust timber accounting to professionals.", "buttonText": "Order scaling" }
+    },
+    "meza-projekta-taksacijas": {
+      "meta": { "title": "Forest Project Inventory | AM Forest", "description": "Forest inventory and project development for sustainable management. Professional forest inventory.", "keywords": "forest inventory, forest projects, forest assessment" },
+      "hero": { "title": "Forest Project Inventory", "description": "Forest inventory and project development for sustainable management. We ensure professional forest resource assessment." },
+      "features": { "title": "Inventory Services", "items": [
+        { "title": "Full inventory", "description": "Detailed forest resource accounting and assessment." },
+        { "title": "Project development", "description": "Forest management plan and project preparation." },
+        { "title": "Digital mapping", "description": "Modern GIS technologies for precise mapping." }
+      ]},
+      "details": { "title": "What inventory includes", "description": "Forest inventory services provide a complete forest resource assessment and planning documentation.", "bulletPoints": ["Tree species and age determination", "Stock calculations and growth forecasts", "Forest health status assessment", "Management plan development"] },
+      "faq": [
+        { "question": "How often should forest inventory be done?", "answer": "Forest inventory is recommended once every 10 years or before major management activities." },
+        { "question": "Is inventory mandatory?", "answer": "In certain cases, inventory is mandatory, for example, before clear-cutting or forest property sale." }
+      ],
+      "cta": { "title": "Need forest inventory?", "description": "Professional forest inventory for sustainable management.", "buttonText": "Schedule inventory" }
+    },
+    "stigosanas-pakalpojumi": {
+      "meta": { "title": "Forest Marking Services | AM Forest", "description": "Forest marking and boundary identification with precise equipment. Felling area marking and measurement.", "keywords": "forest marking, boundary identification, felling area marking" },
+      "hero": { "title": "Forest Marking Services", "description": "Forest marking and boundary identification with precise equipment. Professional felling area marking and forest boundary designation." },
+      "features": { "title": "Marking Precision", "items": [
+        { "title": "GPS technologies", "description": "We use precise GPS devices for boundary identification." },
+        { "title": "Legal compliance", "description": "All work is performed in accordance with regulatory acts." },
+        { "title": "Detailed documentation", "description": "We prepare complete documentation with maps and descriptions." }
+      ]},
+      "details": { "title": "Marking Work", "description": "Forest marking services include a complete felling area preparation and boundary identification process.", "bulletPoints": ["Forest property boundary identification", "Felling area marking in the field", "Retention tree marking", "Map and documentation preparation"] },
+      "faq": [
+        { "question": "When is marking needed?", "answer": "Marking is needed before starting felling work to precisely determine felling area boundaries." },
+        { "question": "How long does marking take?", "answer": "Depending on the area, marking work usually takes 1-3 days." }
+      ],
+      "cta": { "title": "Need forest marking?", "description": "Precise boundary identification for professional forest work.", "buttonText": "Schedule marking" }
+    }
+  }
+}

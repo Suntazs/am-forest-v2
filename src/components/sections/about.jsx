@@ -1,8 +1,10 @@
 "use client";
 import React, { useEffect, useRef, useState } from 'react';
 import AnimatedCounter from '@/components/ui/AnimatedCounter';
+import { useTranslation } from 'next-i18next';
 
 export default function About() {
+  const { t } = useTranslation('common');
   const [isInView, setIsInView] = useState(false);
   const [counterInView, setCounterInView] = useState(false);
   const flowerRef = useRef(null);
@@ -62,7 +64,7 @@ export default function About() {
         <div className="w-full lg:w-2/3 mb-8 lg:mb-0">
           <div className="max-w-3xl">
             <h2 className="text-4xl md:text-5xl lg:text-7xl font-bold text-neutral-700 leading-tight mb-6 md:mb-8">
-              <span className="block">Par AM Forest</span>
+              <span className="block">{t('homeAbout.heading1')}</span>
               <span>
                 {/* Animated flower inline */}
                 <span ref={flowerRef} className="inline-block mr-3 md:mr-6 group" style={{ verticalAlign: 'baseline', position: 'relative', top: '-0.1em' }}>
@@ -86,11 +88,11 @@ export default function About() {
                     </defs>
                   </svg>
                 </span>
-                Mežsaimniecībā
+                {t('homeAbout.heading2')}
               </span>
             </h2>
             <p className='text-neutral-700 text-base md:text-lg lg:text-xl'>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium officia magnam delectus dolorum doloremque Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nulla, officia!
+              {t('homeAbout.description')}
             </p>
           </div>
         </div>
@@ -112,11 +114,11 @@ export default function About() {
               </div>
               
               <span className="text-6xl md:text-7xl lg:text-7xl font-bold text-[#bc9d6e] ml-4 md:ml-6 pb-2">
-                gadi +
+                {t('homeAbout.years')}
               </span>
             </div>
             <p className="text-4xl md:text-6xl lg:text-6xl font-semibold text-neutral-600 mt-1 text-left">
-              Mežsaimniecībā
+              {t('homeAbout.inForestry')}
             </p>
           </div>
         </div>

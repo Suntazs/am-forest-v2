@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useRouter } from "next/router";
+import { useTranslation } from 'next-i18next';
 
 export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
   const [isVisible, setIsVisible] = useState(true);
@@ -8,6 +9,7 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
   const router = useRouter();
+  const { t } = useTranslation('common');
 
   // Check if mobile on mount and resize
   useEffect(() => {
@@ -168,12 +170,25 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
                     d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
                   />
                 </svg>
-                <span className="text-sm lg:text-base xl:text-lg whitespace-nowrap">Riga, Latvia</span>
+                <span className="text-sm lg:text-base xl:text-lg whitespace-nowrap">{t('nav.address')}</span>
               </a>
             </div>
           </div>
 
-          {/* Right side - Unique hamburger menu button */}
+          {/* Right side - Language switcher + hamburger menu button */}
+          <div className="flex items-center gap-2 md:gap-4">
+            {/* Language Switcher */}
+            <button
+              onClick={() => {
+                const newLocale = router.locale === 'lv' ? 'en' : 'lv';
+                router.push(router.asPath, router.asPath, { locale: newLocale });
+              }}
+              className="text-neutral-200 hover:text-[#dbf6a3] transition-colors text-sm md:text-base font-medium px-2 py-1 rounded border border-neutral-200/30 hover:border-[#dbf6a3]/50"
+              aria-label="Switch language"
+            >
+              {router.locale === 'lv' ? 'EN' : 'LV'}
+            </button>
+
           <button
             onClick={toggleMenu}
             className="relative group p-3 hover:bg-[#faf6ed]/10 rounded-lg transition-colors"
@@ -188,6 +203,7 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
             <div className="absolute -right-1 -top-1 w-2 h-2 bg-[#dbf6a3] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             <div className="absolute -left-1 -bottom-1 w-1.5 h-1.5 bg-[#faf6ed] rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-75"></div>
           </button>
+          </div>
         </div>
       </div>
 

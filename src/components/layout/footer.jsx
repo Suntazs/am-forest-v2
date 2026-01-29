@@ -1,9 +1,11 @@
 "use client";
 import React from "react";
 import { useContactModal } from '@/contexts/ContactModalContext';
+import { useTranslation } from 'next-i18next';
 
 export default function Footer() {
   const { openContactModal } = useContactModal();
+  const { t } = useTranslation('common');
   return (
     <footer className="bg-[#2a2a2a] py-16 md:py-24 lg:py-30">
       <div className="px-6 md:px-12 lg:px-20">
@@ -20,7 +22,7 @@ export default function Footer() {
               </div>
             </div>
             <h2 className="text-white font-bold text-2xl md:text-4xl lg:text-6xl leading-tight">
-              Trust your forest to us
+              {t('footer.heading')}
             </h2>
           </div>
 
@@ -74,7 +76,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <div className="text-gray-400 text-base md:text-lg mb-6 md:mb-8">
-          © Copyright 2024, All Rights Reserved
+          {t('footer.copyright')}
         </div>
 
         {/* Bottom section with button and links */}
@@ -84,7 +86,7 @@ export default function Footer() {
             <button
               onClick={openContactModal}
               className="bg-[#f3ecda] text-[#2a2a2a] px-6 py-2 rounded-lg font-semibold text-base md:text-lg hover:bg-[#e6d9c2] transition-colors w-full sm:w-auto">
-              Sazinies ar mums
+              {t('footer.contactBtn')}
             </button>
           </div>
 
@@ -94,25 +96,25 @@ export default function Footer() {
               href="/about"
               className="text-white hover:text-gray-300 transition-colors text-base md:text-lg"
             >
-              About
+              {t('footer.about')}
             </a>
             <a
               href="/services"
               className="text-white hover:text-gray-300 transition-colors text-base md:text-lg"
             >
-              Services
+              {t('footer.services')}
             </a>
             <a
               href="/projects"
               className="text-white hover:text-gray-300 transition-colors text-base md:text-lg"
             >
-              Projects
+              {t('footer.projects')}
             </a>
             <a
               href="/contact"
               className="text-white hover:text-gray-300 transition-colors text-base md:text-lg"
             >
-              Contact
+              {t('footer.contact')}
             </a>
           </div>
 

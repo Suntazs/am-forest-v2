@@ -1,6 +1,8 @@
 import React from 'react';
+import { useTranslation } from 'next-i18next';
 
 export default function Reviews() {
+  const { t } = useTranslation('common');
   return (
     <section className="relative py-16 md:py-24 lg:py-30 bg-[#f3ecda] overflow-hidden">
       <div className="flex flex-col lg:flex-row px-6 md:px-12 lg:px-20">
@@ -8,7 +10,7 @@ export default function Reviews() {
         <div className="w-full lg:w-1/3 mb-8 lg:mb-0">
           <div className="max-w-3xl">
             <h2 className="text-2xl md:text-4xl lg:text-7xl font-bold text-neutral-700 leading-tight mb-6 lg:mb-0">
-              Atsauksmes
+              {t('reviews.heading')}
             </h2>
           </div>
         </div>
@@ -17,12 +19,12 @@ export default function Reviews() {
         <div className="w-full lg:w-2/3 lg:pl-16">
           <div>
             <p className="text-base md:text-xl lg:text-2xl text-neutral-600 mb-6 leading-relaxed">
-              "Ļoti profesionāla komanda un izcils serviss! Viņi parādīja augstu kvalitāti savā darbā un bija ļoti atsaucīgi uz visām mūsu vajadzībām. Noteikti iesaku visiem, kas meklē uzticamus mežsaimniecības speciālistus."
+              "{t('reviews.quote')}"
             </p>
 
             <div>
               <div className="flex flex-col sm:flex-row sm:items-center mb-2">
-                <div className="font-semibold text-neutral-700 text-base md:text-lg mb-2 sm:mb-0 sm:mr-4">Andris Ozols</div>
+                <div className="font-semibold text-neutral-700 text-base md:text-lg mb-2 sm:mb-0 sm:mr-4">{t('reviews.author')}</div>
                 <div className="flex">
                   {[...Array(5)].map((_, i) => (
                     <svg key={i} className="w-4 h-4 md:w-5 md:h-5 text-[#bc9d6e] fill-current" viewBox="0 0 20 20">
@@ -31,7 +33,7 @@ export default function Reviews() {
                   ))}
                 </div>
               </div>
-              <div className="text-neutral-500 text-sm md:text-base">Klients</div>
+              <div className="text-neutral-500 text-sm md:text-base">{t('reviews.role')}</div>
             </div>
           </div>
         </div>

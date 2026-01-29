@@ -1,8 +1,11 @@
+import { useTranslation } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useContactModal } from '../contexts/ContactModalContext';
 import { usePageTransition } from '../contexts/PageTransitionContext';
 import { useEffect, useRef } from 'react';
 
 export default function ContactPage() {
+  const { t } = useTranslation('common');
   const { openContactModal } = useContactModal();
   const { animationsEnabled } = usePageTransition();
   const iframeRef = useRef(null);
@@ -34,16 +37,16 @@ export default function ContactPage() {
               
               <div className="space-y-3 text-lg lg:text-xl text-[#243c36]/80">
                 <p>
-                  <span className="font-semibold">PVN Reģ. Nr.:</span> LV40103347835
+                  <span className="font-semibold">{t('contact.pvnLabel')}</span> LV40103347835
                 </p>
                 <p>
-                  <span className="font-semibold">Juridiskā adrese:</span> Ēdoles iela 56, Kuldīga, LV-3301
+                  <span className="font-semibold">{t('contact.addressLabel')}</span> Ēdoles iela 56, Kuldīga, LV-3301
                 </p>
                 <p>
-                  <span className="font-semibold">Kods:</span> NDEALV2X
+                  <span className="font-semibold">{t('contact.codeLabel')}</span> NDEALV2X
                 </p>
                 <p>
-                  <span className="font-semibold">Konts:</span> LV55 NDEA 0000 0833 9152 9
+                  <span className="font-semibold">{t('contact.accountLabel')}</span> LV55 NDEA 0000 0833 9152 9
                 </p>
                 <div className="pt-4 space-y-2">
                   <p className="flex items-center gap-2">
@@ -68,19 +71,26 @@ export default function ContactPage() {
 
             <div className="mt-12">
               <p className="text-xl lg:text-2xl text-[#243c36]/70 mb-8 leading-relaxed">
-                We're here to help with all your forestry needs. Whether you have questions about our services, 
-                need a consultation, or want to discuss a project, don't hesitate to reach out.
+                {t('contact.description')}
               </p>
               
               <button
                 onClick={openContactModal}
                 className="inline-block px-10 py-5 bg-[#243c36] text-white rounded-full font-medium text-lg lg:text-xl hover:bg-[#1e3029] transition-all duration-300 transform hover:scale-105"
               >
-                Get in Contact
+                {t('contact.button')}
               </button>
             </div>
         </div>
       </div>
     </div>
   );
+}
+
+export async function getStaticProps({ locale }) {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale, ['common'])),
+    },
+  };
 }

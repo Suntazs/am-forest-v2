@@ -1,13 +1,18 @@
 "use client";
 import React, { useEffect, useRef } from 'react';
 import { useContactModal } from '@/contexts/ContactModalContext';
+import { useTranslation } from 'next-i18next';
 
 const ServiceCTA = ({ 
-  title = "Nepieciešami mūsu pakalpojumi?",
-  description = "Sazinieties ar mums, lai saņemtu individuālu piedāvājumu jūsu projektam.",
-  buttonText = "Sazināties ar mums"
+  title,
+  description,
+  buttonText
 }) => {
   const { openContactModal } = useContactModal();
+  const { t } = useTranslation('common');
+  const resolvedTitle = title || t('cta.heading');
+  const resolvedDescription = description || t('cta.button');
+  const resolvedButtonText = buttonText || t('cta.button');
   const flowerRef = useRef(null);
 
   useEffect(() => {
@@ -48,17 +53,17 @@ const ServiceCTA = ({
             </div>
 
             <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#faf6ed] mb-6">
-              {title}
+              {resolvedTitle}
             </h2>
             <p className="text-lg md:text-xl text-[#faf6ed]/80 mb-10 max-w-2xl mx-auto">
-              {description}
+              {resolvedDescription}
             </p>
             
             <button 
               onClick={openContactModal}
               className="bg-[#faf6ed] text-[#243c36] px-8 py-4 font-semibold text-lg hover:text-[#243c36] transition-all duration-300 relative overflow-hidden group inline-block"
             >
-              <span className="relative z-10">{buttonText}</span>
+              <span className="relative z-10">{resolvedButtonText}</span>
               {/* Green background that slides up from bottom on hover */}
               <span className="absolute bottom-0 left-0 w-full h-0 bg-[#dbf6a3] transition-all duration-300 ease-out group-hover:h-full"></span>
             </button>

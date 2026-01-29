@@ -1,9 +1,11 @@
 "use client";
 import React, { useEffect, useRef } from 'react';
 import { usePageTransition } from '@/contexts/PageTransitionContext';
+import { useTranslation } from 'next-i18next';
 
 export default function AboutHero() {
   const { animationsEnabled } = usePageTransition();
+  const { t } = useTranslation('common');
   const flowerRef1 = useRef(null);
   const flowerRef2 = useRef(null);
   const curveRef = useRef(null);
@@ -43,7 +45,7 @@ export default function AboutHero() {
           {/* Heading with flower */}
           <div className="mb-12 md:mb-16">
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-[#faf6ed] leading-tight max-w-5xl">
-              Expertise 
+              {t('aboutHero.heading1')} 
               <span className="inline-flex mx-2 align-middle" style={{ verticalAlign: '-0.15em' }}>
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
@@ -68,7 +70,7 @@ export default function AboutHero() {
                   </defs>
                 </svg>
               </span>
-              that inspires confidence and security at every
+              {t('aboutHero.heading2')}
               <span className="inline-flex ml-2 align-middle" style={{ verticalAlign: '-0.15em' }}>
                 <svg 
                   xmlns="http://www.w3.org/2000/svg" 
@@ -93,17 +95,14 @@ export default function AboutHero() {
                   </defs>
                 </svg>
               </span>
-              {' '}step
+              {' '}{t('aboutHero.heading3')}
             </h1>
           </div>
           
           {/* Description with offset */}
           <div className="ml-12 md:ml-32 lg:ml-48">
             <p className="text-lg md:text-xl lg:text-2xl text-[#faf6ed]/80 max-w-4xl leading-relaxed">
-              Thanks to the dedication and expertise of our team at AM Forest, 
-              we continue to grow and inspire confidence. Each member plays 
-              a key role in the success of your forestry projects, combining 
-              rigor with a human approach to sustainable forest management.
+              {t('aboutHero.description')}
             </p>
           </div>
         </div>

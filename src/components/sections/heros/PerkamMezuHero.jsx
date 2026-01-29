@@ -2,9 +2,11 @@
 import React from "react";
 import { ProgressiveVideo } from "@/components/ui/ProgressiveMedia";
 import { useContactModal } from '@/contexts/ContactModalContext';
+import { useTranslation } from 'next-i18next';
 
 export default function PerkamMezuHero() {
   const { openContactModal } = useContactModal();
+  const { t } = useTranslation('common');
 
   return (
     <section className="relative overflow-hidden">
@@ -27,16 +29,16 @@ export default function PerkamMezuHero() {
           <div className="absolute inset-0 flex items-center justify-center px-6 md:px-12 z-20">
             <div className="max-w-2xl text-center">
               <h1 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
-                Pērkam Mežu
+                {t('perkamMezu.heading')}
               </h1>
               <p className="text-base md:text-lg text-white/90 leading-relaxed mb-8">
-                Mēs esam uzticams partneris meža īpašumu iegādē. Piedāvājam godīgas cenas, ātru darījumu norisi un profesionālu konsultāciju.
+                {t('perkamMezu.descriptionMobile')}
               </p>
               <button
                 onClick={openContactModal}
                 className="bg-[#dbf6a3] text-[#243c36] px-6 py-3 rounded-full font-semibold text-base hover:bg-[#c8e885] transition-colors duration-300 shadow-lg"
               >
-                Saņemt piedāvājumu
+                {t('perkamMezu.ctaButton')}
               </button>
             </div>
           </div>
@@ -62,16 +64,16 @@ export default function PerkamMezuHero() {
           <div className="px-6 md:px-12 lg:px-20">
             <div className="max-w-2xl">
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-neutral-700 leading-tight mb-8">
-                Pērkam Mežu
+                {t('perkamMezu.heading')}
               </h1>
               <p className="text-lg md:text-xl text-neutral-700 leading-relaxed mb-8">
-                Mēs esam uzticams partneris meža īpašumu iegādē. Piedāvājam godīgas cenas, ātru darījumu norisi un profesionālu konsultāciju. Mūsu pieredzējušie eksperti nodrošina caurskatāmu procesu no sākotnējās apsekošanas līdz darījuma noslēgšanai.
+                {t('perkamMezu.descriptionDesktop')}
               </p>
               <button
                 onClick={openContactModal}
                 className="bg-[#dbf6a3] text-[#243c36] px-8 py-4 rounded-full font-semibold text-lg hover:bg-[#c8e885] transition-colors duration-300 shadow-lg"
               >
-                Saņemt piedāvājumu
+                {t('perkamMezu.ctaButton')}
               </button>
             </div>
           </div>

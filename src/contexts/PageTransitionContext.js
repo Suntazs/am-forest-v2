@@ -12,9 +12,15 @@ const PageTransitionContext = createContext({
 export function PageTransitionProvider({ children }) {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [animationsEnabled, setAnimationsEnabled] = useState(true);
-  // Check if we've already seen the intro animation
-  const hasVisited = typeof window !== 'undefined' && sessionStorage.getItem('hasVisited');
-  const [transitionComplete, setTransitionComplete] = useState(!!hasVisited); // Start as true if already visited
+  const [transitionComplete, setTransitionComplete] = useState(false);
+
+  // Check sessionStorage after mount to avoid hydration mismatch
+  useEffect(() => {
+    const hasVisited = sessionStorage.getItem('hasVisited');
+    if (hasVisited) {
+      setTransitionComplete(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (isTransitioning) {
