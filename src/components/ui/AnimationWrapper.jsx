@@ -85,25 +85,55 @@ export function ImageWrapper({ src, alt, className = '', ...props }) {
 export function VideoWrapper({ src, className = '', autoPlay = true, loop = false, ...props }) {
   const { animationsEnabled } = usePageTransition();
   const videoRef = useRef(null);
+  const [videoReady, setVideoReady] = useState(false);
   const [hasStarted, setHasStarted] = useState(false);
 
+  // Handle video loading
   useEffect(() => {
-    if (videoRef.current) {
-      if (animationsEnabled && !hasStarted && autoPlay) {
-        // Start video playback only once after first transition
-        setTimeout(() => {
-          videoRef.current.play().catch(() => {});
-          setHasStarted(true);
-        }, 200);
-      } else if (!animationsEnabled && hasStarted) {
-        // Don't reset, just pause temporarily
-        videoRef.current.pause();
-      } else if (animationsEnabled && hasStarted) {
-        // Resume if it was already playing
-        videoRef.current.play().catch(() => {});
-      }
+    const video = videoRef.current;
+    if (!video || !src) return;
+
+    const handleCanPlay = () => {
+      setVideoReady(true);
+    };
+
+    const handleLoadedData = () => {
+      setVideoReady(true);
+    };
+
+    video.addEventListener('canplay', handleCanPlay);
+    video.addEventListener('loadeddata', handleLoadedData);
+
+    // Check if video is already loaded (cached)
+    if (video.readyState >= 3) {
+      setVideoReady(true);
+    } else {
+      // Force load if not loaded
+      video.load();
     }
-  }, [animationsEnabled, autoPlay, hasStarted]);
+
+    return () => {
+      video.removeEventListener('canplay', handleCanPlay);
+      video.removeEventListener('loadeddata', handleLoadedData);
+    };
+  }, [src]);
+
+  // Handle playback based on animation state
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (animationsEnabled && videoReady && autoPlay) {
+      // Start or resume video playback
+      setTimeout(() => {
+        video.play().catch(() => {});
+        setHasStarted(true);
+      }, hasStarted ? 0 : 200);
+    } else if (!animationsEnabled && hasStarted) {
+      // Pause during transitions
+      video.pause();
+    }
+  }, [animationsEnabled, autoPlay, hasStarted, videoReady]);
 
   return (
     <video
@@ -113,6 +143,7 @@ export function VideoWrapper({ src, className = '', autoPlay = true, loop = fals
       muted
       playsInline
       loop={loop}
+      preload="auto"
       {...props}
     />
   );
