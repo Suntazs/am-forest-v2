@@ -5,17 +5,25 @@ import { useTranslation } from 'next-i18next';
 
 export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
   const [isVisible, setIsVisible] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
+  const [isMobile, setIsMobile] = useState(true); // Default TRUE to prevent hiding on mobile before detection
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
+  const isMobileRef = useRef(true); // Ref for IMMEDIATE access in scroll handler
   const router = useRouter();
   const { t } = useTranslation('common');
 
   // Check if mobile on mount and resize
   useEffect(() => {
     const checkMobile = () => {
-      const mobile = window.innerWidth <= 768;
+      const mobile = window.innerWidth <= 768 || 
+        /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      isMobileRef.current = mobile; // Update ref FIRST (synchronous)
       setIsMobile(mobile);
+      
+      // Force visible on mobile
+      if (mobile) {
+        setIsVisible(true);
+      }
     };
 
     checkMobile();
@@ -23,23 +31,25 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Scroll handling for desktop only
+  // Scroll handling - check ref INSIDE handler for immediate mobile detection
   useEffect(() => {
-    if (isMobile) {
-      setIsVisible(true); // Always visible on mobile
-      return;
-    }
-
     const updateNavbar = () => {
+      // CRITICAL: Check ref, not state, for immediate mobile detection
+      if (isMobileRef.current) {
+        setIsVisible(true);
+        ticking.current = false;
+        return;
+      }
+
       const currentScrollY = window.scrollY;
 
       if (currentScrollY < 80) {
         // Always show at the top
         setIsVisible(true);
-      } else if (currentScrollY > lastScrollY.current) {
-        // Scrolling down - hide
+      } else if (currentScrollY > lastScrollY.current + 5) {
+        // Scrolling down - hide (added threshold to prevent jitter)
         setIsVisible(false);
-      } else if (currentScrollY < lastScrollY.current) {
+      } else if (currentScrollY < lastScrollY.current - 5) {
         // Scrolling up - show
         setIsVisible(true);
       }
@@ -55,11 +65,11 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
       }
     };
 
-    // Set initial state
+    // Initialize scroll position
     lastScrollY.current = window.scrollY;
-    if (window.scrollY > 80) {
-      setIsVisible(false);
-    }
+    
+    // DO NOT set isVisible(false) here - this was causing the mobile bug!
+    // Let scroll events handle visibility changes naturally
 
     // Listen for scroll events
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -67,7 +77,7 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [isMobile]);
+  }, []); // Empty deps - we use refs for immediate state
 
   const toggleMenu = useCallback(() => {
     const newState = !isMenuOpen;
