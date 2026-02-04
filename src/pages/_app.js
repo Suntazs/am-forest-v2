@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import { appWithTranslation } from 'next-i18next';
 import Navbar from '../components/layout/navbar';
 import Footer from '../components/layout/footer';
@@ -14,6 +14,7 @@ import '../app/globals.css';
 
 function AppContent({ Component, pageProps }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [shouldApplyTransform, setShouldApplyTransform] = useState(false);
   const { isContactOpen, closeContactModal } = useContactModal();
 
   // Disable browser scroll restoration
@@ -22,6 +23,35 @@ function AppContent({ Component, pageProps }) {
       history.scrollRestoration = 'manual';
     }
   }, []);
+
+  // Handle transform application - sync with contact modal
+  // useLayoutEffect ensures transform is applied BEFORE browser paint (same frame as modal)
+  useLayoutEffect(() => {
+    if (isContactOpen) {
+      // Immediately apply transform when opening - same frame as modal
+      setShouldApplyTransform(true);
+    }
+  }, [isContactOpen]);
+
+  // Handle cleanup after close animation (can use regular useEffect)
+  useEffect(() => {
+    if (!isContactOpen && shouldApplyTransform) {
+      // Keep transform during close animation, then remove after 700ms
+      const timer = setTimeout(() => {
+        setShouldApplyTransform(false);
+      }, 700);
+      return () => clearTimeout(timer);
+    }
+  }, [isContactOpen, shouldApplyTransform]);
+
+  // Calculate transform value based on screen size
+  const getTransformValue = () => {
+    if (typeof window === 'undefined') return 'translateX(-100%)';
+    const width = window.innerWidth;
+    if (width >= 1024) return 'translateX(-550px)';
+    if (width >= 768) return 'translateX(-480px)';
+    return 'translateX(-100%)';
+  };
 
   // Prevent scrolling ONLY when contact modal is open (not menu)
   useEffect(() => {
@@ -59,15 +89,32 @@ function AppContent({ Component, pageProps }) {
     };
   }, [isContactOpen, menuOpen]);
 
+  // Determine styles - only apply transform when needed
+  const getWrapperStyle = () => {
+    if (!shouldApplyTransform) {
+      // No transform at all - fixes mobile navbar fixed positioning
+      return undefined;
+    }
+    
+    // Apply transform with transition - exact same as ContactModal
+    return {
+      transform: isContactOpen ? getTransformValue() : 'translateX(0)',
+      transition: 'transform 700ms cubic-bezier(0.4, 0, 0.2, 1)',
+    };
+  };
+
   return (
     <div className="min-h-screen overflow-x-hidden" style={{ backgroundColor: '#faf6ed' }}>
       <PageTransition>
         <SimplePageTransition>
           {/* Main wrapper with push effect matching modal width */}
-          <div className={`relative transition-transform duration-700 ease-in-out bg-[#faf6ed] ${
-            isContactOpen ? 'transform -translate-x-full md:-translate-x-[480px] lg:-translate-x-[550px]' : 'transform translate-x-0'
-          }`}>
-            {/* Navbar inside transform so it moves with the page */}
+          {/* CRITICAL: Only apply transform when contact modal is OPEN or CLOSING */}
+          {/* When fully closed, NO transform = navbar fixed positioning works on mobile */}
+          <div 
+            className="relative bg-[#faf6ed]"
+            style={getWrapperStyle()}
+          >
+            {/* Navbar inside - slides with page when contact modal opens */}
             <Navbar onMenuToggle={setMenuOpen} isMenuOpen={menuOpen} setIsMenuOpen={setMenuOpen} />
 
             {/* Main content */}
@@ -82,7 +129,7 @@ function AppContent({ Component, pageProps }) {
                 isContactOpen ? 'opacity-100' : 'opacity-0'
               }`}
               style={{
-                transition: isContactOpen ? 'opacity 700ms 200ms' : 'opacity 700ms',
+                transition: 'opacity 700ms cubic-bezier(0.4, 0, 0.2, 1)',
               }}
             />
           </div>

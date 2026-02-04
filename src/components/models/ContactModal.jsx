@@ -67,10 +67,12 @@ export default function ContactModal({ isOpen, onClose }) {
     <>
       {/* Modal */}
       <div 
-        className="fixed top-0 right-0 h-screen w-full md:w-[480px] lg:w-[550px] z-[9999] bg-[#faf6ed] transition-transform duration-700 ease-in-out"
+        className="fixed top-0 right-0 h-screen w-full md:w-[480px] lg:w-[550px] z-[9999] bg-[#faf6ed]"
         style={{
           transform: !isMounted ? 'translateX(100%)' : (isOpen ? 'translateX(0)' : 'translateX(100%)'),
           WebkitTransform: !isMounted ? 'translateX(100%)' : (isOpen ? 'translateX(0)' : 'translateX(100%)'),
+          transition: 'transform 700ms cubic-bezier(0.4, 0, 0.2, 1)',
+          WebkitTransition: '-webkit-transform 700ms cubic-bezier(0.4, 0, 0.2, 1)',
         }}
       >
         {/* Modal Content */}

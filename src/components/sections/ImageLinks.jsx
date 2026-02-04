@@ -20,26 +20,20 @@ export default function ImageLinks() {
     {
       title: t('imageLinks.link1'),
       href: "/services/forest-management",
-      image: "/image/beautiful-shot-forest-with-sunlight.png"
     },
     {
       title: t('imageLinks.link2'),
       href: "/services/timber-trade",
-      image: "/image/beautiful-shot-forest-with-sunlight.png"
     },
     {
       title: t('imageLinks.link3'),
       href: "/services/consulting",
-      image: "/image/beautiful-shot-forest-with-sunlight.png"
     },
     {
       title: t('imageLinks.link4'),
       href: "/services/reforestation",
-      image: "/image/beautiful-shot-forest-with-sunlight.png"
     }
   ];
-
-  const currentImage = hoveredIndex !== null ? links[hoveredIndex].image : "/image/beautiful-shot-forest-with-sunlight.png";
 
   // Intersection Observer for triggering overlay animations on links
   useEffect(() => {
@@ -132,12 +126,9 @@ export default function ImageLinks() {
         <div className="w-full lg:w-5/12 mb-4 lg:mb-0 lg:pr-12">
           <div className="relative h-[400px] lg:h-[700px] overflow-hidden">
             <ProgressiveImage
-              src={currentImage}
+              src="/image/amforest-Forwarder.jpg"
               alt={t('imageLinks.imageAlt')}
-              className="w-full h-full transition-all duration-700 ease-in-out transform"
-              style={{
-                transform: hoveredIndex !== null ? 'scale(1.05)' : 'scale(1)'
-              }}
+              className="w-full h-full"
             />
           </div>
         </div>

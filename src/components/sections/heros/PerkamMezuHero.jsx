@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { ProgressiveVideo } from "@/components/ui/ProgressiveMedia";
+import { ProgressiveImage } from "@/components/ui/ProgressiveMedia";
 import { useContactModal } from '@/contexts/ContactModalContext';
 import { useTranslation } from 'next-i18next';
 
@@ -12,15 +12,12 @@ export default function PerkamMezuHero() {
     <section className="relative overflow-hidden">
       {/* Mobile Layout */}
       <div className="block lg:hidden pt-18 md:pt-22">
-        {/* Video section */}
+        {/* Image section */}
         <div className="relative h-[400px] md:h-[500px]">
-          <ProgressiveVideo
-            src="/video/vid-bg-amforest-optimized.mp4"
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full"
+          <ProgressiveImage
+            src="/image/image.png"
+            alt={t('perkamMezu.heading')}
+            className="w-full h-full object-cover"
           />
           {/* Dark overlay for better text visibility */}
           <div className="absolute inset-0 bg-black/30 z-10"></div>
@@ -47,15 +44,12 @@ export default function PerkamMezuHero() {
 
       {/* Desktop Layout - Original Design */}
       <div className="hidden lg:flex h-[700px] pt-20">
-        {/* Left side - Video touching edge */}
+        {/* Left side - Image touching edge */}
         <div className="w-1/2 relative h-full">
-          <ProgressiveVideo
-            src="/video/vid-bg-amforest-optimized.mp4"
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute inset-0 w-full h-full"
+          <ProgressiveImage
+            src="/image/image.png"
+            alt={t('perkamMezu.heading')}
+            className="absolute inset-0 w-full h-full object-cover"
           />
         </div>
 
