@@ -14,7 +14,7 @@
     "gsap": "^3.13.0",
     "i18next": "^25.8.0",
     "locomotive-scroll": "^4.1.4",
-    "next": "15.4.6",
+    "next": "15.5.11",
     "next-i18next": "^15.4.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
