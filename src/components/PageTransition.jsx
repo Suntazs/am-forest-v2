@@ -201,42 +201,51 @@ export default function PageTransition({ children }) {
                   ease: [0.6, 0.0, 0.4, 1]
                 }}
               >
-                  {/* Container for logo */}
-                  <div className="relative flex items-center">
-                    {/* Logo - starts at right position immediately */}
+                  {/* Container for logo and text */}
+                  <div className="relative flex items-center gap-2">
+                    {/* Logo with background - starts at right position, moves left */}
                     <motion.div
-                      className="z-20 flex items-center gap-3 md:gap-4"
+                      className="z-20 relative overflow-visible"
                       initial={{ 
-                        x: textWidth > 0 ? `${textWidth + 20}px` : 0
+                        x: textWidth > 0 ? `${textWidth + 8}px` : 0
                       }}
                       animate={{ 
                         x: animationPhase === 'revealText' || animationPhase === 'slideUp' ? 0 : 
-                           textWidth > 0 ? `${textWidth + 20}px` : 0
+                           textWidth > 0 ? `${textWidth + 8}px` : 0
                       }}
                       transition={{ 
                         duration: 1.5,
                         ease: [0.4, 0.0, 0.2, 1]
                       }}
                     >
+                      {/* Background that extends left to cover text and right to cover gap */}
+                      <div 
+                        className="absolute bg-gray-100"
+                        style={{
+                          top: '-20px',
+                          bottom: '-20px',
+                          left: '-500px',
+                          right: '-8px'
+                        }}
+                      />
                       <img 
                         src="/image/amforest-logo-black.svg" 
                         alt="AM Forest" 
-                        className="h-16 md:h-20 lg:h-24 w-auto"
+                        className="h-16 md:h-20 lg:h-24 w-auto relative z-10 block"
                       />
-                      <span className="text-[#243c36] font-semibold text-2xl md:text-3xl lg:text-4xl">Forest</span>
                     </motion.div>
                     
-                    {/* Hidden text for width measurement */}
+                    {/* Forest text */}
                     <h1
                       ref={textRef}
-                      className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#243c36] whitespace-nowrap opacity-0 absolute"
+                      className="text-5xl md:text-6xl lg:text-7xl font-bold text-black whitespace-nowrap"
                       style={{
-                        visibility: 'hidden'
+                        opacity: animationPhase === 'initial' ? 0 : 1,
+                        transition: 'opacity 0.3s'
                       }}
                     >
-                      AM Forest
+                      Forest
                     </h1>
-                    
                   </div>
               </motion.div>
             </div>

@@ -6,11 +6,24 @@ import { useTranslation } from 'next-i18next';
 export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
   const [isVisible, setIsVisible] = useState(true);
   const [isMobile, setIsMobile] = useState(true); // Default TRUE to prevent hiding on mobile before detection
+  const [langDropdownOpen, setLangDropdownOpen] = useState(false);
   const lastScrollY = useRef(0);
   const ticking = useRef(false);
   const isMobileRef = useRef(true); // Ref for IMMEDIATE access in scroll handler
+  const langDropdownRef = useRef(null);
   const router = useRouter();
   const { t } = useTranslation('common');
+
+  // Close language dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (langDropdownRef.current && !langDropdownRef.current.contains(event.target)) {
+        setLangDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   // Check if mobile on mount and resize
   useEffect(() => {
@@ -188,17 +201,48 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
 
           {/* Right side - Language switcher + hamburger menu button */}
           <div className="flex items-center gap-2 md:gap-4">
-            {/* Language Switcher */}
-            <button
-              onClick={() => {
-                const newLocale = router.locale === 'lv' ? 'en' : 'lv';
-                router.push(router.asPath, router.asPath, { locale: newLocale });
-              }}
-              className="text-neutral-200 hover:text-[#dbf6a3] transition-colors text-sm md:text-base font-medium px-2 py-1 rounded border border-neutral-200/30 hover:border-[#dbf6a3]/50"
-              aria-label="Switch language"
-            >
-              {router.locale === 'lv' ? 'EN' : 'LV'}
-            </button>
+            {/* Language Dropdown */}
+            <div className="relative" ref={langDropdownRef}>
+              <button
+                onClick={() => setLangDropdownOpen(!langDropdownOpen)}
+                className="flex items-center gap-1 text-neutral-200 hover:text-[#dbf6a3] transition-colors text-sm md:text-base font-medium px-2 py-1 rounded border border-neutral-200/30 hover:border-[#dbf6a3]/50"
+                aria-label="Select language"
+              >
+                {router.locale?.toUpperCase() || 'LV'}
+                <svg 
+                  className={`w-3 h-3 transition-transform duration-200 ${langDropdownOpen ? 'rotate-180' : ''}`} 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              
+              {/* Dropdown menu */}
+              {langDropdownOpen && (
+                <div className="absolute top-full right-0 mt-2 bg-[#243c36] border border-neutral-200/30 rounded-lg shadow-lg overflow-hidden z-50">
+                  <button
+                    onClick={() => {
+                      router.push(router.asPath, router.asPath, { locale: 'lv' });
+                      setLangDropdownOpen(false);
+                    }}
+                    className={`w-full px-4 py-2 text-left text-sm md:text-base transition-colors ${router.locale === 'lv' ? 'bg-[#dbf6a3] text-[#243c36]' : 'text-neutral-200 hover:bg-[#dbf6a3]/20'}`}
+                  >
+                    LV
+                  </button>
+                  <button
+                    onClick={() => {
+                      router.push(router.asPath, router.asPath, { locale: 'en' });
+                      setLangDropdownOpen(false);
+                    }}
+                    className={`w-full px-4 py-2 text-left text-sm md:text-base transition-colors ${router.locale === 'en' ? 'bg-[#dbf6a3] text-[#243c36]' : 'text-neutral-200 hover:bg-[#dbf6a3]/20'}`}
+                  >
+                    EN
+                  </button>
+                </div>
+              )}
+            </div>
 
           <button
             onClick={toggleMenu}
