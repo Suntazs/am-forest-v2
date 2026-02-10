@@ -9,7 +9,7 @@ export default function Reviews() {
         {/* Left side - 1/3 width on desktop, full width on mobile */}
         <div className="w-full lg:w-1/3 mb-8 lg:mb-0">
           <div className="max-w-3xl">
-            <h2 className="text-2xl md:text-4xl lg:text-7xl font-bold text-neutral-700 leading-tight mb-6 lg:mb-0">
+            <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-neutral-700 leading-tight mb-6 lg:mb-0">
               {t('reviews.heading')}
             </h2>
           </div>

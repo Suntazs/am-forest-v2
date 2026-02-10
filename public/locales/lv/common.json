@@ -30,11 +30,30 @@
     "send": "Nosūtīt ziņojumu"
   },
   "homeHero": {
-    "heading": "AM Forest profesionāla pieeja katram meža īpašniekam, katram hektāram."
+    "heading": "AM Forest – nodrošinām profesionālus pilna cikla mežizstrādes pakalpojumus visā Latvijā kopš 2010. gada."
+  },
+  "whyChooseUs": {
+    "heading": "Kāpēc izvēlēties AM Forest?",
+    "feature1": {
+      "title": "Caurspīdīgi aprēķini un godīga samaksa",
+      "description": "Sniedzam skaidrus aprēķinus, izskaidrojam katru pozīciju un nodrošinām savlaicīgus norēķinus bez slēptām izmaksām."
+    },
+    "feature2": {
+      "title": "Viss jūsu mežam vienuviet",
+      "description": "Nodrošinām pilnu mežsaimniecības darbu ciklu no plānošanas un dokumentācijas līdz mežizstrādei un realizācijai, piedāvājot ērtu un efektīvu sadarbību."
+    },
+    "feature3": {
+      "title": "Ilggadēja pieredze mežsaimniecībā",
+      "description": "Strādājam nozarē jau kopš 2010. gada, realizējot dažādas sarežģītības meža apsaimniekošanas un mežizstrādes projektus visā Latvijā. Mūsu komandā strādā pieredzējuši un kvalificēti nozares speciālisti."
+    },
+    "feature4": {
+      "title": "Personīga pieeja katram īpašumam",
+      "description": "Katrs mežs ir atšķirīgs, tāpēc izvērtējam situāciju dabā un piedāvājam piemērotāko risinājumu tieši jūsu īpašumam."
+    }
   },
   "servicesSection": {
-    "heading": "Mūsu pakalpojumi, piedāvā pilnu mežsaimniecības risinājumu klāstu no plānošanas līdz apsaimniekošanai",
-    "subheading": "Nodrošinām individuālu pieeju un augstu kvalitāti visos mežsaimniecības posmos.",
+    "heading": "Pakalpojumi – viss jūsu mežam",
+    "subheading": "Nodrošinām pilna cikla mežizstrādi, meža apsaimniekošanu, tehnikas un transporta pakalpojumus, kā arī meža īpašumu un cirsmu iegādi par labāko cenu.",
     "viewAllTitle": "Visi",
     "viewAllSubtitle": "pakalpojumi",
     "viewAllDesc": "Skatīt visus mūsu pakalpojumus"
@@ -116,9 +135,9 @@
     }
   },
   "homeAbout": {
-    "heading1": "Par AM Forest",
-    "heading2": "Mežsaimniecībā",
-    "description": "AM Forest ir vadošais meža apsaimniekošanas uzņēmums Latvijā ar vairāk nekā 14 gadu pieredzi nozarē. Mēs piedāvājam pilnu pakalpojumu klāstu, sākot no meža inventarizācijas līdz kokmateriālu tirdzniecībai.",
+    "heading1": "Par",
+    "heading2": "AM Forest",
+    "description": "Strādājam ātri, kvalitatīvi un atbildīgi, jo saprotam, ka katrs meža īpašums ir vērtība. Katram klientam pieejam individuāli, piedāvājot piemērotākos risinājumus meža apsaimniekošanā un kopšanā. Mūsu pieredze un tehniskās iespējas ļauj nodrošināt stabilu darba kvalitāti jebkuras sarežģītības projektos. Gada laikā realizējam 50 000 m³ un vairāk kokmateriālu, apliecinot mūsu kapacitāti un uzticamību nozarē. Mēs esam uzņēmums, kuram rūp, lai Latvijā būtu sakopti un ilgtspējīgi apsaimniekoti meži.",
     "years": "gadi +",
     "inForestry": "Mežsaimniecībā"
   },
@@ -130,19 +149,19 @@
   },
   "aboutContent": {
     "imageAlt": "Mežs ar saules gaismu",
-    "heading": "Mūsu stāsts",
-    "p1": "Dibināts ar vīziju revolucionizēt meža apsaimniekošanu Latvijā, AM Forest ir izaudzis no nelielas aizrautīgu mežsaimnieku komandas par vadošo spēku ilgtspējīgas mežsaimniecības praksē.",
-    "p2": "Mēs apvienojam gadu desmitiem uzkrātas tradicionālās mežsaimniecības zināšanas ar modernākajām tehnoloģijām, lai nodrošinātu visaptverošus meža apsaimniekošanas risinājumus, kas sniedz labumu gan dabai, gan mūsu klientiem.",
-    "p3": "Mūsu apņemšanās izcilībai un ilgtspējai ir nopelnījusi mums zemes īpašnieku, kopienu un vides organizāciju uzticību visā Baltijas reģionā.",
-    "stat1Value": "20+",
+    "heading": "Par mums",
+    "p1": "Esam pieredzējis mežizstrādes uzņēmums, kas jau vairāk nekā 15 gadus profesionāli strādā Latvijas mežos. Nodrošinām pilnu mežizstrādes ciklu — no cirsmu stigošanas un dastošanas līdz koku zāģēšanai, pievešanai un gatavo kokmateriālu realizācijai. Papildus piedāvājam ekskavatora, treilera un ekskavatora ar kniebējgalvu pakalpojumus dažādu darbu veikšanai.",
+    "p2": "Strādājam ātri, kvalitatīvi un atbildīgi, jo saprotam, ka katrs meža īpašums ir vērtība. Katram klientam pieejam individuāli, piedāvājot piemērotākos risinājumus meža apsaimniekošanā un kopšanā. Mūsu pieredze un tehniskās iespējas ļauj nodrošināt stabilu darba kvalitāti jebkuras sarežģītības projektos. Gada laikā realizējam 50 000 m³ un vairāk kokmateriālu, apliecinot mūsu kapacitāti un uzticamību nozarē.",
+    "p3": "Mēs esam uzņēmums, kuram rūp, lai Latvijā būtu sakopti un ilgtspējīgi apsaimniekoti meži.",
+    "stat1Value": "15+",
     "stat1Label": "Gadu pieredze",
-    "stat2Value": "500+",
-    "stat2Label": "Pabeigti projekti",
+    "stat2Value": "50k+",
+    "stat2Label": "m³ gadā",
     "stat3Value": "100k+",
     "stat3Label": "Apsaimniekotie hektāri"
   },
   "reviews": {
-    "heading": "Atsauksmes",
+    "heading": "Atsauksmes – klientu pieredze runā pati par sevi",
     "quote": "Ļoti profesionāla komanda un izcils serviss! Viņi parādīja augstu kvalitāti savā darbā un bija ļoti atsaucīgi uz visām mūsu vajadzībām. Noteikti iesaku visiem, kas meklē uzticamus mežsaimniecības speciālistus.",
     "author": "Andris Ozols",
     "role": "Klients"
@@ -155,8 +174,8 @@
     "imageAlt": "Mežs"
   },
   "cta": {
-    "heading": "Esi gatavs? Saznineis ar mums lai sāktu darboties",
-    "button": "Saznineis ar mums",
+    "heading": "AM Forest – uztici savu mežu profesionāļiem.",
+    "button": "Sazinies ar mums",
     "imageAlt": "Meža skats no augšas"
   },
   "faq": {
@@ -517,6 +536,198 @@
         { "question": "Cik ilgs laiks nepieciešams stigošanai?", "answer": "Atkarībā no platības, stigošanas darbi parasti aizņem 1-3 dienas." }
       ],
       "cta": { "title": "Nepieciešama meža stigošana?", "description": "Precīza robežu noteikšana profesionāliem meža darbiem.", "buttonText": "Pieteikt stigošanu" }
+    }
+  },
+  "articles": {
+    "forestMaintenance": {
+      "meta": {
+        "title": "Kāpēc jākopj mežs? | AM Forest",
+        "description": "Uzziniet, kāpēc meža kopšana ir svarīga un kā tā ietekmē meža vērtību. AM Forest piedāvā profesionālu meža kopšanu."
+      },
+      "hero": {
+        "title": "Kāpēc jākopj mežs?",
+        "subtitle": "Meža kopšana ir viens no svarīgākajiem darbiem, kas tieši ietekmē meža vērtību un noturību nākotnē."
+      },
+      "intro": "Savlaicīgi kopts mežs aug kvalitatīvāks, veselīgāks un izturīgāks pret vēja, sniega un citu dabas faktoru radītiem bojājumiem. Rūpējoties par jauno mežu jau no pirmajiem augšanas gadiem, tiek veidota spēcīga un produktīva mežaudze ar lielāku ekonomisko potenciālu nākotnē.",
+      "agrotechnical": {
+        "heading": "Agrotehniskā kopšana",
+        "p1": "Pirmajos gados pēc meža atjaunošanas svarīgi nodrošināt, lai jaunie kociņi netiktu nomākti ar zāli, krūmiem un nevēlamām atvasēm. Agrotehniskās kopšanas laikā tiek atbrīvota augšanas telpa ap mērķa koku sugām, ļaujot tām augt spēcīgākām un taisnākām.",
+        "p2": "Šie darbi parasti tiek veikti vairākus gadus pēc stādīšanas vai dabiskās atjaunošanās, atkarībā no tā, cik intensīvi platība aizaug. Regulāra kopšana palīdz samazināt bojāgājušo koku skaitu un veicina vienmērīgu mežaudzes attīstību.",
+        "p3": "AM Forest nodrošina profesionālu agrotehnisko kopšanu, izvērtējot katras platības apstākļus un pielāgojot darbu intensitāti konkrētajai situācijai.",
+        "imageAlt": "Agrotehniskā meža kopšana"
+      },
+      "youngStands": {
+        "heading": "Jaunaudžu kopšana",
+        "p1": "Kad mežs jau paaudzies, nākamais svarīgais solis ir jaunaudžu kopšana. Tās mērķis ir izveidot kvalitatīvu, veselīgu un produktīvu kokaudzi ar piemērotu koku sugu sastāvu un optimālu koku skaitu uz hektāra.",
+        "p2": "Savlaicīgi kopta jaunaudze aug ātrāk, koki kļūst resnāki un noturīgāki, un nākotnē iespējams iegūt augstvērtīgāku koksni. Kopšanas laikā tiek izņemti konkurējošie, bojātie vai mazvērtīgie koki, dodot priekšroku spēcīgākajiem un perspektīvākajiem kokiem. Šādi darbi palīdz veidot mežu ar lielāku ekonomisko vērtību nākotnes cirsmās.",
+        "p3": "AM Forest veic jaunaudžu kopšanu atbilstoši konkrētā meža vecumam, sastāvam un augšanas apstākļiem, nodrošinot ilgtermiņā veselīgu, noturīgu un vērtīgu mežu.",
+        "imageAlt": "Jaunaudžu kopšana"
+      },
+      "benefits": {
+        "heading": "Ko meža kopšana dod īpašniekam?",
+        "items": [
+          "Ātrāku un kvalitatīvāku koku augšanu.",
+          "Vērtīgāku un ražīgāku mežaudzi nākotnē.",
+          "Mazāku risku vēja, sniega un slimību bojājumiem.",
+          "Sakoptu un pārskatāmu meža īpašumu.",
+          "Lielāku finansiālo atdevi nākotnes cirsmās."
+        ],
+        "outro": "AM Forest palīdz meža īpašniekiem parūpēties par savu mežu visos tā attīstības posmos, nodrošinot profesionālu un pārdomātu meža kopšanu."
+      },
+      "cta": {
+        "heading": "Nepieciešama meža kopšana?",
+        "description": "Mūsu eksperti palīdzēs izvērtēt jūsu meža stāvokli un piedāvās piemērotākos kopšanas risinājumus.",
+        "button": "Sazināties ar mums"
+      }
+    },
+    "sellForest": {
+      "meta": {
+        "title": "Kā pārdot mežu? | AM Forest",
+        "description": "Uzziniet, kā pareizi pārdot meža īpašumu. AM Forest palīdz ar meža novērtēšanu un pārdošanas procesu."
+      },
+      "hero": {
+        "title": "Kā pārdot mežu?",
+        "subtitle": "Meža pārdošana daudziem īpašniekiem ir nozīmīgs lēmums, jo bieži šāds darījums notiek tikai vienu reizi dzīvē."
+      },
+      "intro": "Meža pārdošana atšķiras no ierastā nekustamā īpašuma pārdošanas, jo tas nav tikai zemes darījums. Meža vērtību būtiski ietekmē tajā augošā koksne, piekļuve īpašumam un tirgus situācija konkrētajā brīdī. Tāpēc svarīgi pieņemt pārdomātu lēmumu un sadarboties ar pieredzējušu nozares partneri.",
+      "whenToSell": {
+        "heading": "Kad apsvērt meža pārdošanu?",
+        "p1": "Mežu var pārdot dažādos tā attīstības posmos, un iemesli šādam lēmumam var būt ļoti atšķirīgi. Ne vienmēr īpašnieks vēlas vai spēj gaidīt brīdi, kad mežaudze sasniedz maksimālo vērtību.",
+        "p2": "Bieži lēmumu nosaka praktiski apsvērumi — nepieciešami līdzekļi, īpašums atrodas tālu no dzīvesvietas vai tā apsaimniekošana kļuvusi par smagu nastu. Svarīgākais ir objektīvi izvērtēt gan meža stāvokli, gan savu situāciju.",
+        "imageAlt": "Meža īpašums"
+      },
+      "priceFactors": {
+        "heading": "No kā veidojas meža cena?",
+        "intro": "Meža cenu ietekmē vairāki svarīgi faktori:",
+        "items": [
+          "Zemes kvalitāte un atrašanās vieta.",
+          "Koku sugas, vecums un koksnes apjoms.",
+          "Piekļuve īpašumam un izstrādes apstākļi.",
+          "Iespējamie saimnieciskās darbības ierobežojumi."
+        ],
+        "outro": "Pat šķietami neievērojama meža platība var izrādīties vērtīgs īpašums."
+      },
+      "waysToSell": {
+        "heading": "Kādā veidā var pārdot mežu?",
+        "p1": "Mežu iespējams pārdot dažādos veidos — kā cirsmu, augošus kokus vai visu meža īpašumu kopā ar zemi. Katram no šiem variantiem ir savas nianses un piemērotākā izvēle ir atkarīga no īpašnieka mērķiem un nākotnes plāniem."
+      },
+      "preparation": {
+        "heading": "Kā sagatavoties pārdošanai?",
+        "intro": "Lai darījums noritētu raiti, svarīgi, lai:",
+        "items": [
+          "Īpašumtiesības būtu sakārtotas.",
+          "Pieejama informācija par meža inventarizāciju.",
+          "Skaidrība par to, ko tieši vēlaties pārdot."
+        ],
+        "outro": "Ja dokumentācija nav pilnībā sakārtota, to iespējams izdarīt pirms pārdošanas procesa kopā ar mūsu speciālistiem.",
+        "imageAlt": "Meža dokumentācija"
+      },
+      "howWeHelp": {
+        "heading": "Kā AM Forest palīdz meža pārdošanā?",
+        "p1": "AM Forest palīdz īpašniekiem saprast sava meža vērtību, izskaidro pārdošanas iespējas un nodrošina skaidru un pārskatāmu darījuma procesu bez slēptiem nosacījumiem. Mēs pieejam katram īpašumam individuāli un piedāvājam godīgus, tirgus situācijai atbilstošus nosacījumus.",
+        "p2": "Mūsu mērķis ir, lai meža pārdošana jums būtu droša, saprotama un finansiāli izdevīga, bez lieka stresa un neskaidrībām."
+      },
+      "cta": {
+        "heading": "Vēlaties pārdot mežu?",
+        "description": "Sazinieties ar mums, lai saņemtu bezmaksas meža novērtējumu un uzzinātu par pārdošanas iespējām.",
+        "button": "Saņemt novērtējumu"
+      }
+    },
+    "whenToHarvest": {
+      "meta": {
+        "title": "Kad ir īstais laiks cirst mežu? | AM Forest",
+        "description": "Uzziniet, kā noteikt labāko laiku meža ciršanai. AM Forest palīdz izvērtēt mežaudzes gatavību."
+      },
+      "hero": {
+        "title": "Kad ir īstais laiks cirst mežu?",
+        "subtitle": "Īstais brīdis ciršanai nav viens konkrēts datums kalendārā. To nosaka mežaudzes vecums, stāvoklis un jūsu mērķi kā īpašniekam."
+      },
+      "intro": "Pareizi izvēlēts laiks palīdz iegūt lielāku vērtību un pasargāt mežu no zaudējumiem.",
+      "imageAlt": "Meža ciršana",
+      "factorsHeading": "Galvenie faktori",
+      "factors": [
+        {
+          "number": "1",
+          "title": "Koku vecums un ciršanas vecums",
+          "description": "Katrai koku sugai ir noteikts vecums, kad audze sasniedz ciršanas gatavību. Ja mežs ir pāraudzis, pieaug bojājumu risks un koksnes kvalitāte var pasliktināties. Savukārt savlaicīgi kopts mežs bieži sasniedz labāku kvalitāti un lielāku vērtību tieši ciršanas brīdī."
+        },
+        {
+          "number": "2",
+          "title": "Audzes veselība",
+          "description": "Vēja un sniega postījumi, kā arī kaitēkļu bojājumi vai slimības var būt signāls rīkoties savlaicīgi, lai saglabātu koksnes kvalitāti un tās vērtību."
+        },
+        {
+          "number": "3",
+          "title": "Tirgus situācija",
+          "description": "Koksnes cenas svārstās. Labvēlīga tirgus situācija var būt papildu arguments ciršanai, īpaši, ja mežaudze jau ir sasniegusi ciršanas vecumu."
+        },
+        {
+          "number": "4",
+          "title": "Iepriekš veiktie ieguldījumi meža kopšanā",
+          "description": "Savlaicīga kopšana, jaunaudžu retināšana un citi mežkopības darbi ietekmē to, cik kvalitatīvs un vērtīgs mežs izaug. Kopts mežs biežāk dod lielāku finansiālo atdevi ciršanas brīdī."
+        },
+        {
+          "number": "5",
+          "title": "Īpašnieka plāni",
+          "description": "Dažkārt lēmumu nosaka praktiski iemesli. Var būt nepieciešami līdzekļi, trūkst laika apsaimniekošanai vai īpašums atrodas tālu no dzīvesvietas."
+        }
+      ],
+      "conclusion": "AM Forest izvērtē jūsu mežaudzes vecumu, sastāvu, veselību un kopšanas vēsturi, kā arī tirgus situāciju. Pareizi izvēlēts laiks ciršanai ir viens no svarīgākajiem lēmumiem meža vērtības palielināšanai.",
+      "cta": {
+        "heading": "Vēlaties uzzināt, vai jūsu mežs ir gatavs ciršanai?",
+        "description": "Mūsu eksperti izvērtēs mežaudzes stāvokli un sniegs profesionālu ieteikumu.",
+        "button": "Pieteikt konsultāciju"
+      }
+    },
+    "beforeLogging": {
+      "meta": {
+        "title": "Kas jāzina pirms meža nociršanas? | AM Forest",
+        "description": "Svarīgākā informācija pirms meža ciršanas. Dokumenti, ierobežojumi un darbu organizēšana."
+      },
+      "hero": {
+        "title": "Kas jāzina pirms meža nociršanas?",
+        "subtitle": "Meža ciršana ir atbildīgs solis. Lai darbs noritētu likumīgi, droši un izdevīgi, pirms tam jāizvērtē vairāki svarīgi aspekti."
+      },
+      "intro": "Pirms meža ciršanas uzsākšanas ir būtiski pārliecināties, ka visi nepieciešamie nosacījumi ir izpildīti un dokumentācija sakārtota.",
+      "factors": [
+        {
+          "number": "1",
+          "title": "Vai mežaudze ir ciršanas gatavībā",
+          "description": "Svarīgi saprast, vai audze ir sasniegusi ciršanas vecumu un vai tās kvalitāte ļaus iegūt vērtīgu koksni. Pāragri nocirsts mežs var nozīmēt zaudētu potenciālo vērtību."
+        },
+        {
+          "number": "2",
+          "title": "Nepieciešamie dokumenti",
+          "description": "Ciršanai ir vajadzīgs ciršanas apliecinājums. Bez tā mežizstrādi veikt nedrīkst. Jābūt arī sakārtotām īpašumtiesībām un aktuāliem meža inventarizācijas datiem."
+        },
+        {
+          "number": "3",
+          "title": "Mežizstrādes apstākļi",
+          "description": "Liela nozīme ir piekļuvei īpašumam, ceļu stāvoklim un augsnes nestspējai. Dažos gadījumos darbus var veikt tikai noteiktos gadalaikos, lai nesabojātu augsni un saglabātu meža vidi."
+        },
+        {
+          "number": "4",
+          "title": "Ierobežojumi un aizsargājamās teritorijas",
+          "description": "Jāpārliecinās, vai īpašumā nav dabas aizsardzības ierobežojumu, kas var ietekmēt ciršanas apjomu vai laiku."
+        },
+        {
+          "number": "5",
+          "title": "Meža atjaunošanas pienākums",
+          "description": "Pēc ciršanas īpašniekam ir pienākums atjaunot mežu noteiktā termiņā. Tas nozīmē plānot stādīšanu vai dabisko atjaunošanos jau pirms ciršanas uzsākšanas."
+        },
+        {
+          "number": "6",
+          "title": "Darbu organizēšana",
+          "description": "Svarīgi izvēlēties uzticamu izpildītāju, kas strādā atbildīgi un ievēro gan likumdošanu, gan saimniecisko loģiku. Nepareizi veikta ciršana var radīt zaudējumus gan mežam, gan īpašniekam."
+        }
+      ],
+      "conclusion": "AM Forest izvērtē visus būtiskos faktorus pirms meža ciršanas – mežaudzes vecumu, stāvokli, piekļuves iespējas, dokumentāciju un tirgus situāciju. Mēs pārliecināmies, ka ciršana tiek veikta piemērotā laikā un veidā, lai īpašnieks iegūtu maksimālu atdevi no sava meža. Mēs sakārtojam nepieciešamos dokumentus, organizējam ciršanas darbus un nodrošinām kvalitatīvu meža atjaunošanu pēc izstrādes.",
+      "imageAlt": "Meža ciršanas darbi",
+      "cta": {
+        "heading": "Plānojat meža ciršanu?",
+        "description": "Mēs palīdzēsim sagatavot visu nepieciešamo un organizēsim darbus profesionāli.",
+        "button": "Sazināties ar mums"
+      }
     }
   }
 }

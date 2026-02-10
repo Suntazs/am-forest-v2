@@ -19,19 +19,19 @@ export default function ImageLinks() {
   const links = [
     {
       title: t('imageLinks.link1'),
-      href: "/services/forest-management",
+      href: "/info/kapec-jakopj-mezs",
     },
     {
       title: t('imageLinks.link2'),
-      href: "/services/timber-trade",
+      href: "/info/ka-pardot-mezu",
     },
     {
       title: t('imageLinks.link3'),
-      href: "/services/consulting",
+      href: "/info/kad-cirst-mezu",
     },
     {
       title: t('imageLinks.link4'),
-      href: "/services/reforestation",
+      href: "/info/kas-jazina-pirms-cirsanas",
     }
   ];
 

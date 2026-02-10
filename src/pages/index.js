@@ -1,6 +1,7 @@
 import { useTranslation } from 'next-i18next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import HomeHero from "@/components/sections/heros/HomeHero";
+import WhyChooseUs from "@/components/sections/WhyChooseUs";
 import Services from "@/components/sections/services";
 import About from "@/components/sections/about";
 import Reviews from "@/components/sections/reviews";
@@ -16,6 +17,7 @@ export default function Home() {
   return (
     <div className="">
       <HomeHero />
+      <WhyChooseUs />
       <Services />
       <About />
       <Reviews />

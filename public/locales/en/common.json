@@ -30,11 +30,30 @@
     "send": "Send Message"
   },
   "homeHero": {
-    "heading": "AM Forest — a professional approach for every forest owner, every hectare."
+    "heading": "AM Forest – providing professional full-cycle forestry services throughout Latvia since 2010."
+  },
+  "whyChooseUs": {
+    "heading": "Why Choose AM Forest?",
+    "feature1": {
+      "title": "Transparent Calculations & Fair Payment",
+      "description": "We provide clear calculations, explain every item, and ensure timely payments without hidden costs."
+    },
+    "feature2": {
+      "title": "Everything for Your Forest in One Place",
+      "description": "We provide the full forestry work cycle from planning and documentation to logging and sales, offering convenient and efficient cooperation."
+    },
+    "feature3": {
+      "title": "Years of Experience in Forestry",
+      "description": "We have been working in the industry since 2010, implementing various complexity forest management and logging projects throughout Latvia. Our team consists of experienced and qualified industry specialists."
+    },
+    "feature4": {
+      "title": "Personal Approach for Each Property",
+      "description": "Every forest is different, so we evaluate the situation on-site and offer the most suitable solution specifically for your property."
+    }
   },
   "servicesSection": {
-    "heading": "Our services offer a complete range of forestry solutions from planning to management",
-    "subheading": "We ensure an individual approach and high quality at every stage of forestry.",
+    "heading": "Services – everything for your forest",
+    "subheading": "We provide full-cycle logging, forest management, machinery and transport services, as well as forest property and timber stand acquisition at the best price.",
     "viewAllTitle": "All",
     "viewAllSubtitle": "services",
     "viewAllDesc": "View all our services"
@@ -60,9 +79,9 @@
     "konsultacijas": { "title": "Free", "subtitle": "consultations", "description": "We offer free consultations on forest management, sales, and valuation. Our experts will help you choose the best solution for your forest property." }
   },
   "homeAbout": {
-    "heading1": "About AM Forest",
-    "heading2": "In Forestry",
-    "description": "AM Forest is a leading forest management company in Latvia with over 14 years of industry experience. We offer a full range of services, from forest inventory to timber trading.",
+    "heading1": "About",
+    "heading2": "AM Forest",
+    "description": "We work quickly, with quality, and responsibly, because we understand that every forest property is valuable. We approach each client individually, offering the most suitable solutions for forest management and maintenance. Our experience and technical capabilities allow us to ensure stable work quality in projects of any complexity. We process 50,000 m³ and more timber annually, confirming our capacity and reliability in the industry. We are a company that cares about maintaining well-kept and sustainably managed forests in Latvia.",
     "years": "years +",
     "inForestry": "In Forestry"
   },
@@ -74,19 +93,19 @@
   },
   "aboutContent": {
     "imageAlt": "Forest with sunlight",
-    "heading": "Our Story",
-    "p1": "Founded with a vision to revolutionize forest management in Latvia, AM Forest has grown from a small team of passionate foresters to a leading force in sustainable forestry practices.",
-    "p2": "We combine decades of traditional forestry knowledge with cutting-edge technology to provide comprehensive forest management solutions that benefit both nature and our clients.",
-    "p3": "Our commitment to excellence and sustainability has earned us the trust of landowners, communities, and environmental organizations throughout the Baltic region.",
-    "stat1Value": "20+",
+    "heading": "About Us",
+    "p1": "We are an experienced forestry company that has been professionally working in Latvian forests for more than 15 years. We provide a full logging cycle — from felling area marking and scaling to tree cutting, forwarding, and timber sales. Additionally, we offer excavator, trailer, and excavator with grapple head services for various tasks.",
+    "p2": "We work quickly, with quality, and responsibly, because we understand that every forest property is valuable. We approach each client individually, offering the most suitable solutions for forest management and maintenance. Our experience and technical capabilities allow us to ensure stable work quality in projects of any complexity. We process 50,000 m³ and more timber annually, confirming our capacity and reliability in the industry.",
+    "p3": "We are a company that cares about maintaining well-kept and sustainably managed forests in Latvia.",
+    "stat1Value": "15+",
     "stat1Label": "Years of Experience",
-    "stat2Value": "500+",
-    "stat2Label": "Projects Completed",
+    "stat2Value": "50k+",
+    "stat2Label": "m³ per year",
     "stat3Value": "100k+",
     "stat3Label": "Hectares Managed"
   },
   "reviews": {
-    "heading": "Reviews",
+    "heading": "Reviews – our clients' experience speaks for itself",
     "quote": "Very professional team and excellent service! They showed high quality in their work and were very responsive to all our needs. I definitely recommend to everyone looking for reliable forestry specialists.",
     "author": "Andris Ozols",
     "role": "Client"
@@ -99,7 +118,7 @@
     "imageAlt": "Forest"
   },
   "cta": {
-    "heading": "Ready? Contact us to get started",
+    "heading": "AM Forest – trust your forest to the professionals.",
     "button": "Contact us",
     "imageAlt": "Aerial view of forest"
   },
@@ -374,6 +393,198 @@
         { "question": "How long does marking take?", "answer": "Depending on the area, marking work usually takes 1-3 days." }
       ],
       "cta": { "title": "Need forest marking?", "description": "Precise boundary identification for professional forest work.", "buttonText": "Schedule marking" }
+    }
+  },
+  "articles": {
+    "forestMaintenance": {
+      "meta": {
+        "title": "Why Should You Maintain Your Forest? | AM Forest",
+        "description": "Learn why forest maintenance is important and how it affects forest value. AM Forest offers professional forest maintenance services."
+      },
+      "hero": {
+        "title": "Why Should You Maintain Your Forest?",
+        "subtitle": "Forest maintenance is one of the most important tasks that directly affects the value and resilience of the forest in the future."
+      },
+      "intro": "A timely maintained forest grows higher quality, healthier, and more resistant to damage caused by wind, snow, and other natural factors. By caring for a young forest from its first years of growth, a strong and productive stand is created with greater economic potential for the future.",
+      "agrotechnical": {
+        "heading": "Agrotechnical Maintenance",
+        "p1": "In the first years after forest regeneration, it is important to ensure that young trees are not suppressed by grass, bushes, and unwanted shoots. During agrotechnical maintenance, growing space around target tree species is cleared, allowing them to grow stronger and straighter.",
+        "p2": "These works are usually performed for several years after planting or natural regeneration, depending on how intensively the area becomes overgrown. Regular maintenance helps reduce the number of damaged trees and promotes uniform stand development.",
+        "p3": "AM Forest provides professional agrotechnical maintenance, evaluating the conditions of each area and adjusting work intensity to the specific situation.",
+        "imageAlt": "Agrotechnical forest maintenance"
+      },
+      "youngStands": {
+        "heading": "Young Stand Maintenance",
+        "p1": "When the forest has already grown, the next important step is young stand maintenance. Its goal is to create a quality, healthy, and productive stand with an appropriate tree species composition and optimal number of trees per hectare.",
+        "p2": "A timely maintained young stand grows faster, trees become thicker and more resilient, and in the future, it is possible to obtain higher-value timber. During maintenance, competing, damaged, or low-value trees are removed, giving preference to the strongest and most promising trees. Such work helps create a forest with greater economic value for future harvesting.",
+        "p3": "AM Forest performs young stand maintenance according to the specific forest's age, composition, and growing conditions, ensuring a healthy, resilient, and valuable forest in the long term.",
+        "imageAlt": "Young stand maintenance"
+      },
+      "benefits": {
+        "heading": "What Does Forest Maintenance Give the Owner?",
+        "items": [
+          "Faster and higher quality tree growth.",
+          "More valuable and productive stand in the future.",
+          "Lower risk of wind, snow, and disease damage.",
+          "Well-maintained and clear forest property.",
+          "Greater financial return from future harvests."
+        ],
+        "outro": "AM Forest helps forest owners take care of their forest at all stages of its development, providing professional and thoughtful forest maintenance."
+      },
+      "cta": {
+        "heading": "Need Forest Maintenance?",
+        "description": "Our experts will help evaluate your forest condition and offer the most suitable maintenance solutions.",
+        "button": "Contact Us"
+      }
+    },
+    "sellForest": {
+      "meta": {
+        "title": "How to Sell a Forest? | AM Forest",
+        "description": "Learn how to properly sell a forest property. AM Forest helps with forest valuation and the selling process."
+      },
+      "hero": {
+        "title": "How to Sell a Forest?",
+        "subtitle": "Selling a forest is a significant decision for many owners, as such a transaction often happens only once in a lifetime."
+      },
+      "intro": "Selling a forest differs from regular real estate sales because it is not just a land transaction. The forest value is significantly affected by the timber growing in it, access to the property, and the market situation at the given moment. Therefore, it is important to make a thoughtful decision and cooperate with an experienced industry partner.",
+      "whenToSell": {
+        "heading": "When to Consider Selling a Forest?",
+        "p1": "A forest can be sold at various stages of its development, and the reasons for such a decision can be very different. The owner does not always want or can wait for the moment when the stand reaches maximum value.",
+        "p2": "Often the decision is determined by practical considerations — funds are needed, the property is far from the place of residence, or its management has become a heavy burden. The most important thing is to objectively evaluate both the forest condition and your situation.",
+        "imageAlt": "Forest property"
+      },
+      "priceFactors": {
+        "heading": "What Determines Forest Price?",
+        "intro": "Forest price is affected by several important factors:",
+        "items": [
+          "Land quality and location.",
+          "Tree species, age, and timber volume.",
+          "Access to the property and harvesting conditions.",
+          "Possible economic activity restrictions."
+        ],
+        "outro": "Even a seemingly insignificant forest area can turn out to be a valuable property."
+      },
+      "waysToSell": {
+        "heading": "How Can You Sell a Forest?",
+        "p1": "A forest can be sold in various ways — as a felling area, standing trees, or the entire forest property together with the land. Each of these options has its nuances, and the most suitable choice depends on the owner's goals and future plans."
+      },
+      "preparation": {
+        "heading": "How to Prepare for Sale?",
+        "intro": "For the transaction to proceed smoothly, it is important that:",
+        "items": [
+          "Property rights are in order.",
+          "Information about forest inventory is available.",
+          "There is clarity about what exactly you want to sell."
+        ],
+        "outro": "If the documentation is not fully in order, it can be done before the sales process together with our specialists.",
+        "imageAlt": "Forest documentation"
+      },
+      "howWeHelp": {
+        "heading": "How Does AM Forest Help with Forest Sales?",
+        "p1": "AM Forest helps owners understand the value of their forest, explains sales options, and ensures a clear and transparent transaction process without hidden conditions. We approach each property individually and offer fair conditions appropriate to the market situation.",
+        "p2": "Our goal is to make forest sales safe, understandable, and financially beneficial for you, without unnecessary stress and uncertainties."
+      },
+      "cta": {
+        "heading": "Want to Sell Your Forest?",
+        "description": "Contact us to receive a free forest valuation and learn about sales options.",
+        "button": "Get Valuation"
+      }
+    },
+    "whenToHarvest": {
+      "meta": {
+        "title": "When Is the Right Time to Harvest? | AM Forest",
+        "description": "Learn how to determine the best time for forest harvesting. AM Forest helps evaluate stand readiness."
+      },
+      "hero": {
+        "title": "When Is the Right Time to Harvest?",
+        "subtitle": "The right moment for harvesting is not a specific date on the calendar. It is determined by the stand age, condition, and your goals as an owner."
+      },
+      "intro": "Choosing the right time helps obtain greater value and protect the forest from losses.",
+      "imageAlt": "Forest harvesting",
+      "factorsHeading": "Key Factors",
+      "factors": [
+        {
+          "number": "1",
+          "title": "Tree Age and Harvesting Age",
+          "description": "Each tree species has a specific age when the stand reaches harvesting maturity. If the forest is overmature, the risk of damage increases and timber quality may deteriorate. On the other hand, a timely maintained forest often achieves better quality and greater value at the time of harvesting."
+        },
+        {
+          "number": "2",
+          "title": "Stand Health",
+          "description": "Wind and snow damage, as well as pest damage or diseases, can be a signal to act in time to preserve timber quality and its value."
+        },
+        {
+          "number": "3",
+          "title": "Market Situation",
+          "description": "Timber prices fluctuate. A favorable market situation can be an additional argument for harvesting, especially if the stand has already reached harvesting age."
+        },
+        {
+          "number": "4",
+          "title": "Previous Investments in Forest Maintenance",
+          "description": "Timely maintenance, young stand thinning, and other forestry work affect how quality and valuable the forest grows. A maintained forest more often provides greater financial return at the time of harvesting."
+        },
+        {
+          "number": "5",
+          "title": "Owner's Plans",
+          "description": "Sometimes the decision is determined by practical reasons. Funds may be needed, there is no time for management, or the property is far from the place of residence."
+        }
+      ],
+      "conclusion": "AM Forest evaluates your stand's age, composition, health, and maintenance history, as well as the market situation. Choosing the right time for harvesting is one of the most important decisions for increasing forest value.",
+      "cta": {
+        "heading": "Want to Know If Your Forest Is Ready for Harvesting?",
+        "description": "Our experts will evaluate the stand condition and provide professional recommendations.",
+        "button": "Schedule Consultation"
+      }
+    },
+    "beforeLogging": {
+      "meta": {
+        "title": "What to Know Before Logging? | AM Forest",
+        "description": "Essential information before forest logging. Documents, restrictions, and work organization."
+      },
+      "hero": {
+        "title": "What to Know Before Logging?",
+        "subtitle": "Forest logging is a responsible step. For the work to proceed legally, safely, and profitably, several important aspects must be evaluated beforehand."
+      },
+      "intro": "Before starting forest logging, it is essential to ensure that all necessary conditions are met and documentation is in order.",
+      "factors": [
+        {
+          "number": "1",
+          "title": "Is the Stand Ready for Harvesting",
+          "description": "It is important to understand whether the stand has reached harvesting age and whether its quality will yield valuable timber. A prematurely harvested forest can mean lost potential value."
+        },
+        {
+          "number": "2",
+          "title": "Required Documents",
+          "description": "A felling certificate is required for harvesting. Logging cannot be performed without it. Property rights must also be in order and current forest inventory data must be available."
+        },
+        {
+          "number": "3",
+          "title": "Logging Conditions",
+          "description": "Access to the property, road condition, and soil bearing capacity are of great importance. In some cases, work can only be done in certain seasons to avoid damaging the soil and preserve the forest environment."
+        },
+        {
+          "number": "4",
+          "title": "Restrictions and Protected Areas",
+          "description": "It must be verified whether there are nature protection restrictions on the property that may affect the scope or timing of harvesting."
+        },
+        {
+          "number": "5",
+          "title": "Forest Regeneration Obligation",
+          "description": "After harvesting, the owner has an obligation to regenerate the forest within a specified period. This means planning planting or natural regeneration before starting the harvesting."
+        },
+        {
+          "number": "6",
+          "title": "Work Organization",
+          "description": "It is important to choose a reliable contractor who works responsibly and follows both legislation and economic logic. Improperly performed harvesting can cause losses to both the forest and the owner."
+        }
+      ],
+      "conclusion": "AM Forest evaluates all essential factors before forest logging – stand age, condition, access options, documentation, and market situation. We ensure that harvesting is performed at the appropriate time and manner so that the owner receives maximum return from their forest. We arrange the necessary documents, organize harvesting work, and ensure quality forest regeneration after harvesting.",
+      "imageAlt": "Forest logging work",
+      "cta": {
+        "heading": "Planning Forest Logging?",
+        "description": "We will help prepare everything necessary and organize the work professionally.",
+        "button": "Contact Us"
+      }
     }
   }
 }
