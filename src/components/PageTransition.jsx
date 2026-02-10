@@ -201,11 +201,11 @@ export default function PageTransition({ children }) {
                   ease: [0.6, 0.0, 0.4, 1]
                 }}
               >
-                  {/* Container for logo and text */}
-                  <div className="relative flex items-center gap-4">
+                  {/* Container for logo */}
+                  <div className="relative flex items-center">
                     {/* Logo - starts at right position immediately */}
                     <motion.div
-                      className="bg-[#243c36] w-16 h-16 md:w-24 md:h-24 rounded-lg flex items-center justify-center z-20"
+                      className="z-20 flex items-center gap-3 md:gap-4"
                       initial={{ 
                         x: textWidth > 0 ? `${textWidth + 20}px` : 0
                       }}
@@ -218,42 +218,25 @@ export default function PageTransition({ children }) {
                         ease: [0.4, 0.0, 0.2, 1]
                       }}
                     >
-                      <span className="text-[#faf6ed] font-bold text-xl md:text-3xl">AM</span>
+                      <img 
+                        src="/image/amforest-logo-black.svg" 
+                        alt="AM Forest" 
+                        className="h-16 md:h-20 lg:h-24 w-auto"
+                      />
+                      <span className="text-[#243c36] font-semibold text-2xl md:text-3xl lg:text-4xl">Forest</span>
                     </motion.div>
                     
-                    {/* Text */}
+                    {/* Hidden text for width measurement */}
                     <h1
                       ref={textRef}
-                      className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#243c36] whitespace-nowrap opacity-0"
+                      className="text-5xl md:text-6xl lg:text-7xl font-bold text-[#243c36] whitespace-nowrap opacity-0 absolute"
                       style={{
-                        opacity: animationPhase === 'initial' ? 0 : 1,
-                        transition: 'opacity 0.3s'
+                        visibility: 'hidden'
                       }}
                     >
                       AM Forest
                     </h1>
                     
-                    {/* Overlay that covers the text initially, slides left */}
-                    <motion.div 
-                      className="absolute bg-gray-100 z-10 pointer-events-none"
-                      style={{
-                        top: '-10px',
-                        bottom: '-10px',
-                        left: '104px',
-                        right: '-300px',
-                        width: 'calc(100% + 500px)'
-                      }}
-                      initial={{ x: '0%' }}
-                      animate={{ 
-                        x: animationPhase === 'revealText' || animationPhase === 'slideUp' ? 
-                          '-130%' : '0%'
-                      }}
-                      transition={{ 
-                        duration: 2.5,
-                        ease: [0.4, 0.0, 0.4, 1],
-                        delay: typeof window !== 'undefined' && window.innerWidth < 768 ? -0.86 : -0.78
-                      }}
-                    />
                   </div>
               </motion.div>
             </div>

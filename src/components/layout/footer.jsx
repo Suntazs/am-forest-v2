@@ -13,11 +13,13 @@ export default function Footer() {
         <div className="flex flex-col lg:flex-row items-start justify-between gap-8 md:gap-12 lg:gap-16 mb-12 md:mb-16 lg:mb-20">
           {/* Left side - Main heading with logo and forest text */}
           <div className="flex-1 max-w-2xl">
-            <div className="flex items-center gap-4 mb-6">
-              <div className="w-14 h-14 bg-[#f3ecda] rounded-lg flex items-center justify-center">
-                <span className="text-[#2a2a2a] font-bold text-2xl">AM</span>
-              </div>
-              <div className="text-white font-semibold text-2xl">
+            <div className="flex items-center gap-3 mb-6">
+              <img 
+                src="/image/amforest-logo-white.svg" 
+                alt="AM Forest" 
+                className="h-12 md:h-14 lg:h-16 w-auto"
+              />
+              <div className="text-white font-semibold text-xl md:text-2xl">
                 Forest
               </div>
             </div>

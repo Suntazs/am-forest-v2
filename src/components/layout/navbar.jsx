@@ -100,11 +100,12 @@ export default function Navbar({ onMenuToggle, isMenuOpen, setIsMenuOpen }) {
           {/* Left side - Logo, company name, and contact information */}
           <div className="flex items-center gap-4 md:gap-6 lg:gap-8 xl:gap-12">
             {/* Logo and company name */}
-            <div className="flex items-center gap-2 md:gap-4">
-              <div className="w-10 h-10 md:w-12 md:h-12 lg:w-14 lg:h-14 bg-[#faf6ed] rounded-lg flex items-center justify-center flex-shrink-0">
-                {/* Logo placeholder */}
-                <span className="text-[#243c36] font-bold text-lg md:text-xl lg:text-2xl">AM</span>
-              </div>
+            <div className="flex items-center gap-2 md:gap-3">
+              <img 
+                src="/image/amforest-logo-white.svg" 
+                alt="AM Forest" 
+                className="h-10 md:h-12 lg:h-14 w-auto"
+              />
               <div className="text-neutral-200 font-semibold text-lg md:text-xl lg:text-2xl whitespace-nowrap">
                 Forest
               </div>
