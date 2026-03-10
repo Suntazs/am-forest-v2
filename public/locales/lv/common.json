@@ -246,18 +246,38 @@
         "description": "Dabīgi meži ar pilnu attīstības potenciālu"
       }
     ],
-    "relatedServices": [
+    "relatedServicesMezu": [
       {
-        "title": "Meža inventarizācija",
-        "aria": "Meža inventarizācijas pakalpojumi"
+        "title": "Meža projekta taksācijas",
+        "aria": "Meža projekta taksācijas pakalpojumi",
+        "serviceKey": "taksacija"
       },
       {
-        "title": "Taksācijas pakalpojumi",
-        "aria": "Meža taksācijas un vērtēšanas pakalpojumi"
+        "title": "Stigošanas pakalpojumi",
+        "aria": "Meža stigošanas pakalpojumi",
+        "serviceKey": "stigosana"
       },
       {
-        "title": "Juridiskās konsultācijas",
-        "aria": "Juridiskās konsultācijas meža īpašumu jautājumos"
+        "title": "Kokvedēja pakalpojumi",
+        "aria": "Kokmateriālu transportēšanas pakalpojumi",
+        "serviceKey": "kokvedeja"
+      }
+    ],
+    "relatedServicesCirsmu": [
+      {
+        "title": "Mežizvedēja traktora pakalpojumi",
+        "aria": "Mežizvedēja traktora pakalpojumi kokmateriālu izvešanai",
+        "serviceKey": "mezizvedeja"
+      },
+      {
+        "title": "Dāstošanas pakalpojumi",
+        "aria": "Kokmateriālu dāstošanas pakalpojumi",
+        "serviceKey": "dastosana"
+      },
+      {
+        "title": "Kokvedēja pakalpojumi",
+        "aria": "Kokmateriālu transportēšanas pakalpojumi",
+        "serviceKey": "kokvedeja"
       }
     ]
   },

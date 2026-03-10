@@ -1,11 +1,9 @@
 "use client";
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
-import { useMouseFollower } from '@/contexts/MouseFollowerContext';
-import { ProgressiveImage, ProgressiveVideo } from '@/components/ui/ProgressiveMedia';
 import { useTranslation } from 'next-i18next';
 
-const BuyingProcess = () => {
+const BuyingProcess = ({ variant = 'mezu' }) => {
   const { t } = useTranslation('common');
   const [hoveredIndex, setHoveredIndex] = useState(null);
   const [isHovering, setIsHovering] = useState(false);
@@ -22,7 +20,6 @@ const BuyingProcess = () => {
   const gridRef = useRef(null);
   const animationTimeouts = useRef([]);
   const linksAnimationTimeouts = useRef([]);
-  const { showFollower, hideFollower } = useMouseFollower();
 
   const handleMouseEnter = (index) => {
     if (!animationComplete) return;
@@ -171,7 +168,7 @@ const BuyingProcess = () => {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  // Handle scroll for mobile
+  // Handle scroll for mobile - highlight active service link based on scroll position
   useEffect(() => {
     if (!isMobile || !linksRef.current) return;
 
@@ -190,50 +187,15 @@ const BuyingProcess = () => {
         
         let activeIndex = null;
         if (viewportPosition < 0.4) {
-          activeIndex = 0; // Bottom third - first link
+          activeIndex = 0;
         } else if (viewportPosition < 0.7) {
-          activeIndex = 1; // Middle third - second link
+          activeIndex = 1;
         } else {
-          activeIndex = 2; // Top third - third link
+          activeIndex = 2;
         }
         
         if (activeIndex !== mobileActiveIndex) {
           setMobileActiveIndex(activeIndex);
-          
-          // Show follower for mobile
-          if (activeIndex !== null && relatedServices[activeIndex]) {
-            const service = relatedServices[activeIndex];
-            const content = (
-              <div className="w-48 h-32 overflow-hidden shadow-lg">
-                <ProgressiveImage
-                  src={service.media}
-                  alt=""
-                  className="w-full h-full"
-                />
-              </div>
-            );
-            
-            // Position based on which section
-            const mobileFollowerEl = document.createElement('div');
-            mobileFollowerEl.className = 'fixed z-50 pointer-events-none transition-all duration-300';
-            
-            if (activeIndex === 0) {
-              // First link - show below and to the left
-              mobileFollowerEl.style.bottom = '20%';
-              mobileFollowerEl.style.left = '10%';
-            } else if (activeIndex === 1) {
-              // Middle link - show below center
-              mobileFollowerEl.style.bottom = '15%';
-              mobileFollowerEl.style.left = '50%';
-              mobileFollowerEl.style.transform = 'translateX(-50%)';
-            } else {
-              // Last link - show below and to the right
-              mobileFollowerEl.style.bottom = '20%';
-              mobileFollowerEl.style.right = '10%';
-            }
-            
-            // Note: We'll handle this differently with a state-based approach
-          }
         }
       } else {
         setMobileActiveIndex(null);
@@ -246,13 +208,23 @@ const BuyingProcess = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isMobile, mobileActiveIndex]);
 
-  const translatedRelatedServices = t('buyingProcess.relatedServices', { returnObjects: true });
-  const relatedServices = (Array.isArray(translatedRelatedServices) ? translatedRelatedServices : []).map((service, index) => ({
+  // Get variant-specific related services
+  const translationKey = variant === 'cirsmu' ? 'buyingProcess.relatedServicesCirsmu' : 'buyingProcess.relatedServicesMezu';
+  const translatedRelatedServices = t(translationKey, { returnObjects: true });
+  
+  // Service links mapping
+  const serviceLinks = {
+    taksacija: "/services/meza-projekta-taksacijas",
+    stigosana: "/services/stigosanas-pakalpojumi",
+    mezizvedeja: "/services/mezizvedeja-traktora-pakalpojumi",
+    kokvedeja: "/services/kokvedeja-pakalpojumi",
+    dastosana: "/services/dastosanas-pakalpojumi",
+  };
+  
+  const relatedServices = (Array.isArray(translatedRelatedServices) ? translatedRelatedServices : []).map((service) => ({
     title: service.title,
-    href: ["/services/forest-inventory", "/services/taxation", "/services/legal-consulting"][index],
+    href: serviceLinks[service.serviceKey] || "/services",
     ariaLabel: service.aria,
-    media: "/image/beautiful-shot-forest-with-sunlight.png",
-    mediaType: "image"
   }));
 
   const translatedStates = t('buyingProcess.states', { returnObjects: true });
@@ -357,35 +329,13 @@ const BuyingProcess = () => {
                 <div 
                   className="relative group cursor-pointer overflow-hidden"
                   onMouseEnter={() => {
-                    // Only allow hover if this link's overlay has been animated
                     if (!isMobile && animatedLinkIndices.includes(index)) {
                       setHoveredLinkIndex(index);
-                      const content = service.mediaType === 'video' ? (
-                        <div className="w-80 h-52 overflow-hidden rounded-lg shadow-xl">
-                          <ProgressiveVideo
-                            src={service.media}
-                            className="w-full h-full"
-                            autoPlay
-                            muted
-                            loop
-                          />
-                        </div>
-                      ) : (
-                        <div className="w-80 h-52 overflow-hidden rounded-lg shadow-xl">
-                          <ProgressiveImage
-                            src={service.media}
-                            alt=""
-                            className="w-full h-full"
-                          />
-                        </div>
-                      );
-                      showFollower(content);
                     }
                   }}
                   onMouseLeave={() => {
                     if (!isMobile && animatedLinkIndices.includes(index)) {
                       setHoveredLinkIndex(null);
-                      hideFollower();
                     }
                   }}
                 >
@@ -448,9 +398,6 @@ const BuyingProcess = () => {
             </div>
           ))}
           </div>
-          
-          {/* Mobile Image Display - Hidden on mobile */}
-          {/* Removed: Image display on mobile to improve UX */}
         </div>
       </section>
     </>

@@ -14,7 +14,7 @@ const PerkamMezu = () => {
   return (
     <>
       <PerkamMezuHero />
-      <BuyingProcess />
+      <BuyingProcess variant="mezu" />
       <ProcessSteps />
       <ReviewsSection />
       <section className="relative py-20 bg-[#f3ecda] overflow-hidden">

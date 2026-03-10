@@ -163,10 +163,15 @@
       { "title": "Partially harvested forest properties", "description": "With ongoing work and potential for continuation" },
       { "title": "Unharvested forest properties", "description": "Natural forests with full development potential" }
     ],
-    "relatedServices": [
-      { "title": "Forest inventory", "aria": "Forest inventory services" },
-      { "title": "Inventory services", "aria": "Forest inventory and valuation services" },
-      { "title": "Legal consultations", "aria": "Legal consultations on forest property matters" }
+    "relatedServicesMezu": [
+      { "title": "Forest Project Taxation", "aria": "Forest project taxation services", "serviceKey": "taksacija" },
+      { "title": "Forest Marking Services", "aria": "Forest marking services", "serviceKey": "stigosana" },
+      { "title": "Timber Transport Services", "aria": "Timber transportation services", "serviceKey": "kokvedeja" }
+    ],
+    "relatedServicesCirsmu": [
+      { "title": "Forwarder Tractor Services", "aria": "Forwarder tractor services for timber extraction", "serviceKey": "mezizvedeja" },
+      { "title": "Timber Sorting Services", "aria": "Timber sorting services", "serviceKey": "dastosana" },
+      { "title": "Timber Transport Services", "aria": "Timber transportation services", "serviceKey": "kokvedeja" }
     ]
   },
   "processSteps": [

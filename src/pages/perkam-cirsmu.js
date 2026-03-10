@@ -14,7 +14,7 @@ const PerkamCirsmu = () => {
   return (
     <>
       <PerkamCirsmuHero />
-      <BuyingProcess />
+      <BuyingProcess variant="cirsmu" />
       <ProcessSteps />
       <ReviewsSection />
       <section className="relative py-20 bg-[#f3ecda] overflow-hidden">
